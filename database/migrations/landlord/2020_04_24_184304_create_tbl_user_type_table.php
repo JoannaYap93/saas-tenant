@@ -20,8 +20,8 @@ class CreateTblUserTypeTable extends Migration
         Schema::create('tbl_user_type', function (Blueprint $table) {
             $table->increments('user_type_id');
             $table->string('user_type_name', 45)->charset('latin1')->collation('latin1_swedish_ci');
-            $table->dateTime('user_type_cdate');
-            $table->dateTime('user_type_udate');
+            $table->dateTime('user_type_cdate')->nullable();
+            $table->dateTime('user_type_udate')->nullable();
             
             
             $table->charset = 'latin1';
