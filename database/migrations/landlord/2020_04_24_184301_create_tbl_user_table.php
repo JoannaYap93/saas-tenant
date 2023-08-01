@@ -45,6 +45,7 @@ class CreateTblUserTable extends Migration
             $table->tinyInteger('user_platform_id')->default(0)->nullable();
             $table->dateTime('email_verified_at')->nullable();
             $table->integer('user_type_id')->nullable();
+            $table->string('referral_code')->nullable();
             
             
             $table->charset = 'latin1';
