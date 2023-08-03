@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\TenancyServiceProvider::class, // <-- here
+        Yajra\DataTables\DataTablesServiceProvider::class,
     ],
 
     /*

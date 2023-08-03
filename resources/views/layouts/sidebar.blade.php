@@ -53,6 +53,57 @@
                 @endcanany --}}
                 
                 {{-- @canany(['master_setting', 'genre_setting','event_category_setting']) --}}
+                <li class="menu-title">SUBDOMAIN</li>
+                    {{-- @canany(['subdomain_listing', 'subdomain_manage']) --}}
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="bx bx-layout"></i>
+                            <span>Subdomain</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            {{-- @can('user_role_manage') --}}
+                            <li><a href="{{ route('subdomain_add') }}">Add Subdomain</a></li>
+                            {{-- @endcan
+                            @can('user_role_listing') --}}
+                            <li><a href="{{ route('subdomain_listing') }}">Subdomain Listing</a></li>
+                            {{-- @endcan --}}
+                        </ul>
+                    </li>
+                    {{-- @endcananny --}}
+                {{-- @endcananny --}}
+
+                {{-- @canany(['master_setting', 'genre_setting','event_category_setting']) --}}
+                <li class="menu-title">Subscription</li>
+                    {{-- @canany(['subdomain_listing', 'subdomain_manage']) --}}
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="bx bx-layout"></i>
+                            <span>Subscription Plan</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            {{-- @endcan
+                            @can('user_role_listing') --}}
+                            <li><a href="{{ route('subscription.add.view') }}">Add Subscription</a></li>
+                            <li><a href="{{ route('subscription.index') }}">Subscription Listing</a></li>
+                            {{-- @endcan --}}
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="bx bx-layout"></i>
+                            <span>Feature</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            {{-- @endcan
+                            @can('user_role_listing') --}}
+                            <li><a href="{{ route('feature.index') }}">Feature Listing</a></li>
+                            {{-- @endcan --}}
+                        </ul>
+                    </li>
+                    {{-- @endcananny --}}
+                {{-- @endcananny --}}
+                
+                {{-- @canany(['master_setting', 'genre_setting','event_category_setting']) --}}
                 <li class="menu-title">SETTING</li>
                 {{-- @can('master_setting') --}}
                 {{-- <li>
@@ -63,6 +114,11 @@
                 </li> --}}
                 {{-- @endcan --}}
                 {{-- @endcanany --}}
+
+                
+                <li><a href="{{ route('referral.code') }}">
+                    <i class="bx bx-gift font-size-16 align-middle mr-1"></i>Referral Code</a></li>
+
                 <li>
                     <a class="waves-effect text-danger" href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i>

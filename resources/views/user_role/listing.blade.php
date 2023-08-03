@@ -26,7 +26,7 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="row mb-2">
-					@can('user_role_manage')
+					{{-- @can('user_role_manage') --}}
 					<div class="col-sm-12">
 						<div class="text-sm-right">
 							<a href="{{ route('user_role_add') }}">
@@ -36,7 +36,7 @@
 							</a>
 						</div>
 					</div>
-					@endcan			
+					{{-- @endcan			 --}}
 				<div class="table-responsive">
 					<table class="table table-nowrap">
 						<thead class="thead-light">
@@ -55,11 +55,11 @@
 								<td>{{ $role->name }}</td>
 								<td>{{ $user_role_count[$role->id] }}</td>								
 								<td>
-									@can('user_role_manage')
+									{{-- @can('user_role_manage') --}}
 									<a href="{{ route('user_role_edit',$role->id) }}" class="btn btn-sm btn-outline-primary waves-effect waves-light">
 										Edit & Assign Permission
 									</a>		
-									@endcan							
+									{{-- @endcan							 --}}
 								</td>
 							</tr>
 							<?php $num++; ?>

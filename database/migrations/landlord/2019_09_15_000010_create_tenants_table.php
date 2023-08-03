@@ -15,11 +15,13 @@ class CreateTenantsTable extends Migration
      */
     public function up(): void
     {
+        \Illuminate\Support\Facades\DB::statement('SET SESSION sql_require_primary_key=0');
         Schema::create('tenants', function (Blueprint $table) {
             $table->string('id')->primary();
 
             // your custom columns may go here
             $table->string('referral_code')->nullable();
+            $table->string('tenant_code')->nullable();
             $table->enum('tenant_status', ['active', 'pending', 'suspended'])->default('active');
             $table->timestamps();
             $table->json('data')->nullable();

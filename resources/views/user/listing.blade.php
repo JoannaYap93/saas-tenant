@@ -75,7 +75,7 @@
 							</div>
 						</form>
 					</div>
-					@can('user_manage')
+					{{-- @can('user_manage') --}}
 					<div class="col-sm-4">
 						<div class="text-sm-right">
 							<a href="{{ route('user_add') }}">
@@ -85,7 +85,7 @@
 							</a>
 						</div>
 					</div>
-					@endcan
+					{{-- @endcan --}}
 				</div>
 				<div class="table-responsive">
 					<table class="table table-nowrap">
