@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+        'App\Console\Commands\SettingSecurityPin',
+        'App\Console\Commands\PaymentUrlCancellation',
     ];
 
     /**
@@ -26,6 +28,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('SettingSecurityPin:cron')->weekly();
+        $schedule->command('PaymentUrlCancellation:cron')->daily();
     }
 
     /**

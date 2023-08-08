@@ -75,7 +75,7 @@
 							</div>
 						</form>
 					</div>
-					{{-- @can('user_manage') --}}
+					@can('user_manage')
 					<div class="col-sm-4">
 						<div class="text-sm-right">
 							<a href="{{ route('user_add') }}">
@@ -85,7 +85,7 @@
 							</a>
 						</div>
 					</div>
-					{{-- @endcan --}}
+					@endcan
 				</div>
 				<div class="table-responsive">
 					<table class="table table-nowrap">
@@ -226,12 +226,12 @@
 		//$("#user_role").hide();
 		$('.suspend').on('click', function() {
 			var id = $(this).attr('data-id');
-			console.log(id);
+			// console.log(id);
 			$(".modal-body #user_id").val(id);
 		});
 		$('.activate').on('click', function() {
 			var id = $(this).attr('data-id');
-			console.log(id);
+			// console.log(id);
 			$(".modal-body #user_id").val(id);
 		});
 

@@ -64,13 +64,23 @@ class LoginController extends Controller
         if ($this->attemptLogin($request)) {
             $user = User::where('user_email', $request->user_email)->first();
             $ip = $request->ip();
+            
+            if ($user->can('access_backend') == false){
+              $this->guard()->logout();
+
+              $request->session()->invalidate();
+
+              $request->session()->regenerateToken();
+
+              return $this->loggedOut($request) ?: redirect('/');
+            }
             // activity('login')
             //     ->withProperties(['user_ip' => $ip])
             //     ->log('login');
             // if (Auth::viaRemember()) {
             //     $value = Cookie::get('user_email');
             // }
-            return $this->sendLoginResponse($request);
+            // return $this->sendLoginResponse($request);
         }
 
         $this->incrementLoginAttempts($request);

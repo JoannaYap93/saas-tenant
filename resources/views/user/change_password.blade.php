@@ -2,7 +2,7 @@
 
 @section('title') {{ $title }}  @endsection
 
-@section('css') 
+@section('css')
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/select2/select2.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}">
@@ -64,7 +64,7 @@
                         </div>
                         <div class="col-sm-6">
                             <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                            <a href="{{ route('user_listing') }}" class="btn btn-secondary" type="button">Cancel</a>
+                            <a href="{{ route('admin_listing') }}" class="btn btn-secondary" >Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -75,16 +75,16 @@
 @endsection
 
 @section('script')
-    <script src="{{ URL::asset('assets/libs/parsleyjs/parsleyjs.min.js')}}"></script> 
+    <script src="{{ URL::asset('assets/libs/parsleyjs/parsleyjs.min.js')}}"></script>
     <!-- Plugins js -->
-    <script src="{{ URL::asset('assets/js/pages/form-validation.init.js')}}"></script> 
+    <script src="{{ URL::asset('assets/js/pages/form-validation.init.js')}}"></script>
 
     <script src="{{ URL::asset('assets/libs/select2/select2.min.js')}}"></script>
     <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{ URL::asset('assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js')}}"></script>
     <script src="{{ URL::asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')}}"></script>
     <script src="{{ URL::asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
-    <script src="{{ URL::asset('assets/js/pages/form-advanced.init.js')}}"></script> 
+    <script src="{{ URL::asset('assets/js/pages/form-advanced.init.js')}}"></script>
 
     <script>
         $(document).ready(function(e) {

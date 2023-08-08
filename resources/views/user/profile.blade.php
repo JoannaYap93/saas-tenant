@@ -44,10 +44,10 @@
                     <div class="row justify-content-sm-center">
                         <div class="col-sm-6">
                             <div class="form-group text-center">
-                                @if( isset($post->user_profile_photo) && $post->user_profile_photo  )
-                                    <img class="m-auto p-auto rounded-circle avatar-xl" src="{{ url($post->user_profile_photo) }}" height="50"/>
+                                @if( $user->hasMedia('user_profile_photo') )
+                                    <img style="object-fit: cover" class="m-auto p-auto rounded-circle avatar-xl m-auto" src="{{ $user->getFirstMediaUrl('user_profile_photo') }}"/>
                                 @else
-                                    <img class="m-auto p-auto rounded-circle avatar-xl" src="{{url('assets/images/users/avatar-1.jpg')}}" height="50"/>
+                                    <img class="m-auto p-auto rounded-circle avatar-xl" src="{{ "https://ui-avatars.com/api/?name=".Auth::user()->user_fullname }}" height="50"/>
                                 @endif
                                 <input name="user_profile_photo" type="file" class="form-control mt-2" value="">
                             </div>
@@ -122,7 +122,7 @@
                         </div>
                         <div class="col-sm-6">
                             <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                            <a href="{{ route('user_listing') }}" class="btn btn-secondary" type="button">Cancel</a>
+                            <a href="{{ route('user_listing') }}" class="btn btn-secondary" >Cancel</a>
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use App\Model\User; 
+use App\Model\User;
 use App\Model\UserPlatform;
 use App\Model\UserType;
 use Carbon\Carbon;
@@ -46,6 +46,7 @@ class UserController extends Controller
                         "user_status"=>  $request->input('user_status'),
                         "user_type_id"=>  $request->input('user_type_id'),
                         "user_role_id"=>  $request->input('user_role_id'),
+                        'user_language' => $request->input('user_language'),
                         "user_gender"=>  $request->input('user_gender'),
                     ]]);
                     break;
@@ -55,7 +56,7 @@ class UserController extends Controller
             }
         }
         $search = session('user_search') ? session('user_search') : $search;
-        return view('user/listing', [
+        return view('user.listing', [
             'submit'=> route('user_add'),
             'title'=> 'Add',
             'users'=>  User::get_record($search, 15),
@@ -64,6 +65,7 @@ class UserController extends Controller
             'user_role_sel'=> UserType::get_user_role_sel(),
             'user_status_sel'=> ['' => 'Please select status', 'active' => 'Active', 'suspend' => 'Suspend', 'pending' => 'Pending'],
             'user_gender_sel'=> ['' => 'Please select gender', 'Male' => 'Male', 'Female ' => 'Female'],
+            'user_language_sel' => ['' => 'Please select preferred language', 'en' => 'English', 'cn' => 'Chinese', 'bm' => 'Malay'],
         ]);
     }
 
@@ -94,7 +96,7 @@ class UserController extends Controller
                 'user_type_id' => 'User Type'
             ]);
             if (!$validator->fails()) {
-               
+
                 $user_type_id = $request->input('user_type_id');
                 $user_role_id = $request->input('user_role_id');
                 $user = User::create([
@@ -119,7 +121,7 @@ class UserController extends Controller
                     'user_city' => $request->input('user_city') ? $request->input('user_city') : '',
                     'user_state' => $request->input('user_state') ? $request->input('user_state') : '',
                     'user_postcode' => $request->input('user_postcode') ? $request->input('user_postcode') : '',
-                    
+
                 ]);
                 if ($user_type_id == 1 && $user_role_id > 0) {
                     $role = Role::findById($user_role_id);
@@ -174,7 +176,7 @@ class UserController extends Controller
                 'user_mobile' => 'Mobile No',
                 'user_type_id' => 'User Type'
             ]);
-            
+
             if (!$validator->fails()) {
                 $user_type_id = $request->input('user_type_id');
                 $user_role_id = $request->input('user_role_id');
@@ -206,7 +208,7 @@ class UserController extends Controller
                 }else{
                     $user->syncRoles([]);
                 }
-                Session::flash('success_msg', 'Successfully updated '. $request->input('user_email') .' user.'); 
+                Session::flash('success_msg', 'Successfully updated '. $request->input('user_email') .' user.');
                 return redirect()->route('user_listing');
             }
             $post = (object) $request->all();
@@ -238,7 +240,7 @@ class UserController extends Controller
             ])->setAttributeNames([
                 'role_id' => 'User Role',
             ]);
-            
+
             if (!$validator->fails()) {
                 $submit_type = $request->input('submit');
                 $role_id = $request->input('role_id');
@@ -253,17 +255,17 @@ class UserController extends Controller
                             }
                         }
                         $user->syncPermissions($assign_permission);
-                        Session::flash('success_msg', 'Successfully updated '. $user->user_email .' permission.'); 
+                        Session::flash('success_msg', 'Successfully updated '. $user->user_email .' permission.');
                         return redirect()->route('user_listing');
                         break;
                     case 'reset':
                         $role = Role::findById($role_id);
                         $user->syncRoles($role->name);
-                        Session::flash('success_msg', 'Successfully reset '. $user->user_email .' permission.'); 
+                        Session::flash('success_msg', 'Successfully reset '. $user->user_email .' permission.');
                         return redirect()->route('assign_permission', $user_id);
                         break;
                 }
-              
+
             }
             $post = (object) $request->all();
         }
@@ -306,7 +308,7 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'user_email' => "required|unique:tbl_user,user_email,{$user_id},user_id",
                 'user_fullname' => 'required',
-                'user_nric' => 'required',
+                'user_nric' => 'nullable',
                 'user_nationality' => 'required',
                 'user_gender' => 'required',
                 'user_dob' => 'required',
@@ -340,12 +342,13 @@ class UserController extends Controller
                 ];
                 $image = $request->file('user_profile_photo');
                 if ($image) {
-                    $path = 'upload/user_profile_photo';
-                    $name =  $user_id;
-                    $update_detail['user_profile_photo'] = $image->storeAs($path, $name . '.' . $image->getClientOriginalExtension());
+                    // $path = 'upload/user_profile_photo';
+                    // $name =  $user_id;
+                    // $update_detail['user_profile_photo'] = $image->storeAs($path, $name . '.' . $image->getClientOriginalExtension());
+                    $post->addMediaFromRequest('user_profile_photo')->toMediaCollection('user_profile_photo');
                 }
                 $post->update($update_detail);
-                Session::flash('success_msg', 'Successfully updated my profile.'); 
+                Session::flash('success_msg', 'Successfully updated my profile.');
                 return redirect()->route('user_profile');
             }
             $post = (object) $request->all();
@@ -355,6 +358,7 @@ class UserController extends Controller
             'submit'=>route('user_profile'),
             'title'=> 'Profile',
             'post'=> $post,
+            'user'=> $user,
             'user_gender_sel'=> array('' => 'Please select gender', 'Male' => 'Male', 'Female ' => 'Female'),
         ])->withErrors($validator);
     }
@@ -386,9 +390,9 @@ class UserController extends Controller
                     unset($data['old_password']);
                     unset($data['new_password']);
                     unset($data['confirm_password']);
-    
+
                     $user->update($data);
-    
+
                     Session::flash('success_msg', 'Successfully update my password.');
                     return redirect()->route('user_change_password');
                 } else {
@@ -404,15 +408,84 @@ class UserController extends Controller
         ])->withErrors($validator);
     }
 
-    // public function ajax_get_user_details(Request $request)
-    // {
-    //     $user_id = $request->input('user_id');
-    //     $user = User::find($user_id);
-    //     $data['user_fullname'] = $user->user_fullname;
-    //     $data['user_gender'] = $user->user_gender;
-    //     $data['user_mobile'] = $user->user_mobile;
-    //     $data['user_nric'] = $user->user_nric;
-    //     $data['user_nationality'] = $user->user_nationality;
-    //     return response()->json(['data' => $data, 'status' => true]);
-    // }
+    public function change_password_by_super_admin(Request $request, $user_id)
+    {
+        $validator = null;
+        // $user_id = Auth::id();
+        $post = $user =  User::find($user_id);
+        if(!$user){
+            Session::flash('fail_msg', 'Invalid User, Please try again later.');
+            return redirect('/');
+        }
+        if($request->isMethod('post')){
+            $validator = Validator::make($request->all(), [
+                // 'old_password' => 'required|min:8',
+                'new_password' => 'required|min:8',
+                'confirm_password' => 'required|same:new_password'
+            ])->setAttributeNames([
+                // 'old_password' => 'Old Password',
+                'new_password' => 'New Password',
+                'confirm_password' => 'Confirm Password'
+            ]);
+            if (!$validator->fails()) {
+                $data = $request->all();
+                if ($request->confirm_password == $request->new_password) {
+                    $data['password'] = bcrypt($request->new_password);
+                    $data['user_udate'] = now();
+                    // unset($data['old_password']);
+                    unset($data['new_password']);
+                    unset($data['confirm_password']);
+
+                    $user->update($data);
+
+                    Session::flash('success_msg', 'Successfully update ' . $user->user_fullname  . ' password.');
+                    return redirect()->route('admin_listing');
+                } else {
+                    Session::flash('fail_msg', 'The confirmation password does not match.');
+                }
+            }
+            $post = (object) $request->all();
+        }
+        return view('user/change_password_by_super_admin', [
+            'submit'=>route('user_change_password_by_super_admin', $user_id),
+            'title'=> 'Change Password',
+            'post'=> $post,
+        ])->withErrors($validator);
+    }
+
+    public function ajax_get_farm_manager_sel(Request $request)
+    {
+        $company_land_id = $request->input('company_land_id');
+        return User::get_user_land_sel_2($company_land_id);
+        return User::get_user_land_sel();
+    }
+
+    public function ajax_get_farm_manager_sel_by_company(Request $request)
+    {
+        $company_id = $request->input('company_id');
+        return User::get_farm_manager_sel_by_company($company_id);
+        return User::get_user_land_sel();
+    }
+
+    public function ajax_search_user_by_name(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $user_fullname = $request->input('user_name');
+            $company_id = $request->input('company_id');
+            $result = User::get_search_user_sel($user_fullname, $company_id);
+            return response()->json(['data' => $result, 'status' => $result ? true : false]);
+        } else {
+            $user_fullname = $request->input('term');
+            $company_id = $request->input('company_id');
+            $result = User::get_search_user_sel($user_fullname, $company_id, true);
+            return response()->json(['results' => $result, 'status' => $result ? true : false]);
+        }
+    }
+
+    public function ajax_get_user_by_company_id(Request $request)
+    {
+        $company_id = $request->input('company_id');
+        $result = User::get_user_by_company_id($company_id);
+        return response()->json(['data' => $result]);
+    }
 }

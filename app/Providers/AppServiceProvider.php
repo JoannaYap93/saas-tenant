@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,13 +25,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // To allow migration in all subfolder
-        $migrationsPath = database_path('migrations');
-        $directories    = glob($migrationsPath.'/landlord', GLOB_ONLYDIR);
-        $paths          = array_merge([$migrationsPath], $directories);
+        if(env('FORCE_SSL',false)){
+            URL::forceScheme('https');
 
-        $this->loadMigrationsFrom($paths);
-
+            \Illuminate\Pagination\AbstractPaginator::currentPathResolver(function () {
+                /** @var \Illuminate\Routing\UrlGenerator $url */
+               $url = app('url');
+               return $url->current();
+            });
+        }
         Schema::defaultStringLength(191);
     }
 }

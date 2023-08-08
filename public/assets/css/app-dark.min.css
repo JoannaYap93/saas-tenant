@@ -1172,10 +1172,10 @@ body[data-layout=horizontal][data-layout-size=boxed] .navbar-header {
 
 /*!
  * Waves v0.7.6
- * http://fian.my.id/Waves 
- * 
- * Copyright 2014-2018 Alfiana E. Sibuea and other contributors 
- * Released under the MIT license 
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014-2018 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE */
 
 .waves-effect {
@@ -2344,7 +2344,7 @@ body[data-layout=horizontal][data-layout-size=boxed] .navbar-header {
 }
 
 .select2-container {
-  width: 100% !important;
+  /* width: 100% !important; */
 }
 
 .select2-container .select2-selection--single {
@@ -5186,4 +5186,3 @@ input[switch=dark]:checked + label {
   right: 0px;
   top: 12px;
 }
-

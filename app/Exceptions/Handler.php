@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Session;
 
 class Handler extends ExceptionHandler
 {
@@ -36,6 +37,9 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        if ($this->shouldReport($exception) && app()->bound('sentry')) {
+            app('sentry')->captureException($exception);
+        }
         parent::report($exception);
     }
 
@@ -50,6 +54,22 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
+            Session::flash('fail_msg','Token expired. Please try again.');
+            return back()
+            ->withInput(request()->except('_token'));
+        }
+
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException && $exception->getStatusCode() == 403) {
+            if ($exception->getMessage() == "User is not logged in.") {
+                return redirect()->route('login');
+            }
+            elseif ($exception->getMessage() == "User does not have the right permissions.") {
+                Session::flash('fail_msg','Permission denied.');
+                return redirect()->route('dashboard');
+            }
+        }
+
         return parent::render($request, $exception);
     }
 }

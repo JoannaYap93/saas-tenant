@@ -1,22 +1,47 @@
 <header id="page-topbar">
     <div class="navbar-header">
         <div class="d-flex">
-            <div class="navbar-brand-box">
-                <a href="index" class="logo logo-dark">
+            <div class="navbar-brand-box d-flex">
+                <a href="/" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{asset('')}}assets/images/logo.svg" alt="" height="22">
+                        <img src="{{ asset('images/huaxin_logo.png') }}" alt="" height="22">
+                        @if(auth()->user()->company_id != 0)
+                          @if(auth()->user()->company->hasMedia('company_logo'))
+                          X
+                          <img src="{{ auth()->user()->company->getFirstMediaUrl('company_logo') }}" alt="" height="22">
+                          @endif
+                        @endif
                     </span>
                     <span class="logo-lg">
-                        <img src="{{asset('')}}assets/images/logo-dark.png" alt="" height="30">
+                        <img src="{{ asset('images/huaxin_logo.png') }}" alt="" height="55">
+                        @if(auth()->user()->company_id != 0)
+                          @if(auth()->user()->company->hasMedia('company_logo'))
+                          X
+                          <img src="{{ auth()->user()->company->getFirstMediaUrl('company_logo') }}" alt="" height="55">
+                          @endif
+                        @endif
                     </span>
                 </a>
 
-                <a href="index" class="logo logo-light">
+                <a href="/" class="logo logo-light m-auto" style="color: #f6f6f6;">
                     <span class="logo-sm">
-                        <img src="{{asset('')}}assets/images/logo-light.svg" alt="" height="22">
+                        <img src="{{ get_logo() }}" alt="" height="22">
+                        @if(auth()->user()->company_id != 0)
+                          @if(auth()->user()->company->hasMedia('company_logo'))
+                          X
+                          <img src="{{ auth()->user()->company->getFirstMediaUrl('company_logo') }}" alt="" height="22">
+                          @endif
+                        @endif
                     </span>
                     <span class="logo-lg">
-                        <img src="{{asset('')}}assets/images/logo-light.png" alt="" height="30">
+                        {{-- <img src="{{ asset('images/huaxin-logo.svg') }}" alt="" height="40"> --}}
+                        <img src="{{ get_logo() }}" alt="" height="55">
+                        @if(auth()->user()->company_id != 0)
+                          @if(auth()->user()->company->hasMedia('company_logo'))
+                          X
+                          <img src="{{ auth()->user()->company->getFirstMediaUrl('company_logo') }}" alt="" width="60">
+                          @endif
+                        @endif
                     </span>
                 </a>
             </div>
@@ -48,11 +73,14 @@
                 </div>
             </div>
             <div class="dropdown d-inline-block">
+                @php
+                    $img = "https://ui-avatars.com/api/?name=" . Auth::user()->user_fullname;
+                @endphp
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="<?php Auth::user()->user_profile_photo ? url(Auth::user()->user_profile_photo) : url('assets/images/users/avatar-1.jpg') ?>" />
+                    <img style="object-fit: cover" class="rounded-circle header-profile-user" src="{{ Auth::user()->hasMedia('user_profile_photo') ? Auth::user()->getFirstMediaUrl('user_profile_photo') : $img }}" />
                     <span class="d-none d-xl-inline-block ml-1 va_top">
-                        <span>{{{ ucfirst(Auth::user()->user_fullname)  }}}</span><br/>
-                        <span><small>{{ isset(AUTH::user()->roles[0]) ? AUTH::user()->roles[0]->name: "" }}</small></span>
+                        <span>{{ ucfirst(Auth::user()->user_fullname)  }}</span><br/>
+                        <span><small>{{ isset(AUTH::user()->user_type) ? AUTH::user()->user_type->user_type_name: "" }}</small></span>
                     </span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>

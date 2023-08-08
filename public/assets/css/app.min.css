@@ -217,7 +217,7 @@ body[data-topbar=dark] .app-search input.form-control::-webkit-input-placeholder
 }
 
 body[data-sidebar=dark] .navbar-brand-box {
-  background: #2a3042;
+  background: #0B2B2C;
 }
 
 body[data-sidebar=dark] .logo-dark {
@@ -428,7 +428,7 @@ body[data-layout=horizontal] .footer {
 
 #sidebar-menu ul li a {
   display: block;
-  padding: 0.625rem 1.5rem;
+  padding: 0.625rem 0.625rem 0px;
   color: #545a6d;
   position: relative;
   font-size: 13px;
@@ -463,7 +463,7 @@ body[data-layout=horizontal] .footer {
 }
 
 #sidebar-menu ul li ul.sub-menu li a {
-  padding: 0.4rem 1.5rem 0.4rem 3.5rem;
+  padding: 0.4rem 1rem 0.4rem 2.5rem;
   font-size: 13px;
   color: #545a6d;
 }
@@ -478,7 +478,7 @@ body[data-layout=horizontal] .footer {
 }
 
 .menu-title {
-  padding: 12px 20px !important;
+  padding: 1.5rem 0.625rem 0px !important;
   letter-spacing: 0.05em;
   pointer-events: none;
   cursor: default;
@@ -664,7 +664,7 @@ body[data-layout=horizontal] .footer {
 }
 
 body[data-sidebar=dark] .vertical-menu {
-  background: #2a3042;
+  background: #0B2B2C;
 }
 
 body[data-sidebar=dark] #sidebar-menu ul li a {
@@ -1172,10 +1172,10 @@ body[data-layout=horizontal][data-layout-size=boxed] .navbar-header {
 
 /*!
  * Waves v0.7.6
- * http://fian.my.id/Waves 
- * 
- * Copyright 2014-2018 Alfiana E. Sibuea and other contributors 
- * Released under the MIT license 
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014-2018 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE */
 
 .waves-effect {
@@ -2343,8 +2343,13 @@ body[data-layout=horizontal][data-layout-size=boxed] .navbar-header {
   margin-top: 5px;
 }
 
-.select2-container {
+/* .select2-container {
   width: 100% !important;
+} */
+
+
+.select2{
+    width: 100% !important;
 }
 
 .select2-container .select2-selection--single {
@@ -2655,7 +2660,7 @@ input[switch=dark]:checked + label {
 .datepicker {
   border: 1px solid #f8f9fa;
   padding: 8px;
-  z-index: 999 !important;
+  z-index: 1060 !important;
 }
 
 .datepicker table tr th {
@@ -4210,4 +4215,3 @@ input[switch=dark]:checked + label {
   right: 0px;
   top: 12px;
 }
-
