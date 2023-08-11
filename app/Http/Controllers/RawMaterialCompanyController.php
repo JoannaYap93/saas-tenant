@@ -56,7 +56,7 @@ class RawMaterialCompanyController extends Controller
         $raw_material_company = RawMaterialCompany::get_records($search);
         $search = session('raw_material_company_search') ?? array();
         return view('raw_material_company.listing', [
-            'submit' => route('raw_material_company_listing'),
+            'submit' => route('raw_material_company_listing', ['tenant' => tenant('id')]),
             'records' => $raw_material_company,
             // 'status' => ProductStatus::get_records(),
             'company_land_sel' => CompanyLand::get_company_land_sel(),
@@ -96,7 +96,7 @@ class RawMaterialCompanyController extends Controller
 
                 Session::flash('success_msg', 'Raw Material Company Added Successfully!');
 
-                return redirect()->route('raw_material_company_listing');
+                return redirect()->route('raw_material_company_listing', ['tenant' => tenant('id')]);
             }
             $records = (object) $request->all();
             // dd($product_stk_warehse);
@@ -107,7 +107,7 @@ class RawMaterialCompanyController extends Controller
         return view('raw_material_company.form', [
             // 'status' => ProductStatus::get_records(),
             'records' => $records,
-            'submit' => route('raw_material_company_add'),
+            'submit' => route('raw_material_company_add', ['tenant' => tenant('id')]),
             // 'records' => $raw_material_company,
             'status' => ['' => 'Please Select Status', 'active' => 'Active', 'inactive' => 'Inactive'],
             'edit' => true,
@@ -143,7 +143,7 @@ class RawMaterialCompanyController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Raw Material Company Updated Successfully!');
-                return redirect()->route('raw_material_company_listing');
+                return redirect()->route('raw_material_company_listing', ['tenant' => tenant('id')]);
             }
 
             $product = (object) $request->all();
@@ -152,7 +152,7 @@ class RawMaterialCompanyController extends Controller
         // $category = ProductCategory::get_category_sel();
         // $tags = ProductTag::get_sel();
         return view('raw_material_company.form', [
-            'submit' => route('raw_material_company_edit', $id),
+            'submit' => route('raw_material_company_edit', ['tenant' => tenant('id'), 'id' => $id]),
             'records' => $raw_material_company,
             'status' => ['' => 'Please Select Status', 'active' => 'Active', 'inactive' => 'Inactive'],
             'edit' => true,
@@ -174,10 +174,10 @@ class RawMaterialCompanyController extends Controller
                 'is_deleted' => 1
             ]);
             Session::flash('success_msg', 'Deleted successfully!');
-            return redirect()->route('product_listing');
+            return redirect()->route('product_listing', ['tenant' => tenant('id')]);
         } else {
             Session::flash('fail_msg', 'Product not found!');
-            return redirect()->route('product_listing');
+            return redirect()->route('product_listing', ['tenant' => tenant('id')]);
         }
     }
 

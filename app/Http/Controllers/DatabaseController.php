@@ -24,7 +24,7 @@ class DatabaseController extends Controller
     public function compare(Request $request){
 
         if(Auth::id() != '1'){
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard', ['tenant' => tenant('id')]);
         }
 
         $db_live = DB::connection();
@@ -48,11 +48,11 @@ class DatabaseController extends Controller
                 $db_live->statement($create_table['Create Table']);
             }
             Session::flash('success_msg', 'Successfully sync DB');
-            return redirect()->route('compare_db');
+            return redirect()->route('compare_db', ['tenant' => tenant('id')]);
         }
 
         return view('database.compare', [
-            'submit' => route('compare_db'),
+            'submit' => route('compare_db', ['tenant' => tenant('id')]),
             'title' => 'Compare DB',
             'result_live' => $result_live,
             'result_staging' =>  $result_staging,
@@ -83,9 +83,9 @@ class DatabaseController extends Controller
           }
 
         }
-        return redirect()->route('company_expense_listing');
+        return redirect()->route('company_expense_listing', ['tenant' => tenant('id')]);
       }else{
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard', ['tenant' => tenant('id')]);
       }
     }
 }

@@ -158,7 +158,7 @@
                                                 @if (isset($companyExpense['company_expense_array'][$setting_expense_category->setting_expense_category_id][$company->company_id][$month_num][$land_id]['company_expense_sum']) )
                                                     <td style="text-align: center; {{ $col_count % 2 == 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }} border:1px solid #eee">
                                                         @if (@$component)
-                                                            <a class="popup" href="{{ route('company_expense_report_land_product', ['company_land_id' => $land_id, 'setting_expense_category_id' => $setting_expense_category->setting_expense_category_id, 'year' => @$search['year'], 'month_num' => $month_num])}}">
+                                                            <a class="popup" href="{{ route('company_expense_report_land_product', ['tenant' => tenant('id'), 'company_land_id' => $land_id, 'setting_expense_category_id' => $setting_expense_category->setting_expense_category_id, 'year' => @$search['year'], 'month_num' => $month_num])}}">
                                                                 {{number_format($companyExpense['company_expense_array'][$setting_expense_category->setting_expense_category_id][$company->company_id][$month_num][$land_id]['company_expense_sum'],2, '.', ',')}}
                                                             </a>
                                                         @else
@@ -186,7 +186,7 @@
                                         <td style="text-align: center; background-color:#fdfacb; color:#000000; border:1px solid #eee">
                                             @if (@$component)
                                                 @if(empty(@$search['month']))
-                                                <a class="popup" href="{{ route('company_expense_report_land_product_total', ['company_land_id' => $land->company_land_id, 'setting_expense_category_id' => $setting_expense_category->setting_expense_category_id, 'year' => @$search['year']])}}">
+                                                <a class="popup" href="{{ route('company_expense_report_land_product_total', ['tenant' => tenant('id'), 'company_land_id' => $land->company_land_id, 'setting_expense_category_id' => $setting_expense_category->setting_expense_category_id, 'year' => @$search['year']])}}">
                                                     {{number_format($companyExpense['company_total_by_category'][$company->company_id][$land->company_land_id][$setting_expense_category->setting_expense_category_id]['total_by_category'],2, '.', ',')}}
                                                 </a>
                                                 @else

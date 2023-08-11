@@ -31,14 +31,14 @@ class ClaimItemController extends Controller
     public function listing(Request $request, $claim_id) {
         if (!$claim_id || !is_numeric($claim_id)) {
             Session::flash('fail_msg', 'Selected Claim Item Not Valid.');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
         $claim = Claim::get_by_id($claim_id);
 
         if (!$claim) {
             Session::flash('fail_msg', 'Claim is Not Valid.');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->isMethod('post')) {
@@ -52,7 +52,7 @@ class ClaimItemController extends Controller
 
                     if ($claim_amount == 0) {
                         Session::flash('fail_msg', 'Claim Item is empty!');
-                        return redirect()->route('claim_item_listing', $claim_id);
+                        return redirect()->route('claim_item_listing', ['tenant' => tenant('id'), 'id' => $claim_id]);
                     }
 
                     $current_claim_status_id = $claim->claim_status_id;
@@ -71,7 +71,7 @@ class ClaimItemController extends Controller
                     ]);
 
                     Session::flash('success_msg', 'Claim has been submitted');
-                    return redirect()->route('claim_item_listing', $claim_id);
+                    return redirect()->route('claim_item_listing', ['tenant' => tenant('id'), 'id' => $claim_id]);
 
                 case 'update':
                     $expense_amount = 0;
@@ -158,7 +158,7 @@ class ClaimItemController extends Controller
                     ]);
 
                     Session::flash('success_msg', 'Successfully Added Claim Item');
-                    return redirect()->route('claim_item_listing',$claim_id);
+                    return redirect()->route('claim_item_listing', ['tenant' => tenant('id'), 'id' => $claim_id]);
                     break;
             }
         }
@@ -166,40 +166,40 @@ class ClaimItemController extends Controller
 
         switch ($claim->claim_status_id) {
             case '1'://Pending
-                $submit = route('claim_item_listing', $claim_id);
+                $submit = route('claim_item_listing', ['tenant' => tenant('id'), 'id' => $claim_id]);
                 $title = "Submit My Claim";
                 $step = 'claim_pending';
                 break;
             case '2'://Awaiting for Checking
-                $submit = route('claim_approve_checking', $claim_id);
+                $submit = route('claim_approve_checking', ['tenant' => tenant('id'), 'id' => $claim_id]);
                 $title = "Claim Checked";
                 $step = 'claim_check';
                 $is_remark = 1;
                 break;
             case '3'://Awaiting for Verify
-                $submit = route('claim_approve_verify', $claim_id);
+                $submit = route('claim_approve_verify', ['tenant' => tenant('id'), 'id' => $claim_id]);
                 $title = "Confirm Verified";
                 $step = 'claim_verify';
                 $is_remark = 1;
                 break;
             case '4'://Awaiting Approval
-                $submit = route('claim_approve_approval', $claim_id);
+                $submit = route('claim_approve_approval', ['tenant' => tenant('id'), 'id' => $claim_id]);
                 $title = "Approve";
                 $step = 'claim_approve';
                 $is_remark = 1;
                 break;
             case '5'://Approved
-                $submit = route('claim_account_check', $claim_id);
+                $submit = route('claim_account_check', ['tenant' => tenant('id'), 'id' => $claim_id]);
                 $title = "Account Checked";
                 $step = 'claim_account_check';
                 if ($claim->is_account_check=='1') {
-                    $submit = route('claim_payment', $claim_id);
+                    $submit = route('claim_payment', ['tenant' => tenant('id'), 'id' => $claim_id]);
                     $title = "Payment";
                     $step = 'claim_payment';
                 }
                 break;
             case '8'://Rejected (Resubmit)
-                $submit = route('claim_item_listing', $claim_id);
+                $submit = route('claim_item_listing', ['tenant' => tenant('id'), 'id' => $claim_id]);
                 $title = "Submit My Claim";
                 $step = 'claim_pending';
                 break;
@@ -293,7 +293,7 @@ class ClaimItemController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully Added Claim Item');
-                return redirect()->route('claim_item_listing',$claim_id);
+                return redirect()->route('claim_item_listing', ['tenant' => tenant('id'), 'id' => $claim_id]);
             }
             $post = (object) $request->all();
         }
@@ -304,7 +304,7 @@ class ClaimItemController extends Controller
 
 
         return view('claim_item.form', [
-            'submit' => route('claim_item_add',$claim_id),
+            'submit' => route('claim_item_add', ['tenant' => tenant('id'), 'id' => $claim_id]),
             'title' => 'Add',
             'post' => $post,
             'claim_type_sel' => $claim_type_sel,
@@ -319,7 +319,7 @@ class ClaimItemController extends Controller
 
         if(!$claim) {
             Session::flash('fail_msg', 'Invalid Claim');
-            return redirect()->route('/');
+            return redirect()->route('/', ['tenant'=> tenant('id')]);
         }
 
         $record = ClaimLog::get_log_by_claim_id($claim_id);
@@ -334,7 +334,7 @@ class ClaimItemController extends Controller
         $claim_item = ClaimItem::get_by_id($claim_item_id);
         if(!$claim_item){
             Session::flash('fail_msg', 'Invalid Claim Item');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
         if ($request->method('POST')) {
             $validation = Validator::make($request->all(), [
@@ -365,7 +365,7 @@ class ClaimItemController extends Controller
                     'claim_amount' => $new_amount
                 ]);
                 Session::flash('success_msg', 'Rejected Claim Item');
-                return redirect()->route('claim_item_listing',$claim_item->claim_id);
+                return redirect()->route('claim_item_listing', ['tenant' => tenant('id'), 'id' => $claim_item->claim_id]);
             }
         }
     }
@@ -374,7 +374,7 @@ class ClaimItemController extends Controller
         $claim_item = ClaimItem::get_by_id($claim_item_id);
         if(!$claim_item){
             Session::flash('fail_msg', 'Invalid Claim Item');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
         $claim_item->update([
             'is_deleted' => 1,
@@ -396,7 +396,7 @@ class ClaimItemController extends Controller
             'claim_amount' => $new_amount
         ]);
         Session::flash('success_msg', 'Deleted Claim Item');
-        return redirect()->route('claim_item_listing',$claim_item->claim_id);
+        return redirect()->route('claim_item_listing', ['tenant' => tenant('id'), 'id' => $claim_item->claim_id]);
     }
     public static function ajax_get_price_expense_item(Request $request)
     {

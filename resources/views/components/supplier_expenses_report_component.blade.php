@@ -19,11 +19,11 @@
                                             <td style="text-align: center; {{ $key % 2 != 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }} border:1px solid #eee">
                                                 @if (@$records['expense_data_supplier'][$key][$supplier->supplier_id] > 0)
                                                     @if (!@$search['company_id'])
-                                                        <a class="popup" href="{{route('supplier_expenses_report_detail', [ 'year' => $search['year'], 'month' => $key, 'supplier_id' => $supplier->supplier_id, 'company_id' => 0])}}">
+                                                        <a class="popup" href="{{route('supplier_expenses_report_detail', ['tenant' => tenant('id'),'year' => $search['year'], 'month' => $key, 'supplier_id' => $supplier->supplier_id, 'company_id' => 0])}}">
                                                         {{number_format($records['expense_data_supplier'][$key][$supplier->supplier_id], 2)}}
                                                     </a>
                                                     @elseif (@$search['company_id'])
-                                                        <a class="popup" href="{{route('supplier_expenses_report_detail', [ 'year' => $search['year'], 'month' => $key, 'supplier_id' => $supplier->supplier_id, 'company_id' => $search['company_id']])}}">
+                                                        <a class="popup" href="{{route('supplier_expenses_report_detail', ['tenant' => tenant('id'), 'year' => $search['year'], 'month' => $key, 'supplier_id' => $supplier->supplier_id, 'company_id' => $search['company_id']])}}">
                                                         {{number_format($records['expense_data_supplier'][$key][$supplier->supplier_id], 2)}}
                                                     </a>
                                                     @else

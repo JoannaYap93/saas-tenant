@@ -15,7 +15,7 @@
 			<h4 class="mb-0 font-size-18">
 				<span class="mr-2">Customer Listing</span>
 				@can('customer_manage')
-					<a href="{{ route('customer_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1" ><i class="fas fa-plus"></i> Add New</a>
+					<a href="{{ route('customer_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1" ><i class="fas fa-plus"></i> Add New</a>
 				@endcan
 			</h4>
 			<div class="page-title-right">
@@ -135,10 +135,10 @@
 
 										{!!$customer_status!!}<br>
 
-                                        <a class="badge badge-success font-size-11 popup" href="{{ route('customer_credit_detail', $customer->customer_id) }}">Credit: RM{{number_format($customer->customer_credit,2) ?? 0}}</a>
+                                        <a class="badge badge-success font-size-11 popup" href="{{ route('customer_credit_detail', ['tenant' => tenant('id'), 'id' => $customer->customer_id]) }}">Credit: RM{{number_format($customer->customer_credit,2) ?? 0}}</a>
 										@if($customer->warehouse_id != NULL)
 											<br><br><b>WH: </b>
-											<a href="{{ route('get_warehouse_listing_by_id', $customer->warehouse_id) }}">{{ $customer->warehouse->warehouse_name }}</a>
+											<a href="{{ route('get_warehouse_listing_by_id', ['tenant' => tenant('id'), 'id' => $customer->warehouse_id]) }}">{{ $customer->warehouse->warehouse_name }}</a>
 										@endif
 									</td>
 									<td>
@@ -190,7 +190,7 @@
 									</td>
 									<td>
 										@can('customer_manage')
-                                            <a href="{{route('customer_edit', $customer->customer_id)}}" class='btn btn-sm btn-outline-warning waves-effect waves-light'>Edit</a>
+                                            <a href="{{route('customer_edit', ['tenant' => tenant('id'), 'id' => $customer->customer_id])}}" class='btn btn-sm btn-outline-warning waves-effect waves-light'>Edit</a>
 											<button class="btn btn-sm btn-outline-success do_history"
 													data-toggle="modal" data-id="{{ $customer->customer_id }}"
 													data-target="#deliver_order">D.O. History</button>
@@ -200,7 +200,7 @@
 											<button class="btn btn-sm btn-outline-success pic_details"
 													data-toggle="modal" data-id="{{ $customer->customer_id }}"
 													data-target="#pic_details">PIC Details</button><br>
-                                            <a href="{{ route('credit_adjustment', $customer->customer_id) }}" class='btn btn-sm btn-outline-primary waves-effect waves-light pt-2'>Adjust Credit</a>
+                                            <a href="{{ route('credit_adjustment', ['tenant' => tenant('id'), 'id' => $customer->customer_id]) }}" class='btn btn-sm btn-outline-primary waves-effect waves-light pt-2'>Adjust Credit</a>
 
 											@if ($customer->customer_status == "activate")
 												<button class="btn btn-sm btn-outline-danger inactivate" data-toggle="modal" data-target="#inactivate" data-id="{{ $customer->customer_id }}">Inactivate</button>
@@ -228,7 +228,7 @@
 <div class="modal fade" id="activate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('customer_activate') }}">
+            <form method="POST" action="{{ route('customer_activate', ['tenant' => tenant('id')]) }}">
                 @csrf
                 <div class="modal-body">
                     <h4>Activate this customer ?</h4>
@@ -246,7 +246,7 @@
 <div class="modal fade" id="inactivate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('customer_inactivate') }}">
+            <form method="POST" action="{{ route('customer_inactivate', ['tenant' => tenant('id')]) }}">
                 @csrf
                 <div class="modal-body">
                     <h4>Inactivate this customer ?</h4>
@@ -268,7 +268,7 @@
 						<div class="modal-header">
 								<h4>Deliver Order History</h4>
 						</div>
-						<form action="{{ route('do_issue_invoice') }}" method="POST">
+						<form action="{{ route('do_issue_invoice', ['tenant' => tenant('id')]) }}" method="POST">
 								@csrf
 								<div class="modal-body">
 										<table class="table table-bordered">
@@ -300,7 +300,7 @@
 						<div class="modal-header">
 								<h4>Invoice History</h4>
 						</div>
-						<form action="{{ route('do_issue_invoice') }}" method="POST">
+						<form action="{{ route('do_issue_invoice', ['tenant' => tenant('id')]) }}" method="POST">
 								@csrf
 								<div class="modal-body">
 										<table class="table table-bordered">
@@ -334,7 +334,7 @@
 						<div class="modal-header">
 								<h4>Person In Charge Details</h4>
 						</div>
-						<form action="{{ route('do_issue_invoice') }}" method="POST">
+						<form action="{{ route('do_issue_invoice', ['tenant' => tenant('id')]) }}" method="POST">
 								@csrf
 								<div class="modal-body">
 										<table class="table table-bordered">
@@ -434,7 +434,7 @@
 				let customer_id = $(this).attr('data-id');
 				// console.log(customer_id);
 				$.ajax({
-						url: "{{ route('ajax_find_pic_with_customer_id') }}",
+						url: "{{ route('ajax_find_pic_with_customer_id', ['tenant' => tenant('id')]) }}",
 						method: 'post',
 						data: {
 								_token: '{{ csrf_token() }}',
@@ -471,7 +471,7 @@
 				let customer_id = $(this).attr('data-id');
 				// console.log(customer_id);
 				$.ajax({
-						url: "{{ route('ajax_find_invoice_with_customer_id') }}",
+						url: "{{ route('ajax_find_invoice_with_customer_id', ['tenant' => tenant('id')]) }}",
 						method: 'post',
 						data: {
 								_token: '{{ csrf_token() }}',
@@ -540,7 +540,7 @@
 				let customer_id = $(this).attr('data-id');
 				// console.log(customer_id);
 				$.ajax({
-						url: "{{ route('ajax_find_delivery_with_customer_id') }}",
+						url: "{{ route('ajax_find_delivery_with_customer_id', ['tenant' => tenant('id')]) }}",
 						method: 'post',
 						data: {
 								_token: '{{ csrf_token() }}',

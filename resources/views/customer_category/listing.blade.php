@@ -19,7 +19,7 @@
 		<div class="d-flex align-items-center">
                     <h4 class="mb-0 font-size-18 mr-2">Customer Category Listing</h4>
                     @can('customer_category_manage')
-                    <a href="{{ route('customer_category_add') }}"
+                    <a href="{{ route('customer_category_add', ['tenant' => tenant('id')]) }}"
                         class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                             class="fas fa-plus"></i> Add New</a>
                     @endcan
@@ -130,7 +130,7 @@
                                 @can('customer_category_manage')
                                     <td>
                                         @if ($row->company_id == auth()->user()->company_id || auth()->user()->user_type_id == 1 )
-                                            <a href="{{ route('customer_category_edit', $row->customer_category_id) }}"class="btn btn-outline-warning btn-sm mr-2">Edit</a>
+                                            <a href="{{ route('customer_category_edit', ['tenant' => tenant('id'), 'id' => $row->customer_category_id]) }}"class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                             <button class="btn btn-sm btn-outline-danger delete" data-toggle="modal" data-target="#delete" data-id="{{ $row->customer_category_id }}">Delete</button>
                                         @endif
                                     </td>
@@ -157,7 +157,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('customer_category_delete') }}">
+                <form method="POST" action="{{ route('customer_category_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this customer category ?</h4>

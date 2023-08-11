@@ -348,7 +348,7 @@
                     <div class="col-sm-6">
                         <span id="error_user"></span>
                         <button type="submit" id="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                        <a href="{{route('company_expense_listing')}}" class="btn btn-secondary" >Cancel</a>
+                        <a href="{{route('company_expense_listing', ['tenant' => tenant('id')])}}" class="btn btn-secondary" >Cancel</a>
                     </div>
                 </div>
             </div>
@@ -468,7 +468,7 @@
                         let company_expense_item_id =$('.modal-body #ce_item_id').val();
 
                         $.ajax({
-                            url: "{{ route('ajax_delete_image_by_media_item_id') }}",
+                            url: "{{ route('ajax_delete_image_by_media_item_id', ['tenant' => tenant('id')]) }}",
                             method: "POST",
                             data: {
                                     _token: "{{ csrf_token() }}",
@@ -507,7 +507,7 @@
                         let details = '';
 
                         $.ajax({
-                            url: "{{ route('ajax_get_image_by_ce_item_id') }}",
+                            url: "{{ route('ajax_get_image_by_ce_item_id', ['tenant' => tenant('id')]) }}",
                             method: "POST",
                             data: {
                                 _token: "{{ csrf_token() }}",
@@ -604,7 +604,7 @@
                     let land = '';
                     $('#company_land_id').html('<option value="">Loading...</option>');
                     $.ajax({
-                        url: "{{ route('ajax_land_user') }}",
+                        url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                         method: "POST",
                         data: {
                             _token: "{{ csrf_token() }}",
@@ -646,7 +646,7 @@
                     let user = '<option value="">Please Select Farm Manager</option>';
                     $('#manager_id').html('<option value="">Loading...</option>');
                     $.ajax({
-                        url: "{{ route('ajax_get_farm_manager_by_company_id') }}",
+                        url: "{{ route('ajax_get_farm_manager_by_company_id, ['tenant' => tenant('id')]') }}",
                         method: "POST",
                         data: {
                             _token: "{{ csrf_token() }}",
@@ -751,7 +751,7 @@
                 id_selected = $(this).val();
 
                 $.ajax({
-                    url: "{{ route('ajax_get_price_expense') }}",
+                    url: "{{ route('ajax_get_price_expense', ['tenant' => tenant('id')]) }}",
                     method: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -808,7 +808,7 @@
                 // let sland = "{{ @$records->company_expense_land ?? null }}";
                 let sland = <?php echo json_encode(@$records->company_expense_land); ?>;
                 $.ajax({
-                    url: "{{ route('ajax_land_user') }}",
+                    url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                     method: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -863,7 +863,7 @@
             if(manager_id != ''){
                 if(expense_type != ''){
                     $.ajax({
-                        url: "{{ route('ajax_get_worker_list') }}",
+                        url: "{{ route('ajax_get_worker_list', ['tenant' => tenant('id')]) }}",
                         method: 'post',
                         data: {
                             _token: '{{ csrf_token() }}',
@@ -1467,7 +1467,7 @@
             let selection = '<option value="">Please Select Expense</option>';
             let selected = '{{@$rows->expense->setting_expense_id}}';
             $.ajax({
-                url: "{{ route('ajax_get_expense_by_upkeep') }}",
+                url: "{{ route('ajax_get_expense_by_upkeep', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -1492,7 +1492,7 @@
             let selected = $('.supplier_id_hidden'+row).val();
 
             $.ajax({
-                url: "{{ route('ajax_get_supplier_by_upkeep') }}",
+                url: "{{ route('ajax_get_supplier_by_upkeep', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -1520,7 +1520,7 @@
             let selection = '<option value="">Please Select Expense</option>';
             let selected = '{{@$rows->expense->setting_expense_id}}';
             $.ajax({
-                url: "{{ route('ajax_get_expense_by_upkeep') }}",
+                url: "{{ route('ajax_get_expense_by_upkeep', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

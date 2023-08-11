@@ -47,7 +47,7 @@ class ProductController extends Controller
         $product = Product::get_records($search);
 
         return view('product.listing', [
-            'submit' => route('product_listing'),
+            'submit' => route('product_listing', ['tenant' => tenant('id')], ['tenant' => tenant('id')]),
             'records' => $product,
             'status' => ProductStatus::get_records(),
             'product_size_sel' => ['' => 'Please select sizes'] + SettingSize::get_size_sel(),
@@ -142,18 +142,18 @@ class ProductController extends Controller
 
                     Session::flash('success_msg', 'Product Added Successfully!');
 
-                    return redirect()->route('product_listing')->with('message', 'Product ' . $product->product_name . ' created');
+                    return redirect()->route('product_listing', ['tenant' => tenant('id')], ['tenant' => tenant('id')])->with('message', 'Product ' . $product->product_name . ' created');
                 }
                 $product = (object) $request->all();
             }
         } else if (count($category) <= 1) {
-            return redirect()->route('product_category_add')->with('failed_msg', 'Product Category is currently empty, please add a category to proceed.');
+            return redirect()->route('product_category_add', ['tenant' => tenant('id')])->with('failed_msg', 'Product Category is currently empty, please add a category to proceed.');
         }
 
         $tags = ProductTag::get_sel();
         return view('product.form', [
             'status' => ProductStatus::get_records(),
-            'submit' => route('product_add'),
+            'submit' => route('product_add', ['tenant' => tenant('id')]),
             'edit' => false,
             'product' => $product,
             'type' => 'Add',
@@ -178,7 +178,7 @@ class ProductController extends Controller
 
         if ($product == null) {
             Session::flash('fail_msg', 'Invalid Product');
-            return redirect()->route('product_listing');
+            return redirect()->route('product_listing', ['tenant' => tenant('id')]);
         }
 
         $validation = null;
@@ -272,20 +272,20 @@ class ProductController extends Controller
                     }
 
                     Session::flash('success_msg', 'Product Updated Successfully!');
-                    return redirect()->route('product_listing');
+                    return redirect()->route('product_listing', ['tenant' => tenant('id')]);
                 }
 
                 $product = (object) $request->all();
                 $product->media = $p->hasMedia('product_media') ?? 0;
             }
         } else if (count($category) <= 1) {
-            return redirect()->route('product_category_add')->with('failed_msg', 'Product Category is currently empty, please add a category to proceed.');
+            return redirect()->route('product_category_add', ['tenant' => tenant('id')])->with('failed_msg', 'Product Category is currently empty, please add a category to proceed.');
         }
 
 
         $tags = ProductTag::get_sel();
         return view('product.form', [
-            'submit' => route('product_edit', $id),
+            'submit' => route('product_edit', ['tenant' => tenant('id'), 'id' => $id]),
             'product' => $product,
             'status' => ProductStatus::get_records(),
             'product_size_sel' => SettingSize::get_size_sel(),
@@ -308,10 +308,10 @@ class ProductController extends Controller
                 'is_deleted' => 1
             ]);
             Session::flash('success_msg', 'Deleted successfully!');
-            return redirect()->route('product_listing');
+            return redirect()->route('product_listing', ['tenant' => tenant('id')]);
         } else {
             Session::flash('fail_msg', 'Product not found!');
-            return redirect()->route('product_listing');
+            return redirect()->route('product_listing', ['tenant' => tenant('id')]);
         }
     }
 

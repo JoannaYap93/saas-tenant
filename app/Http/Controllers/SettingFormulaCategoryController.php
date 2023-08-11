@@ -38,7 +38,7 @@ class SettingFormulaCategoryController extends Controller
             $search = session('formula_category_listing') ?? array();
 
         return view('setting_formula_category.listing', [
-            'submit' => route('setting_formula_category_listing'),
+            'submit' => route('setting_formula_category_listing', ['tenant' => tenant('id')]),
             'search' => $search,
             'records' => SettingFormulaCategory::get_records($search),
         ]);
@@ -72,13 +72,13 @@ class SettingFormulaCategoryController extends Controller
                   'setting_formula_category_budget' => $request->input('setting_formula_category_budget')
                 ]);
                 Session::flash('success_msg', 'Successfully edited ');
-                return redirect()->route('setting_formula_category_listing');
+                return redirect()->route('setting_formula_category_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('setting_formula_category.form', [
-            'submit' => route('setting_formula_category_edit', $setting_formula_category_id),
+            'submit' => route('setting_formula_category_edit', ['tenant' => tenant('id'), 'id' => $setting_formula_category_id]),
             'title' => 'Edit',
             'post' => $post,
         ])->withErrors($validation);
@@ -111,12 +111,12 @@ class SettingFormulaCategoryController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Added');
-                return redirect()->route('setting_formula_category_listing');
+                return redirect()->route('setting_formula_category_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('setting_formula_category.form', [
-            'submit' => route('setting_formula_category_add'),
+            'submit' => route('setting_formula_category_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
         ])->withErrors($validator);
@@ -143,7 +143,7 @@ class SettingFormulaCategoryController extends Controller
                 if($setting_formula_ids)
                 {
                         Session::flash('fail_msg', 'Invalid Setting Formula Category, Please Try Again.');
-                        return redirect()->route('setting_formula_category_listing');
+                        return redirect()->route('setting_formula_category_listing', ['tenant' => tenant('id')]);
                 }
             }
 
@@ -151,6 +151,6 @@ class SettingFormulaCategoryController extends Controller
                 $setting_formula_category->delete();
 
         Session::flash('success_msg', 'Successfully Deleted Setting Formula Category');
-        return redirect()->route('setting_formula_category_listing');
+        return redirect()->route('setting_formula_category_listing', ['tenant' => tenant('id')]);
     }
 }

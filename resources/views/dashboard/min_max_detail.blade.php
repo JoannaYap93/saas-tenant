@@ -54,15 +54,15 @@
                                                 @if(@$data[$c][$cl]->min)
                                                     @if($data[$c][$cl]->min == $data[$c][$cl]->max)
                                                         @php
-                                                            $link = route('invoice_listing_id',$data[$c][$cl]->invoice_id);
+                                                            $link = route('invoice_listing_id', ['tenant' => tenant('id'), 'id' => $data[$c][$cl]->invoice_id]);
                                                         @endphp
                                                         <td style="{{ $col % 2 != 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }}">
                                                             <a href="{{$link}}" target="_blank"> {{ $data[$c][$cl]->min }} </a>
                                                         </td>
                                                     @else
                                                         @php
-                                                            $link_min = route('invoice_by_price', ['price' => $data[$c][$cl]->min, 'product' => $product, 'company_land_name' => $company_land_name, 'date' => $search_date]);
-                                                            $link_max = route('invoice_by_price', ['price' => $data[$c][$cl]->max, 'product' => $product, 'company_land_name' => $company_land_name, 'date' => $search_date]);
+                                                            $link_min = route('invoice_by_price', ['tenant' => tenant('id'), 'price' => $data[$c][$cl]->min, 'product' => $product, 'company_land_name' => $company_land_name, 'date' => $search_date]);
+                                                            $link_max = route('invoice_by_price', ['tenant' => tenant('id'), 'price' => $data[$c][$cl]->max, 'product' => $product, 'company_land_name' => $company_land_name, 'date' => $search_date]);
                                                         @endphp
                                                         <td style="{{ $col % 2 != 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }}">
                                                             <a href="{{$link_min}}" target="_blank"> {{ $data[$c][$cl]->min }}</a> -  <a href="{{$link_max}}" target="_blank">{{ $data[$c][$cl]->max }} </a>

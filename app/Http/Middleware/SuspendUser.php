@@ -19,7 +19,7 @@ class SuspendUser
 
             auth()->logout();
 
-            return redirect()->route('login')->with('suspended', 'Your account has been suspended. Please contact administrator.');
+            return redirect()->route('login', ['tenant' => tenant('id')])->with('suspended', 'Your account has been suspended. Please contact administrator.');
         }
         return $next($request);
     }

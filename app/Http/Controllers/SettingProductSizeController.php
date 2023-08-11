@@ -36,7 +36,7 @@ class SettingProductSizeController extends Controller
         $search = session('setting_product_size_search') ? session('setting_product_size_search') : $search;
 
         return view('setting_product_size.listing', [
-            'submit' => route('setting_product_size_listing'),
+            'submit' => route('setting_product_size_listing', ['tenant' => tenant('id')]),
             'title' => 'Product Grade Listing',
             'records' =>  SettingSize::get_records($search, $perpage),
             'search' => $search,
@@ -59,7 +59,7 @@ class SettingProductSizeController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully created new size for product');
-                return redirect()->route('setting_product_size_listing');
+                return redirect()->route('setting_product_size_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
@@ -67,7 +67,7 @@ class SettingProductSizeController extends Controller
         return view('setting_product_size.form', [
             'post' => $post,
             'title' => 'Add',
-            'submit' => route('setting_product_size_add'),
+            'submit' => route('setting_product_size_add', ['tenant' => tenant('id')]),
         ])->withErrors($validation);
     }
 
@@ -89,7 +89,7 @@ class SettingProductSizeController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Update Size Name');
-                return redirect()->route('setting_product_size_listing');
+                return redirect()->route('setting_product_size_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
@@ -97,7 +97,7 @@ class SettingProductSizeController extends Controller
         return view('setting_product_size.form', [
             'post' => $post,
             'title' => 'Edit',
-            'submit' => route('setting_product_size_edit', $setting_product_size_id),
+            'submit' => route('setting_product_size_edit', ['tenant' => tenant('id'), 'id' => $setting_product_size_id]),
         ])->withErrors($validation);
     }
 }

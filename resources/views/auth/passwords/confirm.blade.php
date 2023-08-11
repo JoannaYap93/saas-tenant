@@ -26,7 +26,7 @@ Confirm Password
                             <div class="card-body p-4">
 
                                 <div class="p-3">
-                                    <form class="form-horizontal mt-4" method="POST" action="{{ route('password.confirm') }}">
+                                    <form class="form-horizontal mt-4" method="POST" action="{{ route('password.confirm', ['tenant' => tenant('id')]) }}">
                                         @csrf
 
                                         <div class="form-group">
@@ -43,7 +43,7 @@ Confirm Password
                                             <div class="col-12 text-right">
                                                 <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Confirm Password</button>
                                                 @if (Route::has('password.request'))
-                                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                    <a class="btn btn-link" href="{{ route('password.request', ['tenant' => tenant('id')]) }}">
                                                         {{ __('Forgot Your Password?') }}
                                                     </a>
                                                 @endif

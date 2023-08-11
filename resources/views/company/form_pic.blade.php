@@ -45,7 +45,7 @@
 @enderror
 <div class="row">
     <div class="col-12">
-        <form method="POST" action="{{ route('claim_pic', $post->company_id) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('claim_pic', ['tenant' => tenant('id'), 'id' => $post->company_id]) }}" enctype="multipart/form-data">
             @csrf
             <div class="card">
                 <div class="card-body">
@@ -230,7 +230,7 @@
     $('.pic_user').select2({
         ajax: {
             minimumResultsForSearch: -1,
-            url: "{{ route('ajax_search_user_by_name') }}",
+            url: "{{ route('ajax_search_user_by_name', ['tenant' => tenant('id')]) }}",
             dataType: 'json',
             data: function(p) {
                 let query = {
@@ -256,7 +256,7 @@
         let company = $('#company_id').val();
         let value = $(this).val();
         $.ajax({
-            url: "{{ route('ajax_search_user_by_name') }}",
+            url: "{{ route('ajax_search_user_by_name', ['tenant' => tenant('id')]) }}",
             method: 'post',
             data: {
                 _token: '{{ csrf_token() }}',

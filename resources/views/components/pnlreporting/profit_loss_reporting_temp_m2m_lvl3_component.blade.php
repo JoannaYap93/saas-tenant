@@ -283,11 +283,11 @@
                                     @if(isset($expenseitem['data_expense_item'][$company->company_id][$value->setting_expense_category_id][$item->setting_expense_id][$month_num]) && $expenseitem['data_expense_item'][$company->company_id][$value->setting_expense_category_id][$item->setting_expense_id][$month_num] > 0)
                                         <td style="min-width: 150px; text-align: center; {{ $col_count % 2 == 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }} border:1px solid #eee">
                                             @if(isset($search['company_land_id']))
-                                            <a class="popup" href="{{route('profit_loss_m2m_reporting_detail_by_land', [ 'year' => $search['year'], 'company_id' => $company->company_id, 'company_land_id' => $search['company_land_id'], 'setting_expense_id' => $item->setting_expense_id, 'month' => $month_num])}}">
+                                            <a class="popup" href="{{route('profit_loss_m2m_reporting_detail_by_land', ['tenant' => tenant('id')], 'year' => $search['year'], 'company_id' => $company->company_id, 'company_land_id' => $search['company_land_id'], 'setting_expense_id' => $item->setting_expense_id, 'month' => $month_num])}}">
                                                 {{number_format($expenseitem['data_expense_item'][$company->company_id][$value->setting_expense_category_id][$item->setting_expense_id][$month_num],2)}}
                                             </a>
                                             @else
-                                            <a class="popup" href="{{route('profit_loss_m2m_reporting_detail', [ 'year' => $search['year'], 'company_id' => $company->company_id, 'setting_expense_id' => $item->setting_expense_id, 'month' => $month_num])}}">
+                                            <a class="popup" href="{{route('profit_loss_m2m_reporting_detail', ['tenant' => tenant('id'), 'year' => $search['year'], 'company_id' => $company->company_id, 'setting_expense_id' => $item->setting_expense_id, 'month' => $month_num])}}">
                                                 {{number_format($expenseitem['data_expense_item'][$company->company_id][$value->setting_expense_category_id][$item->setting_expense_id][$month_num],2)}}
                                             </a>
                                             @endif
@@ -365,11 +365,11 @@
                                     @if(isset($expenseitem['data_expense_item'][$company->company_id][$value->setting_expense_category_id][$item->setting_expense_id][$month_num]) && $expenseitem['data_expense_item'][$company->company_id][$value->setting_expense_category_id][$item->setting_expense_id][$month_num] > 0)
                                         <td style="min-width: 150px; text-align: center; {{ $col_count % 2 == 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }} border:1px solid #eee">
                                             @if(isset($search['company_land_id']))
-                                            <a class="popup" href="{{route('profit_loss_m2m_reporting_detail_by_land', [ 'year' => $search['year'], 'company_id' => $company->company_id, 'company_land_id' => $search['company_land_id'], 'setting_expense_id' => $item->setting_expense_id, 'month' => $month_num])}}">
+                                            <a class="popup" href="{{route('profit_loss_m2m_reporting_detail_by_land', ['tenant' => tenant('id'), 'year' => $search['year'], 'company_id' => $company->company_id, 'company_land_id' => $search['company_land_id'], 'setting_expense_id' => $item->setting_expense_id, 'month' => $month_num])}}">
                                                 {{number_format($expenseitem['data_expense_item'][$company->company_id][$value->setting_expense_category_id][$item->setting_expense_id][$month_num],2)}}
                                             </a>
                                             @else
-                                            <a class="popup" href="{{route('profit_loss_m2m_reporting_detail', [ 'year' => $search['year'], 'company_id' => $company->company_id, 'setting_expense_id' => $item->setting_expense_id, 'month' => $month_num])}}">
+                                            <a class="popup" href="{{route('profit_loss_m2m_reporting_detail', ['tenant' => tenant('id'), 'year' => $search['year'], 'company_id' => $company->company_id, 'setting_expense_id' => $item->setting_expense_id, 'month' => $month_num])}}">
                                                 {{number_format($expenseitem['data_expense_item'][$company->company_id][$value->setting_expense_category_id][$item->setting_expense_id][$month_num],2)}}
                                             </a>
                                             @endif
@@ -528,7 +528,7 @@
         let sland = "{{ @$search['company_land_id'] ?? null }}";
         console.log(sland);
         $.ajax({
-            url: "{{ route('ajax_land_user') }}",
+            url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",

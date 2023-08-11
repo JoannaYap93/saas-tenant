@@ -8,7 +8,7 @@
         {{-- <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" /> --}}
         <meta content="Webby" name="author" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ asset('images/华盛logo-white.svg') }}">
+        <link rel="shortcut icon" href="{{ global_asset('images/华盛logo-white.svg') }}">
         @include('layouts.head')
         @yield('css')
   </head>

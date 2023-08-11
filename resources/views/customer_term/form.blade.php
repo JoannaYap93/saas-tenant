@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col">
                             <button type="submit" class="btn btn-primary">{{ $title }} Term</button>
-                            <a href="{{ route('customer_term_listing') }}" class="btn btn-secondary" >Cancel</a>
+                            <a href="{{ route('customer_term_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary" >Cancel</a>
                         </div>
                     </div>
             </div>

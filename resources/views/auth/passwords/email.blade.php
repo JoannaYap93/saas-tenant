@@ -24,7 +24,7 @@ Reset pw
                         <div class="card-body ">
                            
                             <div class="p-2">
-                                <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
+                                <form class="form-horizontal" method="POST" action="{{ route('password.email', ['tenant' => tenant('id')]) }}">
                                     @csrf
                                     <div class="form-group">
                                         <label for="username">Email</label>

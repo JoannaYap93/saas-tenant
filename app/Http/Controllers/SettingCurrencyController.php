@@ -40,7 +40,7 @@ class SettingCurrencyController extends Controller
 
         return view('setting_currency.listing', [
             'page_title' => 'Setting Currency',
-            'submit' => route('setting_currency'),
+            'submit' => route('setting_currency', ['tenant' => tenant('id')]),
             'search' => $search,
             'records' => SettingCurrency::get_records($search, $perpage),
         ]);
@@ -68,12 +68,12 @@ class SettingCurrencyController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Updated');
-                return redirect()->route('setting_currency');
+                return redirect()->route('setting_currency', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('setting_currency.form', [
-            'submit' => route('setting_currency_add'),
+            'submit' => route('setting_currency_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
         ])->withErrors($validator);
@@ -98,12 +98,12 @@ class SettingCurrencyController extends Controller
                     'setting_currency_name' => $request->input('setting_currency_name'),
                 ]);
                 Session::flash('success_msg', 'Successfully edited ');
-                return redirect()->route('setting_currency');
+                return redirect()->route('setting_currency', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('setting_currency.form', [
-            'submit' => route('setting_currency_edit', $setting_currency_id),
+            'submit' => route('setting_currency_edit', ['tenant' => tenant('id'), 'id' => $setting_currency_id]),
             'edit' => true,
             'title' => 'Edit',
             'post'=> $post,
@@ -116,12 +116,12 @@ class SettingCurrencyController extends Controller
 
         if(!$currency){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('setting_currency');
+            return redirect()->route('setting_currency', ['tenant' => tenant('id')]);
         }
 
         $currency->delete();
 
         Session::flash('success_msg', "Successfully deleted currency.");
-        return redirect()->route('setting_currency');
+        return redirect()->route('setting_currency', ['tenant' => tenant('id')]);
     }
 }

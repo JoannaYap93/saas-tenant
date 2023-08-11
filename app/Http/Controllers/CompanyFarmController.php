@@ -36,7 +36,7 @@ class CompanyFarmController extends Controller
         $search = session('land_category_search') ?? $search;
 
         return view('land_category/listing', [
-            'submit' => route('company_farm_listing'),
+            'submit' => route('company_farm_listing', ['tenant' => tenant('id')]),
             'title' => 'Farm Listing',
             'records' => CompanyFarm::get_records($search, $perpage),
             'search' =>  $search,
@@ -49,8 +49,6 @@ class CompanyFarmController extends Controller
         $post = null;
 
         if ($request->isMethod('post')) {
-            dd($request->input());
-
             $validator = Validator::make($request->all(), [
                 'company_farm_name' => 'required|unique:tbl_company_farm,company_farm_name',
             ])->setAttributeNames([
@@ -76,13 +74,13 @@ class CompanyFarmController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully created new farm. ');
-                return redirect()->route('company_farm_listing');
+                return redirect()->route('company_farm_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('land_category/form', [
-            'submit' => route('company_farm_add'),
+            'submit' => route('company_farm_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
             'company_land_category_sel' => CompanyLandCategory::get_land_category_sel(),
@@ -141,13 +139,13 @@ class CompanyFarmController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully updated farm');
-                return redirect()->route('company_farm_listing');
+                return redirect()->route('company_farm_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('land_category.form', [
-            'submit' => route('company_farm_edit', $company_farm_id),
+            'submit' => route('company_farm_edit', ['tenant' => tenant('id'), 'id' => $company_farm_id]),
             'title' => 'Edit',
             'post' => $post,
         ])->withErrors($validator);

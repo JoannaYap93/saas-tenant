@@ -58,7 +58,7 @@ class FormulaUsageController extends Controller
 
         $search = session('formula_usage_search') ?? array();
         return view('formula_usage.listing', [
-            'submit' => route('formula_usage_listing'),
+            'submit' => route('formula_usage_listing', ['tenant' => tenant('id')]),
             'records' => FormulaUsage::get_records($search),
             // 'status' => ProductStatus::get_records(),
             'product_tree' => CompanyLandTree::get_tree_w_product_by_land(),
@@ -232,14 +232,14 @@ class FormulaUsageController extends Controller
 
                 Session::flash('success_msg', 'Formula Usage Added Successfully!');
 
-                return redirect()->route('formula_usage_listing');
+                return redirect()->route('formula_usage_listing', ['tenant' => tenant('id')]);
             }
             $records = (object) $request->all();
         }
 
         return view('formula_usage.form', [
             'records' => $records,
-            'submit' => route('formula_usage_add'),
+            'submit' => route('formula_usage_add', ['tenant' => tenant('id')]),
             'edit' => true,
             'type' => 'Add',
             'setting_formula_sel' => SettingFormula::get_by_company_sel(),
@@ -426,7 +426,7 @@ class FormulaUsageController extends Controller
 
               Session::flash('success_msg', 'Formula Usage Updated Successfully!');
 
-              return redirect()->route('formula_usage_listing');
+              return redirect()->route('formula_usage_listing', ['tenant' => tenant('id')]);
           }
 
             $product = (object) $request->all();
@@ -435,7 +435,7 @@ class FormulaUsageController extends Controller
         // $category = ProductCategory::get_category_sel();
         // $tags = ProductTag::get_sel();
         return view('formula_usage.form', [
-            'submit' => route('formula_usage_edit', $formula_usage_id),
+            'submit' => route('formula_usage_edit', ['tenant' => tenant('id'), 'id' => $formula_usage_id]),
             'records' => $formula_usage,
             // 'status' => ['' => 'Please Select Status', 'active' => 'Active', 'inactive' => 'Inactive'],
             'edit' => true,
@@ -490,10 +490,10 @@ class FormulaUsageController extends Controller
               }
             }
             Session::flash('success_msg', 'Deleted successfully!');
-            return redirect()->route('formula_usage_listing');
+            return redirect()->route('formula_usage_listing', ['tenant' => tenant('id')]);
         } else {
             Session::flash('fail_msg', 'Formula Usage not found!');
-            return redirect()->route('formula_usage_listing');
+            return redirect()->route('formula_usage_listing', ['tenant' => tenant('id')]);
         }
     }
 
@@ -561,12 +561,12 @@ class FormulaUsageController extends Controller
     {
         $search['formula_usage_id'] = $formula_usage_id;
         \Illuminate\Support\Facades\Session::put('formula_usage_search', $search);
-        return redirect()->route('formula_usage_listing');
+        return redirect()->route('formula_usage_listing', ['tenant' => tenant('id')]);
     }
     public function listing_by_rm_id($raw_material_id)
     {
         $search['raw_material_id'] = $raw_material_id;
         \Illuminate\Support\Facades\Session::put('formula_usage_search', $search);
-        return redirect()->route('formula_usage_listing');
+        return redirect()->route('formula_usage_listing', ['tenant' => tenant('id')]);
     }
 }

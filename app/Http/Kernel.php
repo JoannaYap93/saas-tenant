@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'super_admin' => \App\Http\Middleware\SuperAdminVerify::class,
         'user_type' => \App\Http\Middleware\UserTypeVerify::class,
+        'subscription' => \App\Http\Middleware\SubscriptionPlan::class,
     ];
 
     /**

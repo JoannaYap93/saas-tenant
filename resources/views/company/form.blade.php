@@ -445,7 +445,7 @@
                     <div class="row mt-3">
                         <div class="col-sm-6">
                             <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                            <a href="{{ route('company_listing') }}" class="btn btn-secondary">Cancel</a>
+                            <a href="{{ route('company_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -582,7 +582,7 @@
             $('#catg_' + id).html('<option value="">Loading...</option>');
             let cat = '<option value="">Please Select Category</option>';
             $.ajax({
-                url: "{{ route('ajax_get_farm') }}",
+                url: "{{ route('ajax_get_farm', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -620,7 +620,7 @@
             let code = $(this).val();
 
             $.ajax({
-                url: "{{ route('check_company_code') }}",
+                url: "{{ route('check_company_code', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -649,7 +649,7 @@
             var value = $(this).val();
 
             $.ajax({
-                url: "{{ route('ajax_check_user_unique_code') }}",
+                url: "{{ route('ajax_check_user_unique_code', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     user_unique_code: value,
@@ -681,7 +681,7 @@
             let user_mobile = $(this).val();
 
             $.ajax({
-                url: "{{ route('ajax_check_user_mobile') }}",
+                url: "{{ route('ajax_check_user_mobile', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     user_mobile: user_mobile,
@@ -712,7 +712,7 @@
             let email = $(this).val();
 
             $.ajax({
-                url: "{{ route('ajax_check_email') }}",
+                url: "{{ route('ajax_check_email', ['tenant' => tenant('id')]) }}",
                 data: {
                     _token: "{{ csrf_token() }}",
                     user_email: email
@@ -740,7 +740,7 @@
         $('.pic_claim').select2({
             ajax: {
                 minimumResultsForSearch: -1,
-                url: "{{ route('ajax_search_user_by_name') }}",
+                url: "{{ route('ajax_search_user_by_name', ['tenant' => tenant('id')]) }}",
                 dataType: 'json',
                 data: function(p) {
                     let query = {
@@ -767,7 +767,7 @@
             let value = $(this).val();
             let count = $(this).attr("id").substr(10);
             $.ajax({
-                url: "{{ route('ajax_search_user_by_name') }}",
+                url: "{{ route('ajax_search_user_by_name', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',

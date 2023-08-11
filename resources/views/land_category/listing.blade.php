@@ -11,7 +11,7 @@
                     <h4 class="mb-0 font-size-18 mr-2">Farm Listing</h4>
                     {{-- @if (auth()->user()->user_type_id == 1) --}}
                         @can('company_land_category_manage')
-                            <a href="{{ route('company_farm_add') }}"
+                            <a href="{{ route('company_farm_add', ['tenant' => tenant('id')]) }}"
                                 class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1">
                                 <i class="fas fa-plus"></i> ADD NEW</a>
                         {{-- @endcan --}}
@@ -36,7 +36,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-8">
-                                <form method="POST" action="{{ route('company_farm_listing') }}">
+                                <form method="POST" action="{{ route('company_farm_listing', ['tenant' => tenant('id')]) }}">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-4">
@@ -115,7 +115,7 @@
                                                     <td><span data-toggle='modal' data-target='#fulfill'
                                                             data-id='{{ $farm->company_farm_id }}'
                                                             class='fulfill'>
-                                                            <a href="{{ route('company_farm_edit', $farm->company_farm_id) }}"
+                                                            <a href="{{ route('company_farm_edit', ['tenant' => tenant('id'), 'id' => $farm->company_farm_id]) }}"
                                                                 class="btn btn-sm btn-outline-primary waves-effect waves-light mr-2 mb-1">Edit</a>
                                                         </span>
                                                         {{-- <button class="btn btn-sm btn-outline-danger delete" data-toggle="modal"
@@ -149,7 +149,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('company_farm_delete') }}">
+                <form method="POST" action="{{ route('company_farm_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this Farm ?</h4>

@@ -74,7 +74,7 @@
                        @foreach ($farm_manager[$company_id] as $key => $user)
                         @if (isset($companyExpenseWorker[$user['user_id']][$company_id][$month_num]['company_expense_worker_sum']) && $companyExpenseWorker[$user['user_id']][$company_id][$month_num]['company_expense_worker_sum'] > 0)
                         <td style="text-align: center; {{  $col_count % 2 == 0 ?  'background-color: #ffffff;' : 'background-color: #e4e4e4;' }} border:1px solid #eee">
-                            <a class="popup" href="{{route('farm_manager_worker_expense_detail', [ 'year' => $search['year'], 'month' => $month_num, 'company_id' => $company_id, 'user_id' => $user['user_id']])}}">
+                            <a class="popup" href="{{route('farm_manager_worker_expense_detail', ['tenant' => tenant('id'), 'year' => $search['year'], 'month' => $month_num, 'company_id' => $company_id, 'user_id' => $user['user_id']])}}">
                             {{number_format($companyExpenseWorker[$user['user_id']][$company_id][$month_num]['company_expense_worker_sum'],2, '.', '')}}</a>
                         </td>
                             @php

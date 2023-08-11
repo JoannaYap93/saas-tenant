@@ -18,7 +18,7 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item">
-                            <a href="{{route('claim_listing')}}">Claim</a>
+                            <a href="{{route('claim_listing', ['tenant' => tenant('id')])}}">Claim</a>
                         </li>
                         <li class="breadcrumb-item active">Form</li>
                     </ol>
@@ -74,7 +74,7 @@
                         <div class="row">
                             <div class="col-12 my-2">
                                 <button type="submit" id="submit" class="btn btn-success">Create Claim</button>
-                                <a href="{{route('claim_listing')}}" class="btn btn-secondary">Cancel</a>
+                                <a href="{{route('claim_listing', ['tenant' => tenant('id')])}}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
             let farm_manager_sel = '<option value="">Please Select Farm Manager</option>';
             $.ajax({
                 type: 'POST',
-                url: "{{route('ajax_check_company_pic')}}",
+                url: "{{route('ajax_check_company_pic', ['tenant' => tenant('id')])}}",
                 data: {
                     company_id: company_id,
                     claim_status_id: 1,

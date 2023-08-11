@@ -53,7 +53,7 @@
                 <div class="d-flex align-items-center">
                     <h4 class="mb-0 font-size-18 mr-2">D.O. Listing</h4>
                     @can('delivery_order_manage')
-                        <a href="{{ route('do_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1">
+                        <a href="{{ route('do_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1">
                             <i class="fas fa-plus"></i> ADD NEW
                         </a>
                     @endcan
@@ -338,11 +338,11 @@
                                                     @if(auth()->user()->user_type_id == 1)
                                                         <tr  class="p-0 m-0" style="border: none;">
                                                             <td  class="pt-2 pr-2 p-0  m-0" style="min-width:50px; border-top: none;">
-                                                                <a href="{{ route('do_pdf', ['id' => $do->delivery_order_id, 'encryption' => md5($do->delivery_order_id.env('ENCRYPTION_KEY'))]) }}" target="_blank" class="btn btn-outline-success btn-sm mb-2 ml-2">
+                                                                <a href="{{ route('do_pdf', ['tenant' => tenant('id'), 'id' => $do->delivery_order_id, 'encryption' => md5($do->delivery_order_id.env('ENCRYPTION_KEY'))]) }}" target="_blank" class="btn btn-outline-success btn-sm mb-2 ml-2">
                                                                     View PDF
                                                                 </a>
                                                                 @if($do->delivery_order_status_id == 5 && $do->invoice_id != 0)
-                                                                    <br><a href="{{ route('get_invoice_from_do', $do->invoice_id) }}" class="btn btn-outline-primary btn-sm mb-2 ml-2">View Invoice</a>
+                                                                    <br><a href="{{ route('get_invoice_from_do', ['tenant' => tenant('id'), 'id' => $do->invoice_id]) }}" class="btn btn-outline-primary btn-sm mb-2 ml-2">View Invoice</a>
                                                                 @endif
                                                                 <br/>
                                                             @if ($do->is_media)
@@ -355,7 +355,7 @@
                                                         @if($do->delivery_order_status_id == 3)
                                                             <tr  class="p-0 m-0" style="border: none;">
                                                                 <td  class="pt-2 pr-2 p-0  m-0" style="min-width:50px; border-top: none;">
-                                                                    <a href="{{ route('do_pdf', ['id' => $do->delivery_order_id, 'encryption' => md5($do->delivery_order_id.env('ENCRYPTION_KEY'))]) }}" target="_blank" class="btn btn-outline-success btn-sm mb-2 ml-2">View PDF</a>
+                                                                    <a href="{{ route('do_pdf', ['tenant' => tenant('id'), 'id' => $do->delivery_order_id, 'encryption' => md5($do->delivery_order_id.env('ENCRYPTION_KEY'))]) }}" target="_blank" class="btn btn-outline-success btn-sm mb-2 ml-2">View PDF</a>
                                                                     <br>
                                                                 @if ($do->is_media)
                                                                     <div class="btn btn-outline-dark btn-sm mb-2 view_images ml-2" data-id="{{ $do->delivery_order_id }}" delivery_order_item_media="{{ $do->delivery_order_item_media }}" data-product-name="{{ $do->product_name }}" data-qty="{{ $do->delivery_order_item_quantity }}" id='view_images_{{$do->delivery_order_id}}'>
@@ -364,7 +364,7 @@
                                                                 @endif
                                                                     @if($do->delivery_order_status_id == 5 && $do->invoice_id != 0)
                                                                         <br/>
-                                                                        <a href="{{ route('get_invoice_from_do', $do->invoice_id) }}" class="btn btn-outline-primary btn-sm ml-2 mb-2">View Invoice</a>
+                                                                        <a href="{{ route('get_invoice_from_do', ['tenant' => tenant('id'), 'id' => $do->invoice_id]) }}" class="btn btn-outline-primary btn-sm ml-2 mb-2">View Invoice</a>
                                                                     @endif
                                                                 </td>
                                                             </tr>
@@ -407,10 +407,10 @@
                                                                     @endif
                                                                 </td>
                                                                 <td  class="pt-2 pr-2 p-0  m-0" style="min-width:50px; border-top: none;">
-                                                                    <a href="{{ route('do_pdf', ['id' => $do->delivery_order_id, 'encryption' => md5($do->delivery_order_id.env('ENCRYPTION_KEY'))]) }}" target="_blank" class="btn btn-outline-success btn-sm mb-2 ml-2">View PDF</a>
+                                                                    <a href="{{ route('do_pdf', ['tenant' => tenant('id'), 'id' => $do->delivery_order_id, 'encryption' => md5($do->delivery_order_id.env('ENCRYPTION_KEY'))]) }}" target="_blank" class="btn btn-outline-success btn-sm mb-2 ml-2">View PDF</a>
                                                                     @if($do->delivery_order_status_id == 5 && $do->invoice_id != 0)
                                                                         <br>
-                                                                        <a href="{{ route('get_invoice_from_do', $do->invoice_id) }}"class="btn btn-outline-primary btn-sm ml-2 mb-2">View Invoice</a>
+                                                                        <a href="{{ route('get_invoice_from_do', ['tenant' => tenant('id'), 'id' => $do->invoice_id]) }}"class="btn btn-outline-primary btn-sm ml-2 mb-2">View Invoice</a>
                                                                     @endif
                                                                     <br/>
                                                                     @if ($do->is_media)
@@ -424,7 +424,7 @@
                                                                     <tr  class="p-0 m-0" style="border: none;">
                                                                         <td  class="pt-2 pr-2 p-0   m-0" style="min-width:50px; border-top: none; border-right: 1px solid #e4e4e4;">
                                                                             @if($do->delivery_order_status_id == 2)
-                                                                                <a href="{{ route('do_edit', $do->delivery_order_id) }}" class="btn btn-sm btn-outline-warning">Edit</a>
+                                                                                <a href="{{ route('do_edit', ['tenant' => tenant('id'), 'id' => $do->delivery_order_id]) }}" class="btn btn-sm btn-outline-warning">Edit</a>
                                                                             @endif
                                                                             <span data-toggle='modal' data-target='#delete' data-id='{{$do->delivery_order_id}}' class='delete'><a href='javascript:void(0);' class='btn btn-sm btn-outline-danger waves-effect waves-light'>Delete</a></span>
                                                                         </td>
@@ -483,7 +483,7 @@
     <div class="modal fade" id="revert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('do_revert') }}">
+                <form method="POST" action="{{ route('do_revert', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Are you sure you want to revert this Delivery Order?</h4>
@@ -505,7 +505,7 @@
     <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('do_delete') }}">
+                <form method="POST" action="{{ route('do_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this delivery order ?</h4>
@@ -529,7 +529,7 @@
     <div class="modal fade" id="price_verification_approval" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form action="{{ route('price_verification_approve_reject') }}" method="POST">
+                <form action="{{ route('price_verification_approve_reject', ['tenant' => tenant('id')]) }}" method="POST">
                     @csrf
                     <div class="modal-header">
                         <h4 id="do_no"></h4>
@@ -631,7 +631,7 @@
                 <div class="modal-header">
                     <h5 id="date"></h5>
                 </div>
-                <form action="{{ route('do_issue_invoice') }}" method="POST">
+                <form action="{{ route('do_issue_invoice', ['tenant' => tenant('id')]) }}" method="POST">
                     @csrf
                     <div class="modal-body table-responsive">
                         <table class="table table-bordered">
@@ -665,7 +665,7 @@
                     <span>RM </span>
                     <span class="total_result"></span>
                 </div>
-                <form action="{{ route('add_expense') }}" method="POST">
+                <form action="{{ route('add_expense', ['tenant' => tenant('id')]) }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -754,7 +754,7 @@
             let details = '';
 
             $.ajax({
-                url: "{{ route('ajax_get_mobile_no_by_do_id') }}",
+                url: "{{ route('ajax_get_mobile_no_by_do_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -818,7 +818,7 @@
             details += '<div class="col-md-12 col-sm-12 style=" border-style: groove;">';
             $('.view_images_body').html('');
             $.ajax({
-                url: "{{ route('ajax_get_image_by_do_id') }}",
+                url: "{{ route('ajax_get_image_by_do_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -924,7 +924,7 @@
 
 
             $.ajax({
-                url: "{{ route('ajax_find_delivery_with_customer_id') }}",
+                url: "{{ route('ajax_find_delivery_with_customer_id', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -1015,7 +1015,7 @@
             // console.log(id);
             $('.modal-body #do_id').val(id);
             $.ajax({
-                url: "{{ route('ajax_find_do_quantity_with_id') }}",
+                url: "{{ route('ajax_find_do_quantity_with_id', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -1113,7 +1113,7 @@
             let do_id = $(this).attr('data-id');
 
             $.ajax({
-                url: "{{ route('ajax_find_do_with_id') }}",
+                url: "{{ route('ajax_find_do_with_id', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -1156,7 +1156,7 @@
             $('#product').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_product_by_product_category_id') }}",
+                url: "{{ route('ajax_get_product_by_product_category_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -1185,7 +1185,7 @@
             $('#size_id').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_setting_size_by_product_id') }}",
+                url: "{{ route('ajax_get_setting_size_by_product_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -1256,7 +1256,7 @@
             let scust = '{{ @$search['customer_id'] }}' ?? null;
             $('#customer_id').html('<option value="">Loading...</option>');
             $.ajax({
-                url: "{{ route('ajax_get_customer_by_category') }}",
+                url: "{{ route('ajax_get_customer_by_category', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -1296,7 +1296,7 @@
             let scust = '{{ @$search['customer_id'] }}' ?? null;
             let scust_cat = '{{ @$search['customer_category_id'] }}' ?? null;
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

@@ -61,7 +61,7 @@ class ProductStockTransferController extends Controller
         $product_stk_transfer = ProductStockTransfer::get_records($search, $user->company_id);
         // dd($product);
         return view('product_stock_transfer.listing', [
-            'submit' => route('product_stock_transfer_listing'),
+            'submit' => route('product_stock_transfer_listing', ['tenant' => tenant('id')]),
             'records' => $product_stk_transfer,
             'product_id_sel' => $product_id,
             'product_size_id_sel' => $product_size_id,
@@ -181,7 +181,7 @@ class ProductStockTransferController extends Controller
 
                 Session::flash('success_msg', 'Product Stock Transfer Successfully!');
 
-                return redirect()->route('product_stock_transfer_listing');
+                return redirect()->route('product_stock_transfer_listing', ['tenant' => tenant('id')]);
             }
             $product_stk_transfer = (object) $request->all();
             // dd($product_stk_transfer);
@@ -191,7 +191,7 @@ class ProductStockTransferController extends Controller
         // $category = ProductCategory::get_category_sel();
         // $tags = ProductTag::get_sel();
         Session::flash('fail_msg', 'Please insert required information!');
-        return redirect()->route('product_stock_transfer_listing')->withErrors($validation);
+        return redirect()->route('product_stock_transfer_listing', ['tenant' => tenant('id')])->withErrors($validation);
     }
 
     public function edit(Request $request, $id)
@@ -237,7 +237,7 @@ class ProductStockTransferController extends Controller
                 }
 
                 Session::flash('success_msg', 'Product Updated Successfully!');
-                return redirect()->route('product_listing');
+                return redirect()->route('product_listing', ['tenant' => tenant('id')]);
             }
 
             $product = (object) $request->all();
@@ -246,7 +246,7 @@ class ProductStockTransferController extends Controller
         $category = ProductCategory::get_category_sel();
         $tags = ProductTag::get_sel();
         return view('product.form', [
-            'submit' => route('product_edit', $id),
+            'submit' => route('product_edit', ['tenant' => tenant('id'), 'id' => $id]),
             'product' => $product,
             'status' => ProductStatus::get_records(),
             'edit' => true,
@@ -267,10 +267,10 @@ class ProductStockTransferController extends Controller
                 'is_deleted' => 1
             ]);
             Session::flash('success_msg', 'Deleted successfully!');
-            return redirect()->route('product_listing');
+            return redirect()->route('product_listing', ['tenant' => tenant('id')]);
         } else {
             Session::flash('fail_msg', 'Product not found!');
-            return redirect()->route('product_listing');
+            return redirect()->route('product_listing', ['tenant' => tenant('id')]);
         }
     }
 
@@ -315,7 +315,7 @@ class ProductStockTransferController extends Controller
     {
         $search['delivery_no'] = $no;
         Session::put('filter_do', $search);
-        return redirect()->route('do_listing');
+        return redirect()->route('do_listing', ['tenant' => tenant('id')]);
     }
 
     public function ajax_get_product_sel_by_company_land_id(Request $request)

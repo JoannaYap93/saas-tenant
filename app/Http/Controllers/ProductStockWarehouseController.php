@@ -51,7 +51,7 @@ class ProductStockWarehouseController extends Controller
         $product_stk_warehse = ProductStockWarehouse::get_records($search, $user->company_id);
         // dd($product);
         return view('product_stock_warehouse.listing', [
-            'submit' => route('product_stock_warehouse_listing'),
+            'submit' => route('product_stock_warehouse_listing', ['tenant' => tenant('id')]),
             'records' => $product_stk_warehse,
             'setting_warehouse_sel' => $setting_warehouse,
             'product_id_sel' => $product_id,
@@ -105,7 +105,7 @@ class ProductStockWarehouseController extends Controller
 
                 Session::flash('success_msg', 'Product Stock Warehouse Added Successfully!');
 
-                return redirect()->route('product_stock_warehouse_listing');
+                return redirect()->route('product_stock_warehouse_listing', ['tenant' => tenant('id')]);
             }
             $product_stk_warehse = (object) $request->all();
             // dd($product_stk_warehse);
@@ -115,7 +115,7 @@ class ProductStockWarehouseController extends Controller
         // $tags = ProductTag::get_sel();
         return view('product_stock_warehouse.form', [
             // 'status' => ProductStatus::get_records(),
-            'submit' => route('product_stock_warehouse_add'),
+            'submit' => route('product_stock_warehouse_add', ['tenant' => tenant('id')]),
             'edit' => false,
             'product_stk_warehse' => $product_stk_warehse,
             'warehouse_id_sel'=> $warehouse_id,
@@ -170,7 +170,7 @@ class ProductStockWarehouseController extends Controller
                 }
 
                 Session::flash('success_msg', 'Product Updated Successfully!');
-                return redirect()->route('product_listing');
+                return redirect()->route('product_listing', ['tenant' => tenant('id')]);
             }
 
             $product = (object) $request->all();
@@ -179,7 +179,7 @@ class ProductStockWarehouseController extends Controller
         $category = ProductCategory::get_category_sel();
         $tags = ProductTag::get_sel();
         return view('product.form', [
-            'submit' => route('product_edit', $id),
+            'submit' => route('product_edit', ['tenant' => tenant('id'), 'id' => $id]),
             'product' => $product,
             'status' => ProductStatus::get_records(),
             'edit' => true,
@@ -200,10 +200,10 @@ class ProductStockWarehouseController extends Controller
                 'is_deleted' => 1
             ]);
             Session::flash('success_msg', 'Deleted successfully!');
-            return redirect()->route('product_listing');
+            return redirect()->route('product_listing', ['tenant' => tenant('id')]);
         } else {
             Session::flash('fail_msg', 'Product not found!');
-            return redirect()->route('product_listing');
+            return redirect()->route('product_listing', ['tenant' => tenant('id')]);
         }
     }
 

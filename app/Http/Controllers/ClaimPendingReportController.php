@@ -69,7 +69,7 @@ class ClaimPendingReportController extends Controller
 
         return view('claim_pending.claim_pending_report', [
             'page_title' => 'All Claim Report',
-            'submit' => route('claim_pending_report'),
+            'submit' => route('claim_pending_report', ['tenant' => tenant('id')]),
             'company_sel' => Company::get_company_sel(),
             'search' => $search,
             'title' => 'All Claim Report',

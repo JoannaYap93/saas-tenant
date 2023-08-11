@@ -31,7 +31,7 @@
                         echo '<tr>';
                         if(isset($component)){
                             if (auth()->user()->user_type_id == 1) {
-                                echo '<td><a class="popup" href="' . route('farm_detail_report', $row->company_farm_id) . '">'. $row->company_farm_name .'</a></td>';
+                                echo '<td><a class="popup" href="' . route('farm_detail_report', ['tenant' => tenant('id'), 'id' => $row->company_farm_id]) . '">'. $row->company_farm_name .'</a></td>';
                             } else {
                                 echo '<td>'. $row->company_farm_name .'</td>';
                             }

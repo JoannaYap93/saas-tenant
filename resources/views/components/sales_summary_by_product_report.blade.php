@@ -84,8 +84,8 @@
 
                         echo '<tr>';
                         if(isset($component)){
-                            $link = route('product_detail_report');
-                            $link2 = route('listing_invoice_daily', $search);
+                            $link = route('product_detail_report', ['tenant' => tenant('id')]);
+                            $link2 = route('listing_invoice_daily', array_merge(['tenant' => tenant('id')], $search));
                             echo '<td style="text-align: center; border:1px solid #eee"><a class="popup" href="'.$link.'">'. $row->product_name . ' - ' . $row->setting_product_size_name .'</a></td>';
                             echo '<td style="text-align: center; border:1px solid #eee"><a href="'.$link2.'" target="_blank">'. number_format($row->quantity, 2, '.', '') .'</a></td>';
 

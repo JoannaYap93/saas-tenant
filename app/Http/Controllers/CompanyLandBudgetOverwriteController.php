@@ -110,13 +110,13 @@ class CompanyLandBudgetOverwriteController extends Controller
                 }
 
                 Session::flash('success_msg', 'Overwrite Successfull. ');
-                return redirect()->route('company_listing');
+                return redirect()->route('company_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('company.budget_overwrite_form', [
-            'submit' => route('budget_overwrite', ['company_id'=>$company_id, 'company_land_id' => $company_land_id]),
+            'submit' => route('budget_overwrite', ['tenant' => tenant('id'), 'company_id'=>$company_id, 'company_land_id' => $company_land_id]),
             'title' => 'Add',
             'post' => $post,
             'company_land_category_sel' => CompanyLandCategory::get_land_category_sel(),

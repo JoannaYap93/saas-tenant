@@ -129,7 +129,7 @@
                                   <div class="col-12 d-flex justify-content-end">
                                     <button type="submit"
                                             class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                                    <a href="{{ route('company_listing') }}" class="btn btn-secondary">Cancel</a>
+                                    <a href="{{ route('company_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                                   </div>
                                 </div>
                             </div>

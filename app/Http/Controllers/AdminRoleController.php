@@ -101,14 +101,14 @@ class AdminRoleController extends Controller
                 $role = Role::create(['name' =>  $request->input('name'), 'company_id' => $company_id]);
                 $permissions = $request->input('permissions');
                 $role->givePermissionTo($permissions);
-                return redirect()->route('admin_role_listing')->with('success_msg', 'Successfully added New Role');
+                return redirect()->route('admin_role_listing', ['tenant' => tenant('id')])->with('success_msg', 'Successfully added New Role');
             }
             $post = (object) $request->all();
         }
 
         $company_sel = Company::get_company_sel();
         return view('user_role/form', [
-            'submit' => route('admin_role_add'),
+            'submit' => route('admin_role_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
             'permissions' => Permission::orderBy('group_name', 'asc')->get(),
@@ -157,7 +157,7 @@ class AdminRoleController extends Controller
                 $post->syncPermissions($permissions);
 
                 Session::flash('success_msg', 'Successfully updated ' . $request->input('name') . ' role.');
-                return redirect()->route('admin_role_listing');
+                return redirect()->route('admin_role_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
             $role_permissions = @$post->permissions ? $post->permissions : array();
@@ -165,7 +165,7 @@ class AdminRoleController extends Controller
         $company_sel = Company::get_company_sel();
 
         return view('user_role/form', [
-            'submit' => route('admin_role_edit', $role_id),
+            'submit' => route('admin_role_edit', ['tenant' => tenant('id'), 'id' => $role_id]),
             'title' => 'Edit',
             'post' => $post,
             'permissions' => Permission::orderBy('group_name', 'asc')->get(),

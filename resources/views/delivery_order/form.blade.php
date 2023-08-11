@@ -464,7 +464,7 @@
                                               data-target="#approve_do" data-toggle="modal">Approve</button>
                                       @endif
                                   @endif
-                                  <a href="{{ route('do_listing') }}" class="btn btn-secondary">Cancel</a>
+                                  <a href="{{ route('do_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                               </div>
                             </div>
                         </div>
@@ -596,7 +596,7 @@
                                             data-target="#approve_do" data-toggle="modal">Approve</button>
                                     @endif
                                 @endif
-                                <a href="{{ route('do_listing') }}" class="btn btn-secondary">Cancel</a>
+                                <a href="{{ route('do_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div> -->
                     </div>
@@ -645,7 +645,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('do_approve') }}">
+                <form method="POST" action="{{ route('do_approve', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Confirm Approval Of This Delivery Order?</h4>
@@ -749,7 +749,7 @@
             let sel_id = $(this).attr('id').substring(10);
             let product_id = $(this).val();
             $.ajax({
-                url: "{{ route('ajax_get_product_size_edit_do') }}",
+                url: "{{ route('ajax_get_product_size_edit_do', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -793,7 +793,7 @@
                 let delivery_order_item_id =$('.modal-body #do_item_id').val();
 
                 $.ajax({
-                    url: "{{ route('ajax_delete_image_by_media_do_item_id') }}",
+                    url: "{{ route('ajax_delete_image_by_media_do_item_id', ['tenant' => tenant('id')]) }}",
                     method: "POST",
                     data: {
                             _token: "{{ csrf_token() }}",
@@ -835,7 +835,7 @@
             let company_id = <?php echo json_encode(auth()->user()->company_id)?>
 
             $.ajax({
-                url: "{{ route('ajax_get_collect_code_from_do') }}",
+                url: "{{ route('ajax_get_collect_code_from_do', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -920,7 +920,7 @@
         $('#customer_mobile').select2({
             ajax: {
                 minimumResultsForSearch: -1,
-                url: "{{ route('ajax_search_customer_by_mobile_no') }}",
+                url: "{{ route('ajax_search_customer_by_mobile_no', ['tenant' => tenant('id')]) }}",
                 dataType: 'json',
                 data: function(p) {
                     let query = {
@@ -944,7 +944,7 @@
         $('#customer_ic').select2({
             ajax: {
                 minimumResultsForSearch: 0,
-                url: "{{ route('ajax_search_customer_pic_by_id') }}",
+                url: "{{ route('ajax_search_customer_pic_by_id', ['tenant' => tenant('id')]) }}",
                 dataType: 'json',
                 data: function(p) {
                     let query = {
@@ -1053,7 +1053,7 @@
             var value = $(this).val();
 
             $.ajax({
-                url: "{{ route('ajax_product_by_name') }}",
+                url: "{{ route('ajax_product_by_name', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -1096,7 +1096,7 @@
 
             let unique_code = '{{ auth()->user()->user_unique_code }}';
             $.ajax({
-                url: "{{ route('ajax_get_product_detail') }}",
+                url: "{{ route('ajax_get_product_detail', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -1155,7 +1155,7 @@
             $("#customer_ic").empty();
             var value = $(this).val();
             $.ajax({
-                url: "{{ route('ajax_search_customer_by_mobile_no') }}",
+                url: "{{ route('ajax_search_customer_by_mobile_no', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -1262,7 +1262,7 @@
             let value = $(this).val();
 
             $.ajax({
-                url: "{{ route('ajax_search_customer_pic_by_id') }}",
+                url: "{{ route('ajax_search_customer_pic_by_id', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',

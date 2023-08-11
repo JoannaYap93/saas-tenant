@@ -64,7 +64,7 @@ class SettingExpenseOverwriteController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Overwrite Expense for '.$company->company_name);
-                return redirect()->route('expense_listing');
+                return redirect()->route('expense_listing', ['tenant' => tenant('id')]);
             }
             $request->request->add(['company_id' => $company_id]);
             $overwrite = (object) $request->all();

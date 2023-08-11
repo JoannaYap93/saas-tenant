@@ -118,7 +118,7 @@ class InvoiceController extends Controller
             'records' => $invoice,
             'invoice_total_amount' => $invoice_total_amount,
             'search' => $search,
-            'submit' => route('invoice_listing'),
+            'submit' => route('invoice_listing', ['tenant' => tenant('id')]),
             'iv_status' => $iv_sorted,
             'iv_status_2' => InvoiceStatus::query()->whereIn('invoice_status_id', [1, 4, 5])->get(),
             'is_approved' => $is_approved,
@@ -159,9 +159,9 @@ class InvoiceController extends Controller
             if (!$validate->fails()) {
 
                 if(!$company_bank_id){
-                    $msg = 'Please add Company Bank for the Land. Go to<a href="'. route('product_company_land_add', $request->input('company_land_id')) . '"> Add Company Bank </a>';
+                    $msg = 'Please add Company Bank for the Land. Go to<a href="'. route('product_company_land_add', ['tenant' => tenant('id'), 'id' => $request->input('company_land_id')]) . '"> Add Company Bank </a>';
                     Session::flash('fail_msg_with_html', $msg);
-                    return redirect()->route('do_issue_invoice')->withErrors($validate);
+                    return redirect()->route('do_issue_invoice', ['tenant' => tenant('id')])->withErrors($validate);
                 }
 
                 if ($user->company_id != 0) {
@@ -330,14 +330,14 @@ class InvoiceController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Added New Invoice');
-                return redirect()->route('invoice_listing');
+                return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
             } else {
                 Session::flash('fail_msg', 'Error when creating invoice...');
-                return redirect()->route('do_issue_invoice')->withErrors($validate);
+                return redirect()->route('do_issue_invoice', ['tenant' => tenant('id')])->withErrors($validate);
             }
         } else {
             Session::flash('fail_msg', 'Error Creating Invoice...');
-            return redirect()->route('do_listing');
+            return redirect()->route('do_listing', ['tenant' => tenant('id')]);
         }
     }
 
@@ -355,7 +355,7 @@ class InvoiceController extends Controller
 
         if ($invoice == null) {
             Session::flash('fail_msg', 'Invalid Invoice');
-            return redirect()->route('invoice_listing');
+            return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->isMethod('post')) {
@@ -428,7 +428,7 @@ class InvoiceController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Update Invoice');
-                return redirect()->route('invoice_listing');
+                return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
             }
             $invoice = (object) $request->all();
         }
@@ -443,7 +443,7 @@ class InvoiceController extends Controller
             'do_txt' => $do,
             'customer' => $customer,
             'gst' => Setting::setting_name('g_s_t'),
-            'submit' => route('invoice_edit', $id),
+            'submit' => route('invoice_edit', ['tenant' => tenant('id'), 'id' => $id]),
             'company' => Company::get_company_sel(),
             'company_land' => CompanyLand::get_company_land_sel(),
         ])->withErrors($validation);
@@ -463,7 +463,7 @@ class InvoiceController extends Controller
 
         if ($invoice == null) {
             Session::flash('fail_msg', 'Invalid Invoice');
-            return redirect()->route('invoice_listing');
+            return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->isMethod('post')) {
@@ -541,7 +541,7 @@ class InvoiceController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Update Invoice');
-                return redirect()->route('invoice_listing');
+                return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
             }
             $invoice = (object) $request->all();
         }
@@ -556,7 +556,7 @@ class InvoiceController extends Controller
             'do_txt' => $do,
             'customer' => $customer,
             'gst' => Setting::setting_name('g_s_t'),
-            'submit' => route('paid_invoice_edit', $id),
+            'submit' => route('paid_invoice_edit', ['tenant' => tenant('id'), 'id' => $id]),
             'company' => Company::get_company_sel(),
             'company_land' => CompanyLand::get_company_land_sel(),
         ])->withErrors($validation);
@@ -570,12 +570,12 @@ class InvoiceController extends Controller
 
         if (!$invoice) {
             Session::flash("fail_msg", "Error, please try again later...");
-            return redirect()->route('invoice_listing');
+            return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
         }
 
         if (!$invoice_log_description) {
             Session::flash("fail_msg", "Remark field is required");
-            return redirect()->route('invoice_listing');
+            return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
         }
 
         $invoice->update([
@@ -607,7 +607,7 @@ class InvoiceController extends Controller
         }
 
         Session::flash('success_msg', 'Successfully cancelled invoice - '.$invoice->invoice_no);
-        return redirect()->route('invoice_listing');
+        return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
     }
 
     public function approve_reject(Request $request)
@@ -619,7 +619,7 @@ class InvoiceController extends Controller
 
         if (!$invoice_id) {
             Session::flash('failed_msg', "Invalid Invoice, Please Try Again...");
-            return redirect()->route('invoice_listing');
+            return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
         }
 
         if ($status == 'approve') {
@@ -640,7 +640,7 @@ class InvoiceController extends Controller
             }
 
             Session::flash('success_msg', "Invoice Approved");
-            return redirect()->route('invoice_listing');
+            return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
         } elseif ($status == 'reject') {
             $query = Invoice::find($invoice_id);
 
@@ -671,7 +671,7 @@ class InvoiceController extends Controller
             }
 
             Session::flash('success_msg', "Invoice Rejected");
-            return redirect()->route('invoice_listing');
+            return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
         }
     }
 
@@ -712,7 +712,7 @@ class InvoiceController extends Controller
         // return redirect('https://api.whatsapp.com/send?phone=' . $profile_mobile . '&text=' . env('APP_URL') . 'view_invoice/' . $invoice->invoice_id . '/' . md5($invoice->invoice_id . env('ENCRYPTION_KEY')));
         // return redirect('https://api.whatsapp.com/send?phone=60167078855&text=Click below to view your invoice.' . env("APP_URL") . '/');
         return redirect($url);
-        // return redirect()->route('view_invoice', ['id' => $invoice->invoice_id, 'encryption' => $encryp]);
+        // return redirect()->route('view_invoice', ['tenant' => tenant('id'),'id' => $invoice->invoice_id, 'encryption' => $encryp]);
     }
 
     public function view_invoice(Request $request, $id, $encryption)
@@ -781,7 +781,7 @@ class InvoiceController extends Controller
                     'invoice' => $invoice,
                     'company' => $company,
                     'do' => $do,
-                    'submit' => route('view_invoice', ['id' => $id, 'encryption' => $encryp])
+                    'submit' => route('view_invoice', ['tenant' => tenant('id'), 'id' => $id, 'encryption' => $encryp])
                 ]);
             } else {
                 return view('pages-404');
@@ -818,7 +818,7 @@ class InvoiceController extends Controller
         $company_invoice = Invoice::query()->where('invoice_id', $id)->where('company_id', auth()->user()->company_id);
         if (!$company_invoice && !$invoice) {
             Session::flash('fail_msg', 'Invalid Invoice. Please try another.');
-            return redirect()->route('invoice_listing');
+            return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
         }
 
         $encryp = md5($invoice->invoice_id . env('ENCRYPTION_KEY'));
@@ -906,7 +906,7 @@ class InvoiceController extends Controller
     {
         $search['invoice_id'] = $invoice_id;
         \Illuminate\Support\Facades\Session::put('invoice_search', $search);
-        return redirect()->route('invoice_listing');
+        return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
     }
 
     public function import(Request $request){
@@ -934,9 +934,9 @@ class InvoiceController extends Controller
                 $selected_company_land = CompanyLand::get_by_id($request->input('company_land_id'));
 
                 if(!@$selected_company_land->company_bank_id){
-                    $msg = 'Please add Company Bank for the Land. Go to<a href="'. route('product_company_land_add', $request->input('company_land_id')) . '"> Add Company Bank </a>';
+                    $msg = 'Please add Company Bank for the Land. Go to<a href="'. route('product_company_land_add', ['tenant' => tenant('id'), 'id' =>  $request->input('company_land_id')]) . '"> Add Company Bank </a>';
                     Session::flash('fail_msg_with_html', $msg);
-                    return redirect()->route('invoice_import')->withErrors($validation);
+                    return redirect()->route('invoice_import', ['tenant' => tenant('id')])->withErrors($validation);
                 }
 
                 if ($request->hasFile('invoice_file')) {
@@ -1135,20 +1135,20 @@ class InvoiceController extends Controller
 
                                     if($big_problem){
                                         Session::flash("fail_msg", $remark);
-                                        return redirect()->route('invoice_import');
+                                        return redirect()->route('invoice_import', ['tenant' => tenant('id')]);
                                         die();
                                     }
                                 }
                             }
                         }else{
                             Session::flash("fail_msg", 'Empty file');
-                            return redirect()->route('invoice_import');
+                            return redirect()->route('invoice_import', ['tenant' => tenant('id')]);
                             die();
                         }
                     }
                 } else {
                     Session::flash("fail_msg", "Please upload a file.");
-                    return redirect()->route('invoice_import');
+                    return redirect()->route('invoice_import', ['tenant' => tenant('id')]);
                     die();
                 }
             }
@@ -1159,7 +1159,7 @@ class InvoiceController extends Controller
             'title' => 'Invoice Import',
             'company_sel' => Company::get_company_sel(),
             'post' => $post,
-            'submit' => route('invoice_import'),
+            'submit' => route('invoice_import', ['tenant' => tenant('id')]),
             'reamrk' => $remark,
             'result' => $result
         ])->withErrors($validation);
@@ -1199,7 +1199,7 @@ class InvoiceController extends Controller
         $search['product_id'] = $product_id;
         $search['product_size_id'] = $product_size_id;
         \Illuminate\Support\Facades\Session::put('invoice_search', $search);
-        return redirect()->route('invoice_listing');
+        return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
     }
 
 }

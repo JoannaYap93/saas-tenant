@@ -42,7 +42,7 @@ class SettingRewardController extends Controller
 
         return view('setting_reward.listing', [
             'page_title' => 'Setting Reward',
-            'submit' => route('setting_reward'),
+            'submit' => route('setting_reward', ['tenant' => tenant('id')]),
             'search' => $search,
             'records' => SettingReward::get_records($search, $perpage),
             'setting_reward_category_sel' => ['' => 'Please select reward category'] +  SettingRewardCategory::get_sel_setting_reward(),
@@ -91,12 +91,12 @@ class SettingRewardController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Created');
-                return redirect()->route('setting_reward');
+                return redirect()->route('setting_reward', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('setting_reward.form', [
-            'submit' => route('setting_reward_add'),
+            'submit' => route('setting_reward_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
             'setting_reward_category_sel' => ['' => 'Please select reward category'] +  SettingRewardCategory::get_sel_setting_reward(),
@@ -150,12 +150,12 @@ class SettingRewardController extends Controller
                     'is_default'  => $request->input('is_default') ?? '',
                 ]);
                 Session::flash('success_msg', 'Successfully edited ');
-                return redirect()->route('setting_reward');
+                return redirect()->route('setting_reward', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('setting_reward.form', [
-            'submit' => route('setting_reward_edit', $setting_reward_id),
+            'submit' => route('setting_reward_edit', ['tenant' => tenant('id'), 'id' => $setting_reward_id]),
             'edit' => true,
             'title' => 'Edit',
             'post'=> $post,
@@ -171,12 +171,12 @@ class SettingRewardController extends Controller
 
         if(!$currency){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('setting_reward');
+            return redirect()->route('setting_reward', ['tenant' => tenant('id')]);
         }
 
         $currency->delete();
 
         Session::flash('success_msg', "Successfully deleted reward.");
-        return redirect()->route('setting_reward');
+        return redirect()->route('setting_reward', ['tenant' => tenant('id')]);
     }
 }

@@ -40,7 +40,7 @@ class SettingRaceController extends Controller
 
         return view('setting_race.listing', [
             'page_title' => 'Setting Race',
-            'submit' => route('setting_race'),
+            'submit' => route('setting_race', ['tenant' => tenant('id')]),
             'search' => $search,
             'records' => SettingRace::get_records($search, $perpage),
         ]);
@@ -65,12 +65,12 @@ class SettingRaceController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Updated');
-                return redirect()->route('setting_race');
+                return redirect()->route('setting_race', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('setting_race.form', [
-            'submit' => route('add'),
+            'submit' => route('add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
         ])->withErrors($validation);
@@ -92,12 +92,12 @@ class SettingRaceController extends Controller
                   'setting_race_name' => $request->input('setting_race_name'),
                 ]);
                 Session::flash('success_msg', 'Successfully edited ');
-                return redirect()->route('setting_race');
+                return redirect()->route('setting_race', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('setting_race.form', [
-            'submit' => route('edit', $setting_race_id),
+            'submit' => route('edit', ['tenant' => tenant('id'), 'id' => $setting_race_id]),
             'edit' => true,
             'title' => 'Edit',
             'post'=> $post,
@@ -110,12 +110,12 @@ class SettingRaceController extends Controller
 
         if(!$race){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('setting_race');
+            return redirect()->route('setting_race', ['tenant' => tenant('id')]);
         }
 
         $race->delete();
 
         Session::flash('success_msg', "Successfully deleted race.");
-        return redirect()->route('setting_race');
+        return redirect()->route('setting_race', ['tenant' => tenant('id')]);
     }
 }

@@ -15,7 +15,7 @@
 			<h4 class="mb-0 font-size-18">
 				<span class="mr-2">Term Listing</span>
 				@can('customer_term_manage')
-					<a href="{{ route('customer_term_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1" ><i class="fas fa-plus"></i> Add New</a>
+					<a href="{{ route('customer_term_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1" ><i class="fas fa-plus"></i> Add New</a>
 				@endcan
 			</h4>
 			<div class="page-title-right">
@@ -96,7 +96,7 @@
                                         </td>
                                         <td>
                                             @can('customer_term_manage')
-                                                <a href="{{route('customer_term_edit', $term->customer_term_id)}}" class='btn btn-sm btn-outline-warning waves-effect waves-light'>Edit</a>
+                                                <a href="{{route('customer_term_edit', ['tenant' => tenant('id'), 'id' => $term->customer_term_id])}}" class='btn btn-sm btn-outline-warning waves-effect waves-light'>Edit</a>
                                                 <span data-toggle='modal' data-target='#delete' data-id='{{ $term->customer_term_id }}' class='delete'><a href='javascript:void(0);' data-toggle='modal' data-target='#delete' data-id='{{ $term->customer_term_id }}'class="btn btn-sm btn-outline-danger waves-effect waves-light">Delete</a></span>
                                             @endcan
                                         </td>
@@ -118,7 +118,7 @@
 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-			<form method="POST" action="{{ route('customer_term_delete') }}">
+			<form method="POST" action="{{ route('customer_term_delete', ['tenant' => tenant('id')]) }}">
 				@csrf
 				<div class="modal-body">
 					<h4>Delete this Term ?</h4>

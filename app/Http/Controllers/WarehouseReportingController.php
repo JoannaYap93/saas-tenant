@@ -68,7 +68,7 @@ class WarehouseReportingController extends Controller
 
         return view('report.warehouse_reporting', [
             'page_title' => 'Warehouse Reporting',
-            'submit' => route('warehouse_reporting'),
+            'submit' => route('warehouse_reporting', ['tenant' => tenant('id')]),
             'company_sel' => Company::get_company_sel_warehouse(),
             // 'company_sel' => Company::get_company_sel(),
             'search' => $search,

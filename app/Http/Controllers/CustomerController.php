@@ -90,7 +90,7 @@ class CustomerController extends Controller
         //     'query' => $request->query(),
         // ]);
         return view('customer/listing', [
-            'submit' => route('customer_listing'),
+            'submit' => route('customer_listing', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'customers' =>  $customers, //User::get_record($search, 15, $pageNumber, [1]),
             'search' =>  $search,
@@ -313,20 +313,20 @@ class CustomerController extends Controller
                 // }
 
                 Session::flash('success_msg', 'Successfully added ' . $request->input('user_fullname'));
-                return redirect()->route('customer_listing');
+                return redirect()->route('customer_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
       }else if(count($company) <= 1){
           Session::flash('fail_msg', 'Company is currently empty, please add a company to proceed.');
-        return redirect()->route('company_add');
+        return redirect()->route('company_add', ['tenant' => tenant('id')]);
       }else if(count($customer_category) <= 1){
           Session::flash('fail_msg', 'Customer Category is currently empty, please add a category to proceed.');
-        return redirect()->route('customer_category_add');
-        // return redirect()->route('customer_category_add')->with('failed_msg', 'Customer Category is currently empty, please add a category to proceed.');
+        return redirect()->route('customer_category_add', ['tenant' => tenant('id')]);
+        // return redirect()->route('customer_category_add', ['tenant' => tenant('id')])->with('failed_msg', 'Customer Category is currently empty, please add a category to proceed.');
       }
         return view('customer/form', [
-            'submit' => route('customer_add'),
+            'submit' => route('customer_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'edit_code' => false,
             'post' => $post,
@@ -358,7 +358,7 @@ class CustomerController extends Controller
 
         if ($post == null) {
             Session::flash('fail_msg', 'Invalid Customer, Please Try Again');
-            return redirect()->route('customer_listing');
+            return redirect()->route('customer_listing', ['tenant' => tenant('id')]);
         }
 
         // $user_type = UserType::get_user_type_sel();
@@ -608,7 +608,7 @@ class CustomerController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully updated ' . $request->input('customer_email') . ' customer.');
-                return redirect()->route('customer_listing');
+                return redirect()->route('customer_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
             $edit_data = true;
@@ -616,14 +616,14 @@ class CustomerController extends Controller
         }
       }else if(count($company) <= 1){
           Session::flash('fail_msg', 'Company is currently empty, please add a company to proceed.');
-        return redirect()->route('company_add');
+        return redirect()->route('company_add', ['tenant' => tenant('id')]);
       }else if(count($customer_category) <= 1){
           Session::flash('fail_msg', 'Customer Category is currently empty, please add a category to proceed.');
-        return redirect()->route('customer_category_add');
+        return redirect()->route('customer_category_add', ['tenant' => tenant('id')]);
       }
 
         return view('customer/form', [
-            'submit' => route('customer_edit', $customer_id),
+            'submit' => route('customer_edit', ['tenant' => tenant('id'), 'id' => $customer_id]),
             'title' => 'Edit',
             'post' => $post,
             'edit_code' => $edit_data,
@@ -698,7 +698,7 @@ class CustomerController extends Controller
 
         if($customer_id != 0 && !$customer){
             Session::flash('fail_msg', 'Invalid customer credit.');
-            return redirect()->route('customer_listing');
+            return redirect()->route('customer_listing', ['tenant' => tenant('id')]);
         }
 
         if($customer){
@@ -745,13 +745,13 @@ class CustomerController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully adjust '. $customer->customer_name .' credit.');
-                return redirect()->route('customer_listing');
+                return redirect()->route('customer_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
-        $submit = $customer_id ? route('credit_adjustment', $customer_id) : route('credit_adjustment');
-        $cancel = $customer_id ? route('customer_listing') : route('customer_listing');
+        $submit = $customer_id ? route('credit_adjustment', ['tenant' => tenant('id'), 'id' => $customer_id]) : route('credit_adjustment', ['tenant' => tenant('id')]);
+        $cancel = $customer_id ? route('customer_listing', ['tenant' => tenant('id')]) : route('customer_listing', ['tenant' => tenant('id')]);
         return view('customer/adjust_credit', [
             'submit' => $submit,
             'cancel' => $cancel,
@@ -767,13 +767,13 @@ class CustomerController extends Controller
 
         if(!$customer){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('customer_listing');
+            return redirect()->route('customer_listing', ['tenant' => tenant('id')]);
         }
 
         $customer->update(['customer_status' => 2]);
 
         Session::flash('success_msg', "Successfully inactivated customer.");
-        return redirect()->route('customer_listing');
+        return redirect()->route('customer_listing', ['tenant' => tenant('id')]);
     }
 
     public function activate(Request $request)
@@ -783,13 +783,13 @@ class CustomerController extends Controller
 
         if(!$customer){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('customer_listing');
+            return redirect()->route('customer_listing', ['tenant' => tenant('id')]);
         }
 
         $customer->update(['customer_status' => 1]);
 
         Session::flash('success_msg', "Successfully activated customer.");
-        return redirect()->route('customer_listing');
+        return redirect()->route('customer_listing', ['tenant' => tenant('id')]);
     }
 
     public function customer_credit_detail($customer_id){
@@ -797,7 +797,7 @@ class CustomerController extends Controller
 
         if(!$customer) {
             Session::flash('fail_msg', 'Invalid Customer!');
-            return redirect()->route('/');
+            return redirect()->route('/', ['tenant' => tenant('id')]);
         }
 
         $record = CustomerCreditHistory::get_credit_history_by_customer_id($customer_id);

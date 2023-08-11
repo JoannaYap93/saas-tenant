@@ -20,7 +20,7 @@
                     <h4 class="mb-0 font-size-18 mr-2">Product Grade Listing</h4>
                     {{-- @if (auth()->user()->user_type_id == 1) --}}
                     @can('setting_product_size')
-                    <a href="{{ route('setting_product_size_add') }}"
+                    <a href="{{ route('setting_product_size_add', ['tenant' => tenant('id')]) }}"
                         class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                             class="fas fa-plus"></i> ADD NEW</a>
                     @endcan
@@ -64,7 +64,7 @@
                                         <td><b>{{ $row->setting_product_size_name }}</b></td>
                                         @if (auth()->user()->user_type_id == 1)
                                             <td>
-                                                <a href="{{ route('setting_product_size_edit', $row->setting_product_size_id) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
+                                                <a href="{{ route('setting_product_size_edit', ['tenant' => tenant('id'), 'id' => $row->setting_product_size_id]) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                                 {{-- <button class="btn btn-sm btn-outline-danger delete" data-toggle="modal" data-target="#delete" data-id="{{ $row->setting_product_size_id }}">Delete</button> --}}
                                             </td>
                                         @endif

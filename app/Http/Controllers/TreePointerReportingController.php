@@ -78,7 +78,7 @@ class TreePointerReportingController extends Controller
         }
 
         return view('report.tree_pointer_reporting', [
-            'submit' => route('tree_pointer_reporting'),
+            'submit' => route('tree_pointer_reporting', ['tenant' => tenant('id')]),
             'search' => $search,
             'record' => TreePointerReporting::record_tree_age_pointer_report($search),
             'recordpointer' => TreePointerReporting::record_pointer_tree_age_pointer_report($search),

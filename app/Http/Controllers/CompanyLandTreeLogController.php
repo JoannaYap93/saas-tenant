@@ -111,7 +111,7 @@ class CompanyLandTreeLogController extends Controller
 
                 $tree_id = $request->input('company_land_tree_id');
                 Session::flash('success_msg', 'Successfully updated tree');
-                return redirect()->route('land_tree_log_listing', $tree_id);
+                return redirect()->route('land_tree_log_listing', ['tenant' => tenant('id'), 'id' => $tree_id]);
             }
 
         }

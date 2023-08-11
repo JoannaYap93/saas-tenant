@@ -252,7 +252,7 @@
                         {{-- <div class="row" style="margin-top: 20px">
                             <div class="col-sm-6">
                                 <button type="submit" id="submit" class="btn btn-primary waves-effect waves-light mr-1" name="submit" value="submit">Submit</button>
-                                <a href="{{ route('setting_tree_age_listing') }}" class="btn btn-secondary">Cancel</a>
+                                <a href="{{ route('setting_tree_age_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div> --}}
                     </div>
@@ -280,7 +280,7 @@
             });
 
             $('.update').editable({
-                url: "{{ route('setting_tree_age_pointer') }}",
+                url: "{{ route('setting_tree_age_pointer', ['tenant' => tenant('id')]) }}",
                 type: 'number',
                 step: '.01',
                 pk: 1,

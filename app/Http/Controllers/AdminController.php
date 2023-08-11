@@ -72,7 +72,7 @@ class AdminController extends Controller
         $perpage = 15;
 
         return view('admin.listing', [
-            'submit' => route('admin_listing'),
+            'submit' => route('admin_listing', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'users' =>  $users,
             'search' =>  $search,
@@ -235,12 +235,12 @@ class AdminController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully added ' . $request->input('user_fullname'));
-                return redirect()->route('admin_listing');
+                return redirect()->route('admin_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('admin.form', [
-            'submit' => route('admin_add'),
+            'submit' => route('admin_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'edit' => false,
             'post' => $post,
@@ -284,7 +284,7 @@ class AdminController extends Controller
 
         if ($post == null) {
             Session::flash('fail_msg', 'Invalid Admin, Please Try Another.');
-            return redirect()->route('admin_listing');
+            return redirect()->route('admin_listing', ['tenant' => tenant('id')]);
         }
 
         $admin = User::find($user_id);
@@ -595,14 +595,14 @@ class AdminController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully updated ' . $request->input('user_email') . ' admin.');
-                return redirect()->route('admin_listing');
+                return redirect()->route('admin_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
             $post->media = $ad->hasMedia('user_profile_photo') ?? '';
         }
 
         return view('admin.form', [
-            'submit' => route('admin_edit', $user_id),
+            'submit' => route('admin_edit', ['tenant' => tenant('id'), 'id' => $user_id]),
             'title' => 'Edit',
             'post' => $post,
             'edit' => true,
@@ -651,13 +651,13 @@ class AdminController extends Controller
                         }
                         $user->syncPermissions($assign_permission);
                         Session::flash('success_msg', 'Successfully updated ' . $user->user_email . ' permission.');
-                        return redirect()->route('admin_listing');
+                        return redirect()->route('admin_listing', ['tenant' => tenant('id')]);
                         break;
                     case 'reset':
                         $role = Role::findById($role_id);
                         $user->syncRoles($role->name);
                         Session::flash('success_msg', 'Successfully reset ' . $user->user_email . ' permission.');
-                        return redirect()->route('assign_permission', $user_id);
+                        return redirect()->route('assign_permission', ['tenant' => tenant('id'), 'id' => $user_id]);
                         break;
                 }
             }
@@ -667,7 +667,7 @@ class AdminController extends Controller
         $roles = Role::query()->where('company_id', auth()->user()->company_id)->orWhere('company_id','0')->get();
 
         return view('admin/assign_permission', [
-            'submit' => route('assign_permission', $user_id),
+            'submit' => route('assign_permission', ['tenant' => tenant('id'), 'id' => $user_id]),
             'title' => 'Assign Permission',
             'user' => $user,
             'user_role' => $user_role,
@@ -690,7 +690,7 @@ class AdminController extends Controller
         $user->update(['user_type_id' => 1]);
 
         Session::flash('success_msg', 'Successfully upgraded ' . $user->user_fullname . ' to admin.');
-        return redirect()->route('admin_edit', $user_id);
+        return redirect()->route('admin_edit', ['tenant' => tenant('id'), 'id' => $user_id]);
     }
 
     public function status(Request $request)
@@ -704,32 +704,32 @@ class AdminController extends Controller
               'user_status' => $action,
             ]);
             Session::flash('success_msg', "Successfully {$action} {$user->user_email} admin.");
-            return redirect()->route('admin_listing');
+            return redirect()->route('admin_listing', ['tenant' => tenant('id')]);
           }elseif($action == 'suspended'){
             $user->update([
               'user_status' => $action,
             ]);
             Session::flash('success_msg', "Successfully {$action} {$user->user_email} admin.");
-            return redirect()->route('admin_listing');
+            return redirect()->route('admin_listing', ['tenant' => tenant('id')]);
           }elseif($action == 'delete'){
             $user->update([
               'user_status' => 'suspended',
               'is_deleted' => 1
             ]);
             Session::flash('success_msg', "Successfully {$action} {$user->user_email} admin.");
-            return redirect()->route('admin_listing');
+            return redirect()->route('admin_listing', ['tenant' => tenant('id')]);
           }else{
             Session::flash('failed_msg', "Something went wrong...");
-            return redirect()->route('admin_listing');
+            return redirect()->route('admin_listing', ['tenant' => tenant('id')]);
           }
         }else{
           Session::flash('failed_msg', "User not found");
-          return redirect()->route('admin_listing');
+          return redirect()->route('admin_listing', ['tenant' => tenant('id')]);
         }
         // $data['user_status'] = $action;
         // $data['is_deleted'] = $action == 'activate' ? 0 : 1;
         // Session::flash('success_msg', "Successfully {$action} {$user->user_email} admin.");
-        // return redirect()->route('admin_listing');
+        // return redirect()->route('admin_listing', ['tenant' => tenant('id')]);
     }
 
     public function ajax_get_farm_manager_list(Request $request)

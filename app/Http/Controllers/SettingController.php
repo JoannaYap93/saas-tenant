@@ -34,7 +34,7 @@ class SettingController extends Controller
         $search = session('filter_setting') ?? array();
 
         return view('setting.listing', [
-            'submit' => route('setting_listing'),
+            'submit' => route('setting_listing', ['tenant' => tenant('id')]),
             'records' => Setting::get_record($search, $perpage),
             'search' => $search
         ]);
@@ -70,12 +70,12 @@ class SettingController extends Controller
                     'setting_value' => $value,
                 ]);
 
-                return redirect()->route('setting_listing')->with('success_msg', 'Setting ' . $request->input('setting_slug') . ' updated');
+                return redirect()->route('setting_listing', ['tenant' => tenant('id')])->with('success_msg', 'Setting ' . $request->input('setting_slug') . ' updated');
             }
         }
 
         return view('setting.form', [
-            'submit' => route('setting_edit', $setting_id),
+            'submit' => route('setting_edit', ['tenant' => tenant('id'), 'id' => $setting_id]),
             'post' => $setting,
             'edit' => true,
             'type' => 'Edit',

@@ -41,7 +41,7 @@ class SettingWarehouseController extends Controller
         $search = session('filter_setting_warehouse') ? session('filter_setting_warehouse') : $search;
 
         return view('setting_warehouse.listing', [
-            'submit'=> route('setting_warehouse_listing'),
+            'submit'=> route('setting_warehouse_listing', ['tenant' => tenant('id')]),
             'title'=> 'Add',
             'warehouse_status_sel'=>[''=>'Please select status','active' =>'Active', 'inactive' => 'Inactive'],
             'company_sel' => Company::get_company_sel(),
@@ -77,13 +77,13 @@ class SettingWarehouseController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully added '.$request->input('warehouse_name'));
-                return redirect()->route('setting_warehouse_listing');
+                return redirect()->route('setting_warehouse_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('setting_warehouse.form', [
-            'submit' => route('setting_warehouse_add'),
+            'submit' => route('setting_warehouse_add', ['tenant' => tenant('id')]),
             'edit' => false,
             'post'=> $post,
             'title' => 'Add',
@@ -106,7 +106,7 @@ class SettingWarehouseController extends Controller
 
         if ($post == null) {
             Session::flash('fail_msg', 'Invalid Warehouse, Please Try Again');
-            return redirect()->route('setting_warehouse_listing');
+            return redirect()->route('setting_warehouse_listing', ['tenant' => tenant('id')]);
         }
 
         $validation = null;
@@ -132,13 +132,13 @@ class SettingWarehouseController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully edited '.$request->input('warehouse_name'));
-                return redirect()->route('setting_warehouse_listing');
+                return redirect()->route('setting_warehouse_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('setting_warehouse.form', [
-            'submit' => route('setting_warehouse_edit', $warehouse_id),
+            'submit' => route('setting_warehouse_edit', ['tenant' => tenant('id'), 'id' => $warehouse_id]),
             'edit' => true,
             'title' => 'Edit',
             'post'=> $post,
@@ -153,7 +153,7 @@ class SettingWarehouseController extends Controller
 
         if(!$setting_warehouse_id){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('setting_warehouse_listing');
+            return redirect()->route('setting_warehouse_listing', ['tenant' => tenant('id')]);
         }
 
         $setting_warehouse_id->update([
@@ -161,14 +161,14 @@ class SettingWarehouseController extends Controller
         ]);
 
         Session::flash('success_msg', "Successfully deleted Warehouse.");
-        return redirect()->route('setting_warehouse_listing');
+        return redirect()->route('setting_warehouse_listing', ['tenant' => tenant('id')]);
     }
 
     public function view_setting_warehouse_by_id($warehouse_id)
     {
         $search['warehouse_id'] = $warehouse_id;
         Session::put('filter_setting_warehouse', $search);
-        return redirect()->route('setting_warehouse_listing');
+        return redirect()->route('setting_warehouse_listing', ['tenant' => tenant('id')]);
     }
 
 }

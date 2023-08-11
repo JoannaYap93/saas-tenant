@@ -33,7 +33,7 @@ class WorkerTypeController extends Controller
         $search = Session::has('worker_type_search') ? Session::get('worker_type_search') : array();
 
         return view('worker_type.listing', [
-            'submit' => route('worker_type_listing'),
+            'submit' => route('worker_type_listing', ['tenant' => tenant('id')]),
             'title' => 'Worker Type Listing',
             'records' => WorkerType::get_records($search, $perpage),
             'search' =>  $search,
@@ -58,13 +58,13 @@ class WorkerTypeController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully added '.$request->input('worker_type_name'));
-                return redirect()->route('worker_type_listing');
+                return redirect()->route('worker_type_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('worker_type.form', [
-            'submit' => route('worker_type_add'),
+            'submit' => route('worker_type_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post'=> $post,
         ])->withErrors($validation);
@@ -87,13 +87,13 @@ class WorkerTypeController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully edited '.$request->input('worker_type_name'));
-                return redirect()->route('worker_type_listing');
+                return redirect()->route('worker_type_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('worker_type.form', [
-            'submit' => route('worker_type_edit', $worker_type_id),
+            'submit' => route('worker_type_edit', ['tenant' => tenant('id'), 'id' => $worker_type_id]),
             'title' => 'Edit',
             'post'=> $post,
         ])->withErrors($validation);
@@ -105,13 +105,13 @@ class WorkerTypeController extends Controller
 
         if(!$worker_type){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('worker_type_listing');
+            return redirect()->route('worker_type_listing', ['tenant' => tenant('id')]);
         }
 
        $worker_type->delete();
 
         Session::flash('success_msg', "Successfully deleted worker type.");
-        return redirect()->route('worker_type_listing');
+        return redirect()->route('worker_type_listing', ['tenant' => tenant('id')]);
     }
 
 }

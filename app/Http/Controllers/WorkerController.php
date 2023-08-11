@@ -57,7 +57,7 @@ class WorkerController extends Controller
         $records = Worker::get_records($search);
 
         return view('worker.listing', [
-            'submit' => route('worker_listing'),
+            'submit' => route('worker_listing', ['tenant' => tenant('id')]),
             'title' => 'Worker Listing',
             'records' => $records,
             'worker_status_sel' => ['' => 'Please Select Worker Status']+ WorkerStatus::get_sel_worker_status(),
@@ -143,13 +143,13 @@ class WorkerController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully added '.$request->input('worker_name'));
-                return redirect()->route('worker_listing');
+                return redirect()->route('worker_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('worker.form', [
-            'submit' => route('worker_add'),
+            'submit' => route('worker_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post'=> $post,
             'edit' => false,
@@ -247,7 +247,7 @@ class WorkerController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully edited '.$request->input('worker_name'));
-                return redirect()->route('worker_listing');
+                return redirect()->route('worker_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
             $worker = Worker::find($worker_id);
@@ -255,7 +255,7 @@ class WorkerController extends Controller
         }
 
         return view('worker.form', [
-            'submit' => route('worker_edit', $worker_id),
+            'submit' => route('worker_edit', ['tenant' => tenant('id'), 'id' => $worker_id]),
             'title' => 'Edit',
             'post'=> $post,
             'edit' => true,
@@ -275,13 +275,13 @@ class WorkerController extends Controller
 
         if(!$worker){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('worker_listing');
+            return redirect()->route('worker_listing', ['tenant' => tenant('id')]);
         }
 
        $worker->delete();
 
         Session::flash('success_msg', "Successfully deleted worker.");
-        return redirect()->route('worker_listing');
+        return redirect()->route('worker_listing', ['tenant' => tenant('id')]);
     }
 
     public function import(Request $request){
@@ -408,19 +408,19 @@ class WorkerController extends Controller
                                 }
 
                                 Session::flash("success_msg", "Imported successfully.");
-                                return redirect()->route('worker_listing');
+                                return redirect()->route('worker_listing', ['tenant' => tenant('id')]);
                                 die();
                             }
                         // }
                         else {
                             Session::flash("fail_msg", "Upload failed. Try again later.");
-                            return redirect()->route('worker_import');
+                            return redirect()->route('worker_import', ['tenant' => tenant('id')]);
                             die();
                         }
                     }
                 } else {
                     Session::flash("fail_msg", "Please upload a file.");
-                    return redirect()->route('worker_import');
+                    return redirect()->route('worker_import', ['tenant' => tenant('id')]);
                     die();
                 }
             }
@@ -431,7 +431,7 @@ class WorkerController extends Controller
             'title' => 'Import Worker',
             'company_sel' => Company::get_company_sel(),
             'post' => $post,
-            'submit' => route('worker_import'),
+            'submit' => route('worker_import', ['tenant' => tenant('id')]),
         ])->withErrors($validation);
     }
 
@@ -443,7 +443,7 @@ class WorkerController extends Controller
 
         if($worker_id != 0 && !$worker){
             Session::flash('fail_msg', 'Invalid user wallet.');
-            return redirect()->route('admin_listing');
+            return redirect()->route('admin_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->isMethod('post')) {
@@ -482,13 +482,13 @@ class WorkerController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully adjust '. $worker->worker_name .' wallet.');
-                return redirect()->route('worker_listing');
+                return redirect()->route('worker_listing', ['tenant' => tenant('id')]);
             }
             $worker = (object) array_merge(collect($worker)->toArray(), collect($worker->company)->toArray(), $request->all());
         }
 
         return view('worker.adjust_wallet', [
-            'submit' => route('worker_wallet_adjustment', $worker_id),
+            'submit' => route('worker_wallet_adjustment', ['tenant' => tenant('id'), 'id' => $worker_id]),
             'title' => 'Adjustment',
             'worker' => $worker,
             'user' => $user,
@@ -501,7 +501,7 @@ class WorkerController extends Controller
 
         if(!$worker) {
             Session::flash('fail_msg', 'Invalid worker');
-            return redirect()->route('worker_listing');
+            return redirect()->route('worker_listing', ['tenant' => tenant('id')]);
         }
 
         $record = WorkerWalletHistory::get_credit_history_by_worker_id($worker_id);

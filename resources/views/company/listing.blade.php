@@ -14,7 +14,7 @@
                 <span class="mr-2">Company Listing</span>
                 {{-- @if (auth()->user()->user_type_id == 1) --}}
                     @can('company_manage')
-                        <a href="{{ route('company_add') }}"
+                        <a href="{{ route('company_add', ['tenant' => tenant('id')]) }}"
                             class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1">
                             <i class="fas fa-plus"></i> Add New</a>
                     @endcan
@@ -39,7 +39,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-12">
-                            <form method="POST" action="{{ route('company_listing') }}">
+                            <form method="POST" action="{{ route('company_listing', ['tenant' => tenant('id')]) }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-4">
@@ -233,7 +233,7 @@
                                                     @foreach ($company->company_land as $index => $company_land)
                                                       <tr>
                                                         <td  style="padding-left: 10px !important">
-                                                          <a @can('company_manage') href="{{ route('product_company_land_add', $company_land->company_land_id) }}" @endcan>
+                                                          <a @can('company_manage') href="{{ route('product_company_land_add', ['tenant' => tenant('id'), 'id' => $company_land->company_land_id]) }}" @endcan>
                                                               <b>{{ @$company_land->company_land_category->company_farm->company_farm_name . '-' . $company_land->company_land_category->company_land_category_name }}</b></a><br>
                                                               {{ @$company_land->company_bank->setting_bank->setting_bank_name }}<br>
                                                               {{ @$company_land->company_bank->company_bank_acc_no }}
@@ -245,22 +245,22 @@
                                                           @endif
                                                           @if($company_land->is_overwrite_budget == 1 && $company_land->overwrite_budget_per_tree > 0)
                                                             @if(auth()->user()->user_type_id == 2)
-                                                              Budget: {{$default_budget}}/<a @can('company_manage') href="{{route('budget_overwrite', ['company_id'=> $company->company_id, 'company_land_id' => $company_land->company_land_id])}}" @endcan>{{$company_land->overwrite_budget_per_tree}}</a>
+                                                              Budget: {{$default_budget}}/<a @can('company_manage') href="{{route('budget_overwrite', ['tenant' => tenant('id'), 'company_id'=> $company->company_id, 'company_land_id' => $company_land->company_land_id])}}" @endcan>{{$company_land->overwrite_budget_per_tree}}</a>
                                                             @else
                                                               Budget: {{$default_budget}}/{{$company_land->overwrite_budget_per_tree}}
                                                             @endif
                                                           @else
                                                             @if(auth()->user()->user_type_id == 2)
-                                                              Budget: <a @can('company_manage') href="{{route('budget_overwrite', ['company_id'=> $company->company_id, 'company_land_id' => $company_land->company_land_id])}}" @endcan>{{$default_budget}}</a>
+                                                              Budget: <a @can('company_manage') href="{{route('budget_overwrite', ['tenant' => tenant('id'), 'company_id'=> $company->company_id, 'company_land_id' => $company_land->company_land_id])}}" @endcan>{{$default_budget}}</a>
                                                             @else
                                                               Budget: {{$default_budget}}
                                                             @endif
                                                           @endif
                                                         </td>
                                                         <td>
-                                                          <a href="{{ route('land_zone_listing',['company_id' => $company->company_id, 'company_land_id' => $company_land->company_land_id] ) }}"
+                                                          <a href="{{ route('land_zone_listing', ['tenant' => tenant('id'), 'company_id' => $company->company_id, 'company_land_id' => $company_land->company_land_id] ) }}"
                                                             class='btn btn-sm btn-outline-primary waves-effect waves-light mr-2 mb-1'>ZONE</a>
-                                                            <a href="{{ route('land_tree_log_listing', ['land_id' => $company_land->company_land_id, 'id' => 0]) }}"
+                                                            <a href="{{ route('land_tree_log_listing', ['tenant' => tenant('id'), 'land_id' => $company_land->company_land_id, 'id' => 0]) }}"
                                                               class='btn btn-sm btn-outline-dark waves-effect waves-light mr-2 mb-1'>TREE LOG</a>
                                                         </td>
                                                       </tr>
@@ -278,13 +278,13 @@
                                                     data-id='{{ $company->company_id }}' class='fulfill'>
                                                     @can('company_manage')
                                                         @if (auth()->user()->user_type_id == 1)
-                                                            <a href="{{ route('company_edit', $company->company_id) }}"
+                                                            <a href="{{ route('company_edit', ['tenant' => tenant('id'), 'id' => $company->company_id]) }}"
                                                                 class="btn btn-sm btn-outline-primary waves-effect waves-light mr-2 mb-1">Edit</a>
                                                         @else
-                                                            <a href="{{ route('company_edit_land', $company->company_id) }}"
+                                                            <a href="{{ route('company_edit_land', ['tenant' => tenant('id'), 'id' => $company->company_id]) }}"
                                                                 class="btn btn-sm btn-outline-primary waves-effect waves-light mr-2 mb-1">Edit</a>
                                                         @endif
-                                                        {{-- <a href="{{ route('company_edit_pic', $company->company_id) }}" class="btn btn-sm btn-outline-info waves-effect waves-light mr-2 mb-1">Edit PIC</a> --}}
+                                                        {{-- <a href="{{ route('company_edit_pic', ['tenant' => tenant('id'), 'id' => $company->company_id]) }}" class="btn btn-sm btn-outline-info waves-effect waves-light mr-2 mb-1">Edit PIC</a> --}}
                                                     @endcan
                                                 </span>
                                                 <button data-toggle="modal" data-target="#view_product_company_land"
@@ -294,11 +294,11 @@
                                                         @if(auth()->user()->user_type_id == 1)
                                                         {!! $actions !!}
                                                         @endif
-                                                        <a href="{{ route('add_company_bank', $company->company_id) }}"
+                                                        <a href="{{ route('add_company_bank', ['tenant' => tenant('id'), 'id' => $company->company_id]) }}"
                                                             class="btn btn-sm btn-outline-primary waves-effect waves-light mr-2 mb-1">Add Bank</a>
                                                     @endcan
                                                     @can('claim_manage')
-                                                        <a href="{{ route('claim_pic', $company->company_id) }}"
+                                                        <a href="{{ route('claim_pic', ['tenant' => tenant('id'), 'id' => $company->company_id]) }}"
                                                             class="btn btn-sm btn-outline-warning waves-effect waves-light mr-2 mb-1">Claim PIC</a>
                                                     @endcan
                                                     @can('sync_company_expense_cost')
@@ -333,7 +333,7 @@
 <div class="modal fade" id="view_company_expense_cost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-          <form method="POST"  action="{{ route('sync_cost') }}">
+          <form method="POST"  action="{{ route('sync_cost', ['tenant' => tenant('id')]) }}">
             @csrf
             <div class="modal-header">
                 <b>Company Land Zone - Tree Data Status</b>
@@ -423,7 +423,7 @@
 <div class="modal fade" id="suspend" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
-			<form method="POST" action="{{ route('company_status') }}">
+			<form method="POST" action="{{ route('company_status', ['tenant' => tenant('id')]) }}">
 				@csrf
 				<div class="modal-body suspend">
           <h4>Company Suspension</h4>
@@ -443,7 +443,7 @@
 <div class="modal fade" id="activate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content active">
-			<form method="POST" action="{{ route('company_status') }}">
+			<form method="POST" action="{{ route('company_status', ['tenant' => tenant('id')]) }}">
 				@csrf
 				<div class="modal-body">
 					<h4>Company Activation</h4>
@@ -513,7 +513,7 @@
             let company_id = $(this).attr('data-id');
 
             $.ajax({
-                url: "{{ route('ajax_find_product_company_land_with_id') }}",
+                url: "{{ route('ajax_find_product_company_land_with_id', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -565,7 +565,7 @@
             let cat = "<option value=''>Please Select Category</option>";
             let cat_id = "{{ @$search['category_id'] ?? null }}";
             $.ajax({
-                url: "{{route('ajax_get_farm')}}",
+                url: "{{route('ajax_get_farm', ['tenant' => tenant('id')])}}",
                 method: "POST",
                 data: {
                     _token: "{{csrf_token()}}",

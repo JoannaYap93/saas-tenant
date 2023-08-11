@@ -61,7 +61,7 @@ class SettingExpenseController extends Controller
 
         return view('setting_expense.listing', [
             'records' => SettingExpense::get_records($search, $perpage),
-            'submit' => route('expense_listing'),
+            'submit' => route('expense_listing', ['tenant' => tenant('id')]),
             'expense_category_sel' => ['' => 'Please Select Expense Category'] + SettingExpenseCategory::get_existing_expense_category_sel(),
             'worker_role_sel' => ['' => 'Please Select Worker Role'] + WorkerRole::get_worker_role_sel(),
             'search' => $search,
@@ -118,7 +118,7 @@ class SettingExpenseController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully created a new expense');
-                return redirect()->route('expense_listing');
+                return redirect()->route('expense_listing', ['tenant' => tenant('id')]);
             }
 
             $post = (object) $request->all();
@@ -129,7 +129,7 @@ class SettingExpenseController extends Controller
             'expense_type_sel' => SettingExpenseType::get_expense_type_sel(),
             'worker_role_sel' => WorkerRole::get_worker_role_sel(),
             'title' => 'Add',
-            'submit' => route('expense_add'),
+            'submit' => route('expense_add', ['tenant' => tenant('id')]),
             'expense_category_sel' => ['' => 'Please Select Expense Category'] + SettingExpenseCategory::get_existing_expense_category_sel(),
 
         ])->withErrors($validation);
@@ -187,7 +187,7 @@ class SettingExpenseController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Update ' . $request->input('setting_expense_name_en'));
-                return redirect()->route('expense_listing');
+                return redirect()->route('expense_listing', ['tenant' => tenant('id')]);
             }
 
             $post = (object) $request->all();
@@ -198,7 +198,7 @@ class SettingExpenseController extends Controller
             'title' => 'Edit',
             'expense_type_sel' => SettingExpenseType::get_expense_type_sel(),
             'worker_role_sel' => WorkerRole::get_worker_role_sel(),
-            'submit' => route('expense_edit', $setting_expense_name_id),
+            'submit' => route('expense_edit', ['tenant' => tenant('id'), 'id' => $setting_expense_name_id]),
             'expense_category_sel' => ['' => 'Please Select Expense Category'] + SettingExpenseCategory::get_existing_expense_category_sel(),
         ])->withErrors($validation);
     }
@@ -209,7 +209,7 @@ class SettingExpenseController extends Controller
         SettingExpense::find($expense_id)->delete();
 
         Session::flash('success_msg', 'Successfully Deleted Expense');
-        return redirect()->route('expense_listing');
+        return redirect()->route('expense_listing', ['tenant' => tenant('id')]);
     }
 
     public function expense_activation(Request $request, $id, $status)
@@ -221,7 +221,7 @@ class SettingExpenseController extends Controller
       ]);
 
       Session::flash('success_msg', 'Successfully Updated Expense Status');
-      return redirect()->route('expense_listing');
+      return redirect()->route('expense_listing', ['tenant' => tenant('id')]);
     }
 
     public function ajax_get_expense_overwrite_detail_modal(Request $request)

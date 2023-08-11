@@ -16,7 +16,7 @@
 		<div class="d-flex align-items-center">
                     <h4 class="mb-0 font-size-18 mr-2">{{$title}} Listing</h4>
                     @can('claim_manage')
-                        <a href="{{ route('claim_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
+                        <a href="{{ route('claim_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
                     @endcan
                 </div>
                 <div class="page-title-right">
@@ -183,10 +183,10 @@
                                     </td>
                                     @can('claim_manage')
                                     <td>
-                                        <a href="{{ route('claim_item_listing', $rows->claim_id) }}" class="btn btn-outline-warning btn-sm mr-2">Claim Details</a>
-                                        <a href="{{ route('claim_view', [$rows->claim_id,md5($rows->claim_id . env('ENCRYPTION_KEY'))]) }}" class="btn btn-outline-success btn-sm mr-2">View PDF</a>
+                                        <a href="{{ route('claim_item_listing', ['tenant' => tenant('id'), 'id' => $rows->claim_id]) }}" class="btn btn-outline-warning btn-sm mr-2">Claim Details</a>
+                                        <a href="{{ route('claim_view', ['tenant' => tenant('id'), 'id' => $rows->claim_id, 'encryption' => md5($rows->claim_id . env('ENCRYPTION_KEY'))]) }}" class="btn btn-outline-success btn-sm mr-2">View PDF</a>
                                         @if(count(@$rows->claim_item) > 0)
-                                        <a href="{{ route('claim_export', $rows->claim_id) }}" class="btn btn-outline-primary btn-sm mr-2">Export</a>
+                                        <a href="{{ route('claim_export', ['tenant' => tenant('id'), 'id' => $rows->claim_id]) }}" class="btn btn-outline-primary btn-sm mr-2">Export</a>
                                         @endif
                                         <button class="btn btn-sm btn-outline-danger delete" data-toggle="modal"
                                         data-target="#delete" data-id="{{ $rows->claim_id }}">Delete
@@ -213,7 +213,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('claim_delete') }}">
+                <form method="POST" action="{{ route('claim_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this claim ?</h4>

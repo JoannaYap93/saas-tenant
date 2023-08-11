@@ -62,7 +62,7 @@ class SupplierExpensesReportController extends Controller
 
         return view('report.supplier_expenses_report', [
             'page_title' => 'Supplier Expenses Reporting',
-            'submit' => route('supplier_expenses_report'),
+            'submit' => route('supplier_expenses_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'year_sel' => $year_sel,
             'month_sel' => $month_sel,

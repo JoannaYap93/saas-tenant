@@ -67,7 +67,7 @@
             <div class="page-title-box d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
                     <h4 class="mb-0 font-size-18 mr-1">Invoice Listing</h4>
-                    {{-- <a href="{{ route('do_add') }}"
+                    {{-- <a href="{{ route('do_add', ['tenant' => tenant('id')]) }}"
                         class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                             class="fas fa-plus"></i> Add New</a> --}}
                 </div>
@@ -242,13 +242,13 @@
                                         </button>
 
                                         @can('invoice_manage')
-                                            <a href="{{ route('invoice_import') }}" class="btn btn-success waves-effect waves-light mr-2">
+                                            <a href="{{ route('invoice_import', ['tenant' => tenant('id')]) }}" class="btn btn-success waves-effect waves-light mr-2">
                                                 <i class="fas fa-file-import mr-1"></i>Import
                                             </a>
                                             <a href="{{ URL::asset('assets/sample/sample-import-invoice.xlsx') }}" target="_blank" class="btn btn-info waves-effect waves-light mr-2">
                                                 <i class="fas fa-download mr-1"></i>Download Sample Import
                                             </a>
-                                            <a href="{{ route('invoice_export_product_list') }}" class="btn btn-info waves-effect waves-light mr-2">
+                                            <a href="{{ route('invoice_export_product_list', ['tenant' => tenant('id')]) }}" class="btn btn-info waves-effect waves-light mr-2">
                                                 <i class="fas fa-file-download mr-1"></i>Export Product Lists
                                             </a>
                                         @endcan
@@ -523,12 +523,12 @@
                                                                     @can('paid_invoice_edit')
                                                                     @if ($invoice->invoice_status_id == 2)
                                                                         <a class="btn btn-outline-warning btn-sm"
-                                                                            href="{{ route('paid_invoice_edit', $invoice->invoice_id) }}">Edit</a>
+                                                                            href="{{ route('paid_invoice_edit', ['tenant' => tenant('id'), 'id' => $invoice->invoice_id]) }}">Edit</a>
                                                                     @endif
                                                                     @endcan
                                                                     @if ($invoice->invoice_status_id != 3 && ($invoice->invoice_status_id == 1 || $invoice->invoice_status_id == 4 || $invoice->invoice_status_id == 5))
                                                                         <a class="btn btn-outline-warning btn-sm"
-                                                                            href="{{ route('invoice_edit', $invoice->invoice_id) }}">Edit</a>
+                                                                            href="{{ route('invoice_edit', ['tenant' => tenant('id'), 'id' => $invoice->invoice_id]) }}">Edit</a>
                                                                     @endif
                                                                     <span data-toggle='modal' data-target='#delete'
                                                                         data-id='{{ $invoice->invoice_id }}' class='delete'><a
@@ -588,7 +588,7 @@
                                                                     <td class="pt-2 pr-2 p-0  m-0"
                                                                         style="min-width:50px; border-top: none; border-right: 1px solid #e4e4e4;">
                                                                         <a class="btn btn-outline-dark btn-sm" target="_blank"
-                                                                            href="{{ route('payment_url_add', $invoice->customer->customer_id) }}">
+                                                                            href="{{ route('payment_url_add', ['tenant' => tenant('id'), 'id' => $invoice->customer->customer_id]) }}">
                                                                             Create Payment Url
                                                                         </a>
                                                                     </td>
@@ -619,7 +619,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('invoice_delete') }}">
+                <form method="POST" action="{{ route('invoice_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this Invoice ?</h4>
@@ -648,7 +648,7 @@
                 <div id="invoice_no" class="modal-header">
                     <!-- <h4>Check Invoice #123 Approval</h4> -->
                 </div>
-                <form action="{{ route('invoice_approve_reject') }}" method="POST">
+                <form action="{{ route('invoice_approve_reject', ['tenant' => tenant('id')]) }}" method="POST">
 
                     @csrf
                     <div id="check_body" class="modal-body">
@@ -768,7 +768,7 @@
             $('#product').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_product_by_product_category_id') }}",
+                url: "{{ route('ajax_get_product_by_product_category_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 async: true,
                 data: {
@@ -805,7 +805,7 @@
             $('#size_id').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_setting_size_by_product_id') }}",
+                url: "{{ route('ajax_get_setting_size_by_product_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -844,7 +844,7 @@
             let details = '';
 
             $.ajax({
-                url: "{{ route('ajax_get_mobile_no_by_id') }}",
+                url: "{{ route('ajax_get_mobile_no_by_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -946,7 +946,7 @@
             let invoice_id = $(this).attr('data-id');
 
             $.ajax({
-                url: "{{ route('ajax_find_invoice_with_id') }}",
+                url: "{{ route('ajax_find_invoice_with_id', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -1167,7 +1167,7 @@
             let scust = '{{ @$search['customer_id'] }}' ?? null;
             $('#customer_id').html('<option value="">Loading...</option>');
             $.ajax({
-                url: "{{ route('ajax_get_customer_by_category') }}",
+                url: "{{ route('ajax_get_customer_by_category', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -1205,7 +1205,7 @@
             let scust = '{{ @$search['customer_id'] }}' ?? null;
             let scust_cat = '{{ @$search['customer_category_id'] }}' ?? null;
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

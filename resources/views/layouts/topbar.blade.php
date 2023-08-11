@@ -4,7 +4,7 @@
             <div class="navbar-brand-box d-flex">
                 <a href="/" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('images/huaxin_logo.png') }}" alt="" height="22">
+                        <img src="{{ global_asset('images/huaxin_logo.png') }}" alt="" height="22">
                         @if(auth()->user()->company_id != 0)
                           @if(auth()->user()->company->hasMedia('company_logo'))
                           X
@@ -13,7 +13,7 @@
                         @endif
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('images/huaxin_logo.png') }}" alt="" height="55">
+                        <img src="{{ global_asset('images/huaxin_logo.png') }}" alt="" height="55">
                         @if(auth()->user()->company_id != 0)
                           @if(auth()->user()->company->hasMedia('company_logo'))
                           X
@@ -34,7 +34,7 @@
                         @endif
                     </span>
                     <span class="logo-lg">
-                        {{-- <img src="{{ asset('images/huaxin-logo.svg') }}" alt="" height="40"> --}}
+                        {{-- <img src="{{ global_asset('images/huaxin-logo.svg') }}" alt="" height="40"> --}}
                         <img src="{{ get_logo() }}" alt="" height="55">
                         @if(auth()->user()->company_id != 0)
                           @if(auth()->user()->company->hasMedia('company_logo'))
@@ -85,11 +85,11 @@
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ route('user_profile') }}"><i class="bx bx-user font-size-16 align-middle mr-1"></i> Profile</a>
-                    <a class="dropdown-item d-block" href="{{ route('user_change_password') }}"><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Change Password</a>
+                    <a class="dropdown-item" href="{{ route('user_profile', ['tenant' => tenant('id')]) }}"><i class="bx bx-user font-size-16 align-middle mr-1"></i> Profile</a>
+                    <a class="dropdown-item d-block" href="{{ route('user_change_password', ['tenant' => tenant('id')]) }}"><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Change Password</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> {{ __('Logout') }} </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    <form id="logout-form" action="{{ route('logout', ['tenant' => tenant('id')]) }}" method="POST" style="display: none;">
                         @csrf
                     </form>
                 </div>

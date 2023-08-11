@@ -49,7 +49,7 @@ class CollectController extends Controller
         $search = session('filter_collect') ?? $search;
 
         return view('collect.listing', [
-            'submit' => route('collect_listing'),
+            'submit' => route('collect_listing', ['tenant' => tenant('id')]),
             'records' => Collect::get_records($search),
             'search' => $search,
             'collect_status_sel' => [
@@ -74,12 +74,12 @@ class CollectController extends Controller
         $collect = Collect::find($collect_id);
         if (!$collect) {
             Session::flash("fail_msg", "Error, please try again later...");
-            return redirect()->route('collect_listing');
+            return redirect()->route('collect_listing', ['tenant' => tenant('id')]);
         }
 
         if (!$collect_log_description) {
             Session::flash("fail_msg", "Remark field is required");
-            return redirect()->route('collect_listing');
+            return redirect()->route('collect_listing', ['tenant' => tenant('id')]);
         }
 
         $collect->update([
@@ -88,7 +88,7 @@ class CollectController extends Controller
         ]);
 
         Session::flash('success_msg', 'Successfully deleted collect  - '.$collect->collect_code);
-        return redirect()->route('collect_listing');
+        return redirect()->route('collect_listing', ['tenant' => tenant('id')]);
     }
 
     public function edit(Request $request)
@@ -103,10 +103,10 @@ class CollectController extends Controller
           ]);
 
           Session::flash('success_msg', 'Successfully Updated collect  - '.$collect->collect_code);
-          return redirect()->route('collect_listing');
+          return redirect()->route('collect_listing', ['tenant' => tenant('id')]);
         }else{
           Session::flash('fail_msg', 'No Collect Found...');
-          return redirect()->route('collect_listing');
+          return redirect()->route('collect_listing', ['tenant' => tenant('id')]);
         }
     }
 }

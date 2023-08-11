@@ -35,7 +35,7 @@ class ProductTagController extends Controller
 
 
         return view('product_tag.listing', [
-            'submit'=> route('product_tag_listing'),
+            'submit'=> route('product_tag_listing', ['tenant' => tenant('id')]),
             'records' => $records,
             'title'=> 'Product Tag Listing',
         ]);
@@ -64,13 +64,13 @@ class ProductTagController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully added '.$request->input('product_tag_name'));
-                return redirect()->route('product_tag_listing');
+                return redirect()->route('product_tag_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('product_tag.form', [
-            'submit' => route('product_tag_add'),
+            'submit' => route('product_tag_add', ['tenant' => tenant('id')]),
             'edit' => false,
             'post'=> $post,
             'title' => 'Add',
@@ -99,13 +99,13 @@ class ProductTagController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully edited '.$request->input('product_tag_name'));
-                return redirect()->route('product_tag_listing');
+                return redirect()->route('product_tag_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('product_tag.form', [
-            'submit' => route('product_tag_edit', $product_tag_id),
+            'submit' => route('product_tag_edit', ['tenant' => tenant('id'), 'id' => $product_tag_id]),
             'edit' => true,
             'title' => 'Edit',
             'post'=> $post,
@@ -119,7 +119,7 @@ class ProductTagController extends Controller
 
         if(!$product_tag_id){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('product_tag_listing');
+            return redirect()->route('product_tag_listing', ['tenant' => tenant('id')]);
         }
 
         $product_tag_id->update([
@@ -127,7 +127,7 @@ class ProductTagController extends Controller
         ]);
 
         Session::flash('success_msg', "Successfully deleted  Product Category.");
-        return redirect()->route('product_tag_listing');
+        return redirect()->route('product_tag_listing', ['tenant' => tenant('id')]);
     }
 
 }

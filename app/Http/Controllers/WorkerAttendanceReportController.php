@@ -87,7 +87,7 @@ class WorkerAttendanceReportController extends Controller
         $records = WorkerAttendanceReport::get_worker_attendance_report($search);
 
         return view('report.worker_attendance_report', [
-            'submit' => route('worker_attendance_report'),
+            'submit' => route('worker_attendance_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'day_array' => $day_array,
             'records' => $records,

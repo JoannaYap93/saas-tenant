@@ -46,7 +46,7 @@ class MessageTemplateController extends Controller
             'records' => MessageTemplate::get_records($search, $perpage),
             'involve_sel' => MessageTemplateInvolve::get_as_selection(),
             'search' =>  $search,
-            'submit' => route('message_template_listing'),
+            'submit' => route('message_template_listing', ['tenant' => tenant('id')]),
         ]);
     }
 
@@ -98,7 +98,7 @@ class MessageTemplateController extends Controller
                     }
                 }
 
-                return redirect()->route('message_template_listing');
+                return redirect()->route('message_template_listing', ['tenant' => tenant('id')]);
             }
             $post = $request->all();
             $post['message_template_involve_id'] = $request->input('message_template_involve_id') ? $request->input('message_template_involve_id') : [];
@@ -110,7 +110,7 @@ class MessageTemplateController extends Controller
             'page_title' => 'Add Message Template',
             'involve_sel' => $involve_sel,
             'post' => $post,
-            'submit' => route('message_template_add'),
+            'submit' => route('message_template_add', ['tenant' => tenant('id')]),
         ])->withErrors($validation);
     }
 
@@ -186,7 +186,7 @@ class MessageTemplateController extends Controller
                     }
                 }
 
-                return redirect()->route('message_template_listing');
+                return redirect()->route('message_template_listing', ['tenant' => tenant('id')]);
             }
             $post = $request->all();
             $post['message_template_involve_id'] = $request->input('message_template_involve_id') ? $request->input('message_template_involve_id') : [];
@@ -198,7 +198,7 @@ class MessageTemplateController extends Controller
             'page_title' => 'Edit Message Template',
             'involve_sel' => $involve_sel,
             'post' => $post,
-            'submit' => route('message_template_edit', ['id' => $message_template_id]),
+            'submit' => route('message_template_edit', ['tenant' => tenant('id'), 'id' => $message_template_id]),
         ])->withErrors($validation);
     }
 
@@ -208,7 +208,7 @@ class MessageTemplateController extends Controller
 
         if (!$message_template_id) {
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('message_template_listing');
+            return redirect()->route('message_template_listing', ['tenant' => tenant('id')]);
         }
 
         $message_template_id->update([
@@ -216,7 +216,7 @@ class MessageTemplateController extends Controller
         ]);
 
         Session::flash('success_msg', "Successfully delete Message Template.");
-        return redirect()->route('message_template_listing');
+        return redirect()->route('message_template_listing', ['tenant' => tenant('id')]);
     }
 
     public function send_whatsapp_template($id, $slug, $message_template_id, $user_mobile = null)
@@ -234,7 +234,7 @@ class MessageTemplateController extends Controller
                 $message_template->message_template_content = str_replace("[SHORT_CUSTOMER_NAME]", substr(@$records->customer->customer_name, 0, 8) . "..", $message_template->message_template_content);
 
                 $message_template->message_template_content = str_replace("[VERIFY_PRICE_URL]", env('GRAPHQL_API') . '/price_verification/' . $id . '/' . $encryption, $message_template->message_template_content);
-                $message_template->message_template_content = str_replace("[DO_DETAILS]", route('do_pdf', ['id' => $records->delivery_order_id, 'encryption' => md5($records->delivery_order_id . env('ENCRYPTION_KEY'))]), $message_template->message_template_content);
+                $message_template->message_template_content = str_replace("[DO_DETAILS]", route('do_pdf', ['tenant' => tenant('id'), 'id' => $records->delivery_order_id, 'encryption' => md5($records->delivery_order_id . env('ENCRYPTION_KEY'))]), $message_template->message_template_content);
                 $user_mobile = $user_mobile ?? @$records->customer->customer_mobile_no;
 
                 // $user_mobile = $user_mobile ? $user_mobile : $records->customer->customer_mobile_no;
@@ -263,7 +263,7 @@ class MessageTemplateController extends Controller
                 $message_template->message_template_content = str_replace("[SHORT_CUSTOMER_NAME]", substr(@$records->customer->customer_name, 0, 8) . "..", $message_template->message_template_content);
 
                 $message_template->message_template_content = str_replace("[VERIFY_PRICE_URL]", env('GRAPHQL_API') . '/price_verification/' . $id . '/' . $encryption, $message_template->message_template_content);
-                $message_template->message_template_content = str_replace("[DO_DETAILS]", route('do_pdf', ['id' => $records->delivery_order_id, 'encryption' => md5($records->delivery_order_id . env('ENCRYPTION_KEY'))]), $message_template->message_template_content);
+                $message_template->message_template_content = str_replace("[DO_DETAILS]", route('do_pdf', ['tenant' => tenant('id'), 'id' => $records->delivery_order_id, 'encryption' => md5($records->delivery_order_id . env('ENCRYPTION_KEY'))]), $message_template->message_template_content);
                 $user_mobile = $user_mobile ?? @$records->customer->customer_mobile_no;
 
                 // $user_mobile = $user_mobile ? $user_mobile : $records->customer->customer_mobile_no;
@@ -296,7 +296,7 @@ class MessageTemplateController extends Controller
                 $message_template->message_template_content = str_replace("[INVOICE_URL]", env('GRAPHQL_API') . '/invoice/' . $records->invoice_id . '/' . $encryption, $message_template->message_template_content);
                 $message_template->message_template_content = str_replace("[RECEIPT_URL]", env('GRAPHQL_API') . '/receipt/' . $records->invoice_id . '/' . $encryption, $message_template->message_template_content);
 
-                // $message_template->message_template_content = str_replace("[INVOICE_URL]", route('view_invoice_pdf',['id' => $records->invoice_id, 'encryption' => $encryption]), $message_template->message_template_content);
+                // $message_template->message_template_content = str_replace("[INVOICE_URL]", route('view_invoice_pdf', ['tenant' => tenant('id'), 'id' => $records->invoice_id, 'encryption' => $encryption]), $message_template->message_template_content);
                 $message_template->message_template_content = str_replace("[PAYMENT_URL]",  env('GRAPHQL_API') . '/view_invoice/' . $records->invoice_id . '/' . $encryption, $message_template->message_template_content);
 
                 if (@$user_mobile[0] == "+") {

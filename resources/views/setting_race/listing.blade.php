@@ -16,7 +16,7 @@
                 <div class="d-flex align-items-center">
                   <h4 class="mb-0 font-size-18 mr-2">Setting Race Listing</h4>
                   @can('setting_expense')
-                    <a href="{{ route('add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
+                    <a href="{{ route('add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
                   @endcan
                 </div>
                 <div class="page-title-right">
@@ -88,7 +88,7 @@
                                         <td>{{ @$row->setting_race_name }}<br></td>
                                         @if (auth()->user()->user_type_id == 1)
                                             <td>
-                                                <a href="{{ route('edit', @$row->setting_race_id) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
+                                                <a href="{{ route('edit', ['tenant' => tenant('id'), 'id' => @$row->setting_race_id]) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                                 <button class="btn btn-sm btn-outline-danger delete" data-toggle="modal" data-target="#delete" data-id="{{ @$row->setting_race_id }}">Delete</button>
                                             </td>
                                         @endif
@@ -112,7 +112,7 @@
  aria-hidden="true">
  <div class="modal-dialog modal-dialog-centered" role="document">
      <div class="modal-content">
-         <form method="POST" action="{{ route('delete') }}">
+         <form method="POST" action="{{ route('delete', ['tenant' => tenant('id')]) }}">
              @csrf
              <div class="modal-body">
                  <h4>Delete this race ?</h4>

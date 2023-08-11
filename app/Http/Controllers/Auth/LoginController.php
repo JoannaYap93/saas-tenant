@@ -48,6 +48,11 @@ class LoginController extends Controller
         return 'user_email';
     }
 
+    public function index()
+    {
+        return view('auth.login');
+    }
+
     public function login(Request $request)
     {
         $this->validateLogin($request);
@@ -72,7 +77,7 @@ class LoginController extends Controller
 
               $request->session()->regenerateToken();
 
-              return $this->loggedOut($request) ?: redirect('/');
+              return $this->loggedOut($request) ?: redirect()->route('main.index', ['tenant' => tenant('id')]);
             }
             // activity('login')
             //     ->withProperties(['user_ip' => $ip])
@@ -102,7 +107,7 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return $this->loggedOut($request) ?: redirect('/');
+        return $this->loggedOut($request) ?: redirect()->route('main.index', ['tenant', tenant('id')]);
     }
 
     protected function attemptLogin(Request $request)

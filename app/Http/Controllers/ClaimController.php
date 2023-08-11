@@ -65,7 +65,7 @@ class ClaimController extends Controller
         $company_sel = Company::get_company_sel();
 
         return view('claim.listing', [
-            'submit' => route('claim_listing'),
+            'submit' => route('claim_listing', ['tenant' => tenant('id')]),
             'title' => 'Claim',
             'records' => $records,
             'search' =>  $search,
@@ -84,7 +84,7 @@ class ClaimController extends Controller
             $next_status = ClaimStatus::get_next_status(auth()->user()->company_id, 1);
             if(!$next_status){
                 Session::flash('fail_msg', 'Company PIC for Approval is required');
-                return redirect()->route('claim_listing');
+                return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
             }
         }
 
@@ -129,13 +129,13 @@ class ClaimController extends Controller
                     'claim_id' => $claim_id,
                     'claim_log_user_id' => Auth::id()
                 ]);
-                return redirect()->route('claim_item_listing',$claim_id);
+                return redirect()->route('claim_item_listing', ['tenant' => tenant('id')],$claim_id);
             }
             $post = (object) $request->all();
         }
 
         return view('claim.form', [
-            'submit' => route('claim_add'),
+            'submit' => route('claim_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post'=> $post,
             'farm_manager_sel' => ['' => 'Please Select Farm Manager'],
@@ -147,7 +147,7 @@ class ClaimController extends Controller
         $claim = Claim::get_by_id($claim_id);
         if(!$claim){
             Session::flash('fail_msg', 'Invalid Claim');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
         $claim_amount = 0;
@@ -157,7 +157,7 @@ class ClaimController extends Controller
 
         if ($claim_amount == 0) {
             Session::flash('fail_msg', 'Claim Item is empty!');
-            return redirect()->route('claim_item_listing', $claim_id);
+            return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id);
         }
 
         $current_claim_status_id = $claim->claim_status_id;
@@ -176,7 +176,7 @@ class ClaimController extends Controller
         ]);
 
         Session::flash('success_msg', 'Claim has been submitted');
-        return redirect()->route('claim_item_listing', $claim_id);
+        return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id);
     }
 
     public function approve_checking(Request $request, $claim_id) {
@@ -185,12 +185,12 @@ class ClaimController extends Controller
 
         if(!$claim){
             Session::flash('fail_msg', 'Invalid Claim');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
         if(!@$claim->claim_status->company_claim_approval){
             Session::flash('fail_msg', 'Forbidden! Permission is not allowed.');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->method('POST')) {
@@ -220,9 +220,9 @@ class ClaimController extends Controller
                     'claim_log_user_id' => Auth::id()
                 ]);
                 Session::flash('success_msg', 'Claim has been checked');
-                return redirect()->route('claim_item_listing', $claim_id);
+                return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id);
             }
-            return redirect()->route('claim_item_listing', $claim_id)->withErrors($validation);
+            return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id)->withErrors($validation);
         }
     }
 
@@ -232,12 +232,12 @@ class ClaimController extends Controller
 
         if(!$claim){
             Session::flash('fail_msg', 'Invalid Claim');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
         if(!@$claim->claim_status->company_claim_approval){
             Session::flash('fail_msg', 'Forbidden! Permission is not allowed.');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->method('POST')) {
@@ -268,9 +268,9 @@ class ClaimController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Claim has been verified');
-                return redirect()->route('claim_item_listing', $claim_id);
+                return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id);
             }
-            return redirect()->route('claim_item_listing', $claim_id)->withErrors($validation);
+            return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id)->withErrors($validation);
         }
     }
 
@@ -280,12 +280,12 @@ class ClaimController extends Controller
 
         if(!$claim){
             Session::flash('fail_msg', 'Invalid Claim');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
         if(!@$claim->claim_status->company_claim_approval){
             Session::flash('fail_msg', 'Forbidden! Permission is not allowed.');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->method('POST')) {
@@ -316,9 +316,9 @@ class ClaimController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Claim has been approved');
-                return redirect()->route('claim_item_listing', $claim_id);
+                return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id);
             }
-            return redirect()->route('claim_item_listing', $claim_id)->withErrors($validation);
+            return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id)->withErrors($validation);
         }
     }
 
@@ -327,11 +327,11 @@ class ClaimController extends Controller
 
         if(!$claim){
             Session::flash('fail_msg', 'Invalid Claim');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
         if(!@$claim->claim_status->company_claim_approval){
             Session::flash('fail_msg', 'Forbidden! Permission is not allowed.');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
         $claim->update([
@@ -354,7 +354,7 @@ class ClaimController extends Controller
         ]);
 
         Session::flash('success_msg', 'Account has been checked');
-        return redirect()->route('claim_item_listing', $claim_id);
+        return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id);
     }
 
     public function payment(Request $request, $claim_id) {
@@ -362,17 +362,17 @@ class ClaimController extends Controller
 
         if(!$claim){
             Session::flash('fail_msg', 'Invalid Claim');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
         if(!@$claim->claim_status->company_claim_approval){
             Session::flash('fail_msg', 'Forbidden! Permission is not allowed.');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
         if($claim->claim_status_id == 6){
             Session::flash('fail_msg', 'Selected Claim is Completed');
-            return redirect()->route('claim_item_listing', $claim_id);
+            return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id);
         }
         $current_claim_status_id = $claim->claim_status_id;
         $claim->update([
@@ -396,7 +396,7 @@ class ClaimController extends Controller
         ]);
 
         Session::flash('success_msg', 'Claim has been updated to paid');
-        return redirect()->route('claim_item_listing', $claim_id);
+        return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id);
     }
 
     public function permanent_reject(Request $request, $claim_id) {
@@ -405,7 +405,7 @@ class ClaimController extends Controller
 
         if(!$claim){
             Session::flash('fail_msg', 'Invalid Claim');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
         if ($request->method('POST')) {
             $validation = Validator::make($request->all(), [
@@ -430,9 +430,9 @@ class ClaimController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Claim has been rejected');
-                return redirect()->route('claim_item_listing', $claim_id);
+                return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id);
             }
-            return redirect()->route('claim_item_listing', $claim_id)->withErrors($validation);
+            return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id)->withErrors($validation);
         }
     }
 
@@ -443,7 +443,7 @@ class ClaimController extends Controller
 
         if(!$claim){
             Session::flash('fail_msg', 'Invalid Claim');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
         if ($request->method('POST')) {
             $validation = Validator::make($request->all(), [
@@ -468,9 +468,9 @@ class ClaimController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Claim has been rejected (resubmit)');
-                return redirect()->route('claim_item_listing', $claim_id);
+                return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id);
             }
-            return redirect()->route('claim_item_listing', $claim_id)->withErrors($validation);
+            return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id)->withErrors($validation);
         }
     }
 
@@ -480,7 +480,7 @@ class ClaimController extends Controller
         $claim = Claim::get_by_id($claim_id);
         if(!$claim){
             Session::flash('fail_msg', 'Invalid Claim');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
         if ($request->method('POST')) {
             $validation = Validator::make($request->all(), [
@@ -505,9 +505,9 @@ class ClaimController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Claim submission has been cancelled');
-                return redirect()->route('claim_item_listing', $claim_id);
+                return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id);
             }
-            return redirect()->route('claim_item_listing', $claim_id)->withErrors($validation);
+            return redirect()->route('claim_item_listing', ['tenant' => tenant('id')], $claim_id)->withErrors($validation);
         }
     }
 
@@ -538,11 +538,11 @@ class ClaimController extends Controller
             // ]);
         } else {
             Session::flash('fail_msg', 'Invalid Claim');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
       }else{
         Session::flash('fail_msg', 'Invalid Claim Encryption');
-        return redirect()->route('claim_listing');
+        return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
       }
     }
 
@@ -559,7 +559,7 @@ class ClaimController extends Controller
           return Excel::download(new ClaimExport('claim/claim_pdf', $claim_item, $claim, $claim_approval_verify, $claim_approval_approve, $excel, $claim_category_material, $claim_category_expense ), 'Claim_'. $claim_id .'.xlsx');
       } else {
           Session::flash('fail_msg', 'Invalid Claim');
-          return redirect()->route('claim_listing');
+          return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
       }
     }
 
@@ -574,7 +574,7 @@ class ClaimController extends Controller
   
         if(!$claim){
             Session::flash('fail_msg', 'Invalid Claim');
-            return redirect()->route('claim_listing');
+            return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
         }
 
 
@@ -584,7 +584,7 @@ class ClaimController extends Controller
        ]);
 
         Session::flash('success_msg', "Successfully deleted claim.");
-        return redirect()->route('claim_listing');
+        return redirect()->route('claim_listing', ['tenant' => tenant('id')]);
       }
 
     public function ajax_check_company_pic(Request $request){

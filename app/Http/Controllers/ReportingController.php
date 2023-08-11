@@ -148,7 +148,7 @@ class ReportingController extends Controller
             'user_sel' => ['' => 'Please Select User'] + User::get_user_sel(),
             'customer_sel' => ['' => 'Please Select Customer'] + Customer::get_customer_sel(),
             'customer_category_sel' => CustomerCategory::customer_category_for_report_sel(),
-            'submit' => route('collect_do_variance'),
+            'submit' => route('collect_do_variance', ['tenant' => tenant('id')]),
             'search' => $search,
             'company_cb' => Company::get_company_check_box(),
             'product_cb' => Product::all(),
@@ -233,7 +233,7 @@ class ReportingController extends Controller
             'user_sel' => ['' => 'Please Select User'] + User::get_user_sel(),
             'customer_sel' => ['' => 'Please Select Customer'] + Customer::get_customer_sel(),
             'date_range' => $date_range,
-            'submit' => route('collect_do_variance_daily'),
+            'submit' => route('collect_do_variance_daily', ['tenant' => tenant('id')]),
             'search' => $search,
             'company_cb' => Company::get_company_check_box(),
             'product_cb' => Product::all(),
@@ -317,7 +317,7 @@ class ReportingController extends Controller
             'customer_sel' => ['' => 'Please Select Customer'] + Customer::get_customer_sel(),
             'customer_category_sel' => CustomerCategory::customer_category_for_report_sel(),
             'date_range' => $date_range,
-            'submit' => route('collect_daily_report'),
+            'submit' => route('collect_daily_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'title' => 'collect_daily_report',
             'company_cb' => Company::get_company_check_box(),
@@ -408,7 +408,7 @@ class ReportingController extends Controller
             'customer_sel' => ['' => 'Please Select Customer'] + Customer::get_customer_sel(),
             'customer_category_sel' => CustomerCategory::customer_category_for_report_sel(),
             'date_range' => $date_range,
-            'submit' => route('do_daily_report'),
+            'submit' => route('do_daily_report', ['tenant' => tenant('id')]),
             'order_type' => DeliveryOrderType::get_sel(),
             'search' => $search,
             'title' => 'do_daily_report',
@@ -481,7 +481,7 @@ class ReportingController extends Controller
         // dd($invoice_information);
         return view('report.invoice_monthly_report', [
             'month_sel' => Reporting::get_month(),
-            'submit' => route('invoice_monthly_report'),
+            'submit' => route('invoice_monthly_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'product' => Product::get_product_name_list_2($search),
             'company_sel' => Company::get_company_sel(),
@@ -685,7 +685,7 @@ class ReportingController extends Controller
         }
 
         return view('report.sales_summary_by_product_report', [
-            'submit' => route('sales_summary_by_product_report'),
+            'submit' => route('sales_summary_by_product_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'sales_summary_details_by_product' => Reporting::get_sales_summary_details_by_product($search),
             'product_sel' => Product::get_by_company(),
@@ -764,7 +764,7 @@ class ReportingController extends Controller
         }
         // dd(Product::get_w_size($search));
         return view('report.sales_summary_by_product_report_company', [
-            'submit' => route('sales_summary_by_product_report_company'),
+            'submit' => route('sales_summary_by_product_report_company', ['tenant' => tenant('id')]),
             'search' => $search,
             'sales_summary_details_by_product_company' => Reporting::get_sales_summary_details_by_product_company($search),
             'product' => Product::get_w_size_2($search),
@@ -844,7 +844,7 @@ class ReportingController extends Controller
         }
         // dd(Product::get_w_size($search));
         return view('report.sales_summary_by_product_report_company_no_grade', [
-            'submit' => route('sales_summary_by_product_report_company_no_grade'),
+            'submit' => route('sales_summary_by_product_report_company_no_grade', ['tenant' => tenant('id')]),
             'search' => $search,
             'sales_summary_details_by_product_company' => Reporting::get_sales_summary_details_by_product_company($search),
             'product' => Product::get_w_size_2($search),
@@ -915,7 +915,7 @@ class ReportingController extends Controller
             $search = Session::get('average_summary_report');
         }
         return view('report.average_summary_report', [
-            'submit' => route('average_summary_report'),
+            'submit' => route('average_summary_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'company_sel' => Company::get_company_sel(),
             'company_land_sel' => CompanyLand::get_company_land_sel(),
@@ -1045,7 +1045,7 @@ class ReportingController extends Controller
             'records' => $records,
             'date_range' => $date_range,
             'product' => Product::get_product_name_list_2($search),
-            'submit' => route('invoice_daily_report'),
+            'submit' => route('invoice_daily_report', ['tenant' => tenant('id')]),
             'company_sel' => Company::get_company_sel(),
             'company_cb' => Company::get_company_check_box(),
             'product_cb' => Product::all(),
@@ -1120,7 +1120,7 @@ class ReportingController extends Controller
         }
 
         return view('report.farm_report', [
-            'submit' => route('sales_summary_by_farm_report'),
+            'submit' => route('sales_summary_by_farm_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'sales_summary_details_by_farm' => Reporting::get_sales_summary_details_by_farm($search),
             'company_sel' => Company::get_company_sel(),
@@ -1200,7 +1200,7 @@ class ReportingController extends Controller
 
         return view('report.message_template_report_by_year', [
             'page_title' => 'WhatsApp Reporting (Years)',
-            'submit' => route('message_template_report_by_year'),
+            'submit' => route('message_template_report_by_year', ['tenant' => tenant('id')]),
             'search' => $search,
             'year_sel' => $year_sel,
             'month_sel' => $month_sel,
@@ -1220,6 +1220,7 @@ class ReportingController extends Controller
 
         if (isset($_GET['reset'])) {
             return Redirect::to(route('message_template_report_by_month', [
+                'tenant' => tenant('id'),
                 "year" => date('Y'),
                 "month" => date('m')
             ]));
@@ -1235,6 +1236,7 @@ class ReportingController extends Controller
                 // $search['message_template_id'] = $request->input('message_template_id') ?? 0;
 
                 return Redirect::to(route('message_template_report_by_month', [
+                    'tenant' => tenant('id'),
                     "year" => $search['year'],
                     "month" => $search['month']
                 ]));
@@ -1267,6 +1269,7 @@ class ReportingController extends Controller
             'month_sel' => $month_sel,
             'template_sel' => $template_sel,
             'submit' => route('message_template_report_by_month', [
+                'tenant' => tenant('id'),
                 "year" => $search['year'],
                 "month" => $search['month']
             ]),
@@ -1372,7 +1375,7 @@ class ReportingController extends Controller
 
         return view('report.sync_attendance_report', [
             'page_title' => 'Sync Attendance Report',
-            'submit' => route('sync_attendance_report'),
+            'submit' => route('sync_attendance_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'date_range' => $date_range,
             'sync_collect_details' => Reporting::get_sync_collect_details_by_land_user($search),
@@ -1658,7 +1661,7 @@ class ReportingController extends Controller
             'company_land_sel' => CompanyLand::get_company_land_sel(),
             'company_sel' => Company::get_company_sel(),
             'user_sel' => ['' => 'Please Select User'] + User::get_user_sel(),
-            'submit' => route('expense_report'),
+            'submit' => route('expense_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'company_cb' => Company::get_company_check_box(),
             'product_cb' => Product::all(),
@@ -1716,7 +1719,7 @@ class ReportingController extends Controller
         $search['user_id'] = $request->input('user_id') != 'Loading...' ? $request->input('user_id') : null;
 
         \Illuminate\Support\Facades\Session::put('invoice_daily_report', $search);
-        return redirect()->route('invoice_daily_report');
+        return redirect()->route('invoice_daily_report', ['tenant' => tenant('id')]);
     }
 
     public function ajax_get_products_multi_company(Request $request)
@@ -1791,7 +1794,7 @@ class ReportingController extends Controller
         // dd($sales_analysis_invoice, $sales_analysis_do);
 
         return view('report.sales_analysis_do', [
-            'submit' => route('sales_analysis_do'),
+            'submit' => route('sales_analysis_do', ['tenant' => tenant('id')]),
             'search' => $search,
             'company' => $company,
             'sales_analysis_do' => $sales_analysis_do,
@@ -1854,7 +1857,7 @@ class ReportingController extends Controller
         $records = Reporting::get_company_expense_report($search);
 
         return view('report.company_expense_report', [
-            'submit' => route('company_expense'),
+            'submit' => route('company_expense', ['tenant' => tenant('id')]),
             'search' => $search,
             'month_sel' => Reporting::get_month_w_filter($search),
             'company' => Company::get_company_for_daily_report($search),
@@ -1879,7 +1882,7 @@ class ReportingController extends Controller
 
 
         return view('report.company_expense_report_land_product', [
-            'submit' => route('company_expense_report_land_product'),
+            'submit' => route('company_expense_report_land_product', ['tenant' => tenant('id')]),
             'company_expense_land_product' => $records,
             'month_sel' => $current_month,
             'company_land' => CompanyLand::get_company_land_name_for_report($company_land_id),
@@ -1896,7 +1899,7 @@ class ReportingController extends Controller
 
 
         return view('report.company_expense_report_land_product_total', [
-            'submit' => route('company_expense_report_land_product_total'),
+            'submit' => route('company_expense_report_land_product_total', ['tenant' => tenant('id')]),
             'company_expense_land_product' => $records,
             'company_land' => CompanyLand::get_company_land_name_for_report($company_land_id),
             'land_product' => ProductCompanyLand::get_product_by_company_land_id_for_report($company_land_id),
@@ -1956,7 +1959,7 @@ class ReportingController extends Controller
         $records = Reporting::get_company_expense_detail_report($search, $month_num, $setting_expense_category_id);
 
         return view('report.company_expense_detail_report', [
-            'submit' => route('company_expense_detail'),
+            'submit' => route('company_expense_detail', ['tenant' => tenant('id')]),
             'search' => $search,
             'company_expense_detail' => $records,
             'month_sel' => $current_month,
@@ -2012,7 +2015,7 @@ class ReportingController extends Controller
         $company_expense = Reporting::company_expense_reporting($search);
 
         return view('report.company_expense_reporting', [
-            'submit' => route('company_expense_reporting'),
+            'submit' => route('company_expense_reporting', ['tenant' => tenant('id')]),
             'search' => $search,
             'company_expense' => $company_expense,
             'month_sel' => Reporting::get_month(),
@@ -2041,7 +2044,7 @@ class ReportingController extends Controller
         $records = Reporting::get_company_expense_detail_report_component($search, $month_num);
 
         return view('report.company_expense_reporting_details', [
-            'submit' => route('company_expense_reporting'),
+            'submit' => route('company_expense_reporting', ['tenant' => tenant('id')]),
             'search' => $search,
             'company_expense_detail' => $records,
             'month_sel' => $current_month,
@@ -2092,7 +2095,7 @@ class ReportingController extends Controller
         $search = session('company_land_tree_report_search') ?? $search;
 
         return view('report.company_land_tree_report', [
-            'submit' => route('land_tree_listing', $company_land_zone_id),
+            'submit' => route('land_tree_listing', ['tenant' => tenant('id'), 'id' => $company_land_zone_id]),
             'records' => Reporting::get_company_land_tree($search),
             'search' => $search,
             'company_sel' => [''=> 'All Company'] + Company::get_all_company_sel(),
@@ -2168,7 +2171,7 @@ class ReportingController extends Controller
         'company_land_sel' => CompanyLand::get_company_land_sel(),
         'company_sel' => Company::get_company_sel(),
         'user_sel' => ['' => 'Please Select User'] + User::get_user_sel(),
-        'submit' => route('formula_usage_report_sa'),
+        'submit' => route('formula_usage_report_sa', ['tenant' => tenant('id')]),
         'search' => $search,
         'company_cb' => Company::get_company_check_box(),
         'product_cb' => Product::all(),
@@ -2271,7 +2274,7 @@ class ReportingController extends Controller
         // 'company_land_sel' => CompanyLand::get_company_land_sel(),
         // 'company_sel' => Company::get_company_sel(),
         // 'user_sel' => ['' => 'Please Select User'] + User::get_user_sel(),
-        'submit' => route('formula_usage_report_sa'),
+        'submit' => route('formula_usage_report_sa', ['tenant' => tenant('id')]),
         'search' => $search,
         // 'company_cb' => Company::get_company_check_box(),
         // 'product_cb' => Product::all(),
@@ -2359,7 +2362,7 @@ class ReportingController extends Controller
         'company_land_sel' => CompanyLand::get_company_land_sel(),
         'company_sel' => Company::get_company_sel(),
         'user_sel' => ['' => 'Please Select User'] + User::get_user_sel(),
-        'submit' => route('formula_usage_report_admin'),
+        'submit' => route('formula_usage_report_admin', ['tenant' => tenant('id')]),
         'search' => $search,
         'company_cb' => Company::get_company_check_box(),
         'product_cb' => Product::all(),
@@ -2463,7 +2466,7 @@ class ReportingController extends Controller
         // 'company_land_sel' => CompanyLand::get_company_land_sel(),
         // 'company_sel' => Company::get_company_sel(),
         // 'user_sel' => ['' => 'Please Select User'] + User::get_user_sel(),
-        'submit' => route('formula_usage_report_admin'),
+        'submit' => route('formula_usage_report_admin', ['tenant' => tenant('id')]),
         'search' => $search,
         // 'company_cb' => Company::get_company_check_box(),
         // 'product_cb' => Product::all(),
@@ -2522,7 +2525,7 @@ class ReportingController extends Controller
         $worker = CompanyExpenseWorker::get_company_expense_worker_id();
 
         return view('report.farm_manager_worker_expense_report',[
-            'submit' => route('farm_manager_worker_expense'),
+            'submit' => route('farm_manager_worker_expense', ['tenant' => tenant('id')]),
             'search' => $search,
             'month' => Reporting::get_month_w_filter($search),
             'company' => $company,
@@ -2584,7 +2587,7 @@ class ReportingController extends Controller
         }
 
         return view('report.farm_manager_worker_expense_report_detail',[
-            'submit' => route('farm_manager_worker_expense_detail'),
+            'submit' => route('farm_manager_worker_expense_detail', ['tenant' => tenant('id')]),
             'search' => $search,
             'company' => Company::find($company_id),
             'farm_manager' => User::find($user_id),
@@ -2658,7 +2661,7 @@ class ReportingController extends Controller
         $overwrite_budget = Reporting::get_budget_company_formula_expense($search);
 
         return view('report.budget_report', [
-            'submit' => route('budget_report'),
+            'submit' => route('budget_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'default_budget' => Setting::where('setting_slug', 'default_budget_per_tree')->pluck('setting_value')->first(),
             'company_sel' => Company::get_company_sel(),
@@ -2714,7 +2717,7 @@ class ReportingController extends Controller
 
         return view('report.claim_report', [
             'page_title' => 'Staff Claim Reporting (Years)',
-            'submit' => route('claim_report'),
+            'submit' => route('claim_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'year_sel' => $year_sel,
             'month_sel' => $month_sel,
@@ -2727,7 +2730,7 @@ class ReportingController extends Controller
     public function claim_detail_report($year = 0, $month = 0, $company_id = 0, $claim_status_id = 0)
     {
         if($company_id == 0 || $year == 0 || $month == 0 || $claim_status_id == 0){
-            redirect(route('claim_report'));
+            redirect(route('claim_report', ['tenant' => tenant('id')]));
         }
 
         $search = array();
@@ -2746,7 +2749,7 @@ class ReportingController extends Controller
 
         return view('report.claim_detail_report', [
             'page_title' => 'Staff Claim Reporting (Users)',
-            'submit' => route('claim_report'),
+            'submit' => route('claim_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'year_sel' => $year_sel,
             'month_sel' => $month_sel,
@@ -2796,7 +2799,7 @@ class ReportingController extends Controller
         }
 
         return view('report.tree_target_report',[
-            'submit' => route('tree_target_report'),
+            'submit' => route('tree_target_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'company_sel' => Company::get_company_sel(),
             'company_land_sel' => CompanyLand::get_company_land_sel(),
@@ -2854,7 +2857,7 @@ class ReportingController extends Controller
         }
 
         return view('report.forecast_report',[
-            'submit' => route('forecast_report'),
+            'submit' => route('forecast_report', ['tenant' => tenant('id')]),
             'search' => $search,
             'price' => Reporting::get_average_price_for_forecast_report($search),
             'company_sel' => Company::get_company_sel(),

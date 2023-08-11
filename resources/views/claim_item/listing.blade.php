@@ -76,7 +76,7 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="card-text">You've Submitted your Claim. Currently Status <br/><strong>{{$claim->claim_status->claim_status_name}}</strong>.</p>
-                        {{-- <a href="{{route('claim_cancel_submission',$claim->claim_id)}}" class="btn btn-primary">Edit My Submission</a> --}}
+                        {{-- <a href="{{route('claim_cancel_submission', ['tenant' => tenant('id'), 'id' => $claim->claim_id])}}" class="btn btn-primary">Edit My Submission</a> --}}
                         <span data-toggle='modal' data-target='#cancel_submission' data-id='{{$claim->claim_id}}' class='modal_claim_action'><a href='javascript:void(0);' class='btn btn-primary'>Edit My Submission</a></span>
                     </div>
                 </div>
@@ -182,7 +182,7 @@
                         </ul>
                     </div></div></div></div><div class="simplebar-placeholder" style="width: auto; height: 472px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 166px; transform: translate3d(0px, 0px, 0px); display: block;"></div></div></div>
                     @if (count($claim->claim_log) > 3)
-                        <div class="text-center mt-4"><a href="{{ route('claim_log', $claim->claim_id) }}" class="btn btn-primary waves-effect waves-light btn-sm popup">View More <i class="mdi mdi-arrow-right ms-1"></i></a></div>
+                        <div class="text-center mt-4"><a href="{{ route('claim_log', ['tenant' => tenant('id'), 'id' => $claim->claim_id]) }}" class="btn btn-primary waves-effect waves-light btn-sm popup">View More <i class="mdi mdi-arrow-right ms-1"></i></a></div>
                     @endif
                 </div>
             </div>
@@ -208,13 +208,13 @@
                                 @endif
                                 @if ($claim->claim_status_id == 1 || $claim->claim_status_id == 8)
                                     @if ($claim->claim_status->is_edit_claim)
-                                        <a href="{{route('claim_item_add',$claim->claim_id)}}" class="btn btn-outline-primary waves-effect waves-light ml-2 text-uppercase">Add New Item</a>
+                                        <a href="{{route('claim_item_add', ['tenant' => tenant('id'), 'id' => $claim->claim_id])}}" class="btn btn-outline-primary waves-effect waves-light ml-2 text-uppercase">Add New Item</a>
                                         @if (count($company_expense_item) > 0 || count($raw_material_company_usage) > 0)
                                             <button type="submit" name="submit" value="update" class="btn btn-outline-primary waves-effect waves-light ml-2 text-uppercase">Update Claim</button>
                                         @endif
                                     @else
                                         <span data-toggle='modal' data-target='#cancel_submission' data-id='{{$claim->claim_id}}' class='modal_claim_action'><a href='javascript:void(0);' class='btn btn-danger waves-effect waves-light mr-1'>Cancel Submission</a></span>
-                                        {{-- <a href="{{route('claim_cancel_submission',$claim->claim_id)}}" class="btn btn-danger waves-effect waves-light">Cancel Submission</a> --}}
+                                        {{-- <a href="{{route('claim_cancel_submission', ['tenant' => tenant('id'), 'id' => $claim->claim_id])}}" class="btn btn-danger waves-effect waves-light">Cancel Submission</a> --}}
                                     @endif
                                 @else
                                     @if ($claim->claim_status->is_editable)
@@ -258,7 +258,7 @@
                                         <td>{{$item->company_expense_item_created}}</td>
                                         <td>
                                             {{json_decode($item->expense->setting_expense_name)->en}}<br>
-                                            <a href="{{route('company_expense_edit',$item->company_expense_id)}}" target="_blank" class="pr-2">
+                                            <a href="{{route('company_expense_edit', ['tenant' => tenant('id'), 'id' => $item->company_expense_id])}}" target="_blank" class="pr-2">
                                                 {{$item->company_expense->company_expense_number}}
                                             </a>
                                             {{-- @if($item->hasMedia('company_expense_item_media'))
@@ -330,7 +330,7 @@
                                 @php
                                     $reject = "";
                                     if ($claim->is_editable && (in_array(Auth::id(), $claim_step))) {
-                                        $reject = "<a title='Reject'  href='" . route('claim_item_reject',[$claim_item->claim_id, $claim_item->claim_item_id]) . "' style='color:red;'>Reject</a>";
+                                        $reject = "<a title='Reject'  href='" . route('claim_item_reject', ['tenant' => tenant('id'), 'id' => $claim_item->claim_id, 'claim_item_id' => $claim_item->claim_item_id]) . "' style='color:red;'>Reject</a>";
                                     }
                                     $caption = $claim_item->claim_item_name . " at " . $claim_item->claim_item_type_name . " <br/> " . $claim_item->claim_item_date . " <br/> RM " . $claim_item->claim_item_amount . "<br/>" . $reject;
                                 @endphp
@@ -365,7 +365,7 @@
                                                 @endif
                                             @endif
                                             @if ($claim->claim_status_id == 1 && $claim->admin_id == Auth::id())
-                                                <a title="Delete" class="text-danger" href="{{route('claim_item_delete',$claim_item->claim_item_id)}}">Delete</a><br/>
+                                                <a title="Delete" class="text-danger" href="{{route('claim_item_delete', ['tenant' => tenant('id'), 'claim_item_id' => $claim_item->claim_item_id])}}">Delete</a><br/>
                                             @endif
                                             {{$reject}}
                                         </span>
@@ -449,7 +449,7 @@
                     </table>
                 </div>
                 <div class="card-footer pt-4 px-0">
-                    <a href="{{route('claim_listing')}}" class="btn btn-secondary"><i class="fa fa-arrow-left mr-1"></i>Back To Claim Listing</a>
+                    <a href="{{route('claim_listing', ['tenant' => tenant('id')])}}" class="btn btn-secondary"><i class="fa fa-arrow-left mr-1"></i>Back To Claim Listing</a>
                 </div>
             </div>
         </div>
@@ -481,7 +481,7 @@
 <div class="modal fade" id="reject_resubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('claim_resubmit_reject') }}">
+            <form method="POST" action="{{ route('claim_resubmit_reject', ['tenant' => tenant('id')]) }}">
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" , name="claim_id" id="claim_id">
@@ -544,7 +544,7 @@
 <div class="modal fade" id="cancel_submission" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('claim_cancel_submission') }}">
+            <form method="POST" action="{{ route('claim_cancel_submission', ['tenant' => tenant('id')]) }}">
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" , name="claim_id" id="claim_id">
@@ -567,7 +567,7 @@
 <div class="modal fade" id="reject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('claim_item_reject')}}">
+            <form method="POST" action="{{ route('claim_item_reject', ['tenant' => tenant('id')])}}">
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" , name="claim_item_id" id="claim_item_id">
@@ -637,7 +637,7 @@
             details += '<div class="col-md-12 col-sm-12 style=" border-style: groove;">';
             $('.view_images_body').html('');
             $.ajax({
-                url: "{{ route('ajax_get_image_by_company_expense_item_id') }}",
+                url: "{{ route('ajax_get_image_by_company_expense_item_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -690,7 +690,7 @@
             details += '<div class="col-md-12 col-sm-12 style=" border-style: groove;">';
             $('.view_images_body_claim').html('');
             $.ajax({
-                url: "{{ route('ajax_get_image_by_claim_item_id') }}",
+                url: "{{ route('ajax_get_image_by_claim_item_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -837,7 +837,7 @@
 
         function add_get_price_expense_item(expense_item_id) {
             $.ajax({
-                url: "{{ route('ajax_get_price_expense_item') }}",
+                url: "{{ route('ajax_get_price_expense_item', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -856,7 +856,7 @@
 
         function minus_get_price_expense_item(expense_item_id2) {
             $.ajax({
-                url: "{{ route('ajax_get_price_expense_item') }}",
+                url: "{{ route('ajax_get_price_expense_item', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -875,7 +875,7 @@
 
         function add_get_price_raw_material_item(raw_material_company_usage_id) {
             $.ajax({
-                url: "{{ route('ajax_get_price_raw_material_item') }}",
+                url: "{{ route('ajax_get_price_raw_material_item', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -894,7 +894,7 @@
 
         function minus_get_price_raw_material_item(raw_material_company_usage_id) {
             $.ajax({
-                url: "{{ route('ajax_get_price_raw_material_item') }}",
+                url: "{{ route('ajax_get_price_raw_material_item', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

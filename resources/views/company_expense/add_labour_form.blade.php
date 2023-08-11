@@ -271,7 +271,7 @@
                               <div class="col-sm-6">
                                   <span id="error_user"></span>
                                   <button type="submit" id="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                                  <a href="{{route('company_expense_listing')}}" class="btn btn-secondary" >Cancel</a>
+                                  <a href="{{route('company_expense_listing', ['tenant' => tenant('id')])}}" class="btn btn-secondary" >Cancel</a>
                               </div>
                           </div>
                         </div>
@@ -362,7 +362,7 @@
                 let user = '<option value="">Please Select Farm Manager</option>';
                 $('#manager_id').html('<option value="">Loading...</option>');
                 $.ajax({
-                    url: "{{ route('ajax_get_farm_manager_sel_by_company') }}",
+                    url: "{{ route('ajax_get_farm_manager_sel_by_company', ['tenant' => tenant('id')]) }}",
                     method: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -407,7 +407,7 @@
                     if (first_time_load && title == 'Edit') {
                       var expense_manager_id = <?php echo json_encode(@$records->worker_id); ?>;
                       $.ajax({
-                          url: "{{ route('ajax_get_user_id_by_worker') }}",
+                          url: "{{ route('ajax_get_user_id_by_worker', ['tenant' => tenant('id')]) }}",
                           method: "POST",
                           data: {
                               _token: "{{ csrf_token() }}",
@@ -472,7 +472,7 @@
                     let land = '';
                     $('#company_land_id').html('<option value="">Loading...</option>');
                     $.ajax({
-                        url: "{{ route('ajax_land_user') }}",
+                        url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                         method: "POST",
                         data: {
                             _token: "{{ csrf_token() }}",
@@ -527,7 +527,7 @@
                 let land = '';
                 let sland = <?php echo json_encode(@$records->company_expense_land); ?>;
                 $.ajax({
-                    url: "{{ route('ajax_land_user') }}",
+                    url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                     method: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -582,7 +582,7 @@
               if(expense_type != ''){
                   if((worker_role_id != '' && worker_role_id != 1 )|| (worker_role_id == 1 && manager_id != '') || (user_type == 1)){
                       $.ajax({
-                          url: "{{ route('ajax_get_worker_list') }}",
+                          url: "{{ route('ajax_get_worker_list', ['tenant' => tenant('id')]) }}",
                           method: 'post',
                           data: {
                               _token: '{{ csrf_token() }}',

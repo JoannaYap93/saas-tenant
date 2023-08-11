@@ -271,7 +271,7 @@
                         <div class="col-sm-6">
                             <span id="error_user"></span>
                             <button type="submit" id="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                            <a href="{{ route('admin_listing') }}" class="btn btn-secondary" >Cancel</a>
+                            <a href="{{ route('admin_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary" >Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -407,7 +407,7 @@ $(document).ready(function(e) {
     $('#user_unique_code').on('keyup', function(){
         var value = $(this).val();
         $.ajax({
-            url: "{{ route('ajax_check_user_unique_code') }}",
+            url: "{{ route('ajax_check_user_unique_code', ['tenant' => tenant('id')]) }}",
             method: 'post',
             data: {
                 user_unique_code: value,
@@ -459,7 +459,7 @@ $(document).ready(function(e) {
     //     let user_mobile = $(this).val();
     //
     //     $.ajax({
-    //         url: "{{ route('ajax_check_user_mobile') }}",
+    //         url: "{{ route('ajax_check_user_mobile', ['tenant' => tenant('id')]) }}",
     //         method: 'post',
     //         data: {
     //             user_mobile: user_mobile,
@@ -486,7 +486,7 @@ $(document).ready(function(e) {
             var error_slug = '';
             $.ajax({
                 type: 'POST',
-                url: "{{route('ajax_check_user_slug')}}",
+                url: "{{route('ajax_check_user_slug', ['tenant' => tenant('id')])}}",
                 data: {
                     user_slug: $(this).val(),
                     user_id: user_id,
@@ -566,7 +566,7 @@ $(document).ready(function(e) {
 
         let land = '';
         $.ajax({
-            url: "{{ route('ajax_get_company_land') }}",
+            url: "{{ route('ajax_get_company_land', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
@@ -648,7 +648,7 @@ $(document).ready(function(e) {
         $('#worker_id').html('<option value="">Loading...</option>');
 
         $.ajax({
-            url: "{{ route('ajax_get_worker_list_sel_by_company_without_user_id') }}",
+            url: "{{ route('ajax_get_worker_list_sel_by_company_without_user_id', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",

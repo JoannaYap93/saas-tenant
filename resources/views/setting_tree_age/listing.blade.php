@@ -16,7 +16,7 @@
                 <div class="d-flex align-items-center">
                   <h4 class="mb-0 font-size-18 mr-2">Setting Tree Age Listing</h4>
                     @can('setting_tree_age')
-                        <a href="{{ route('setting_tree_age_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
+                        <a href="{{ route('setting_tree_age_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
                     @endcan
                 </div>
                 <div class="page-title-right">
@@ -101,7 +101,7 @@
                                         </td>
                                         <td>
                                             @can('setting_tree_age')
-                                                <a href="{{ route('setting_tree_age_edit', @$rows->setting_tree_age_id) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
+                                                <a href="{{ route('setting_tree_age_edit', ['tenant' => tenant('id'), 'id' => @$rows->setting_tree_age_id]) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                             @endcan
                                         </td>
                                     </tr>

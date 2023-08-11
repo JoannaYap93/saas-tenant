@@ -65,7 +65,7 @@
             @endphp
             <tr>
                 <td rowspan="{{$count_company_land[$company->company_id]}}" style="text-align: left; {{ $row_count % 2 == 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }} border:1px solid #eee;">
-                    <a class="popup" href="{{route('budget_report_detail', ['company_id' => $company->company_id, 'year' => @$search['year']])}}">{{$company->company_name}}</a>
+                    <a class="popup" href="{{route('budget_report_detail', ['tenant' => tenant('id'), 'company_id' => $company->company_id, 'year' => @$search['year']])}}">{{$company->company_name}}</a>
                 </td>
                 @foreach ($company_lands[$company->company_id]  as $land)
                     @if ($company_land_index > 0)

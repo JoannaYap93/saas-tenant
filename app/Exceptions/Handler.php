@@ -62,11 +62,11 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException && $exception->getStatusCode() == 403) {
             if ($exception->getMessage() == "User is not logged in.") {
-                return redirect()->route('login');
+                return redirect()->route('login', ['tenant' => tenant('id')]);
             }
             elseif ($exception->getMessage() == "User does not have the right permissions.") {
                 Session::flash('fail_msg','Permission denied.');
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard', ['tenant' => tenant('id')]);
             }
         }
 

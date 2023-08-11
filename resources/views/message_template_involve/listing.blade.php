@@ -18,7 +18,7 @@
 
                 <div class="d-flex align-items-center">
                     <h4 class="mb-0 font-size-18 mr-2">{{$page_title}}</h4>
-                    <a href="{{ route('message_template_involve_add') }}"
+                    <a href="{{ route('message_template_involve_add', ['tenant' => tenant('id')]) }}"
                         class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                             class="fas fa-plus"></i> ADD NEW</a>
                 </div>
@@ -97,7 +97,7 @@
                                     </td>
                                     <td>{{$rows->message_template_involve_slug}}</td>
                                     <td>
-                                        <a href="{{ route('message_template_involve_edit', $rows->message_template_involve_id) }}"
+                                        <a href="{{ route('message_template_involve_edit', ['tenant' => tenant('id'), 'id' => $rows->message_template_involve_id]) }}"
                                             class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                         <button class="btn btn-sm btn-outline-danger delete" data-toggle="modal"
                                             data-target="#delete" data-id="{{ $rows->message_template_involve_id }}">Delete
@@ -124,7 +124,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('message_template_involve_delete') }}">
+                <form method="POST" action="{{ route('message_template_involve_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this Message Template Involve ?</h4>

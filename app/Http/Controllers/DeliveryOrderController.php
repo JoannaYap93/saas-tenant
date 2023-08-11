@@ -114,7 +114,7 @@ class DeliveryOrderController extends Controller
 
         return view('delivery_order.listing', [
             'records' => $do,
-            'submit' => route('do_listing'),
+            'submit' => route('do_listing', ['tenant' => tenant('id')]),
             'company' => $company,
             'search' => $search,
             'order_type' => $order_type,
@@ -138,7 +138,7 @@ class DeliveryOrderController extends Controller
 
         if (Product::get_product_company() == false) {
             Session::flash('fail_msg', 'Please add a product before continue');
-            return redirect()->route('do_listing');
+            return redirect()->route('do_listing', ['tenant' => tenant('id')]);
         }
 
         $do = null;
@@ -435,7 +435,7 @@ class DeliveryOrderController extends Controller
                 session()->forget('filter_do');
 
                 Session::flash('success_msg', 'Added new D.O. successfully!');
-                return redirect()->route('do_listing');
+                return redirect()->route('do_listing', ['tenant' => tenant('id')]);
             }
             $do = (object) $request->all();
             $i= 0;
@@ -453,7 +453,7 @@ class DeliveryOrderController extends Controller
         $warehouse = SettingWarehouse::get_warehouse_sel();
         return view('delivery_order.form', [
             'type' => 'Add',
-            'submit' => route('do_add'),
+            'submit' => route('do_add', ['tenant' => tenant('id')]),
             'order_type' => $order_type,
             'records' => $do,
             'expense' => $expense,
@@ -481,7 +481,7 @@ class DeliveryOrderController extends Controller
 
         if ($do == null) {
             Session::flash('fail_msg', 'Invalid Delivery Order');
-            return redirect()->route('do_listing');
+            return redirect()->route('do_listing', ['tenant' => tenant('id')]);
         }
 
         $check_do = DeliveryOrder::find($id);
@@ -928,7 +928,7 @@ class DeliveryOrderController extends Controller
                 session()->forget('filter_do');
 
                 Session::flash('success_msg', 'Updated successfully!');
-                return redirect()->route('do_listing');
+                return redirect()->route('do_listing', ['tenant' => tenant('id')]);
 
 
             }else{
@@ -956,7 +956,7 @@ class DeliveryOrderController extends Controller
         $warehouse = SettingWarehouse::get_warehouse_sel();
         return view('delivery_order.form', [
             'type' => 'Edit',
-            'submit' => route('do_edit', $id),
+            'submit' => route('do_edit', ['tenant' => tenant('id'), 'id' => $id]),
             'order_type' => $order_type,
             'expense' => $expense,
             'records' => $do,
@@ -980,7 +980,7 @@ class DeliveryOrderController extends Controller
         } else {
             Session::flash('fail_msg', 'Invalid Delivery Order!');
         }
-        return redirect()->route('do_listing');
+        return redirect()->route('do_listing', ['tenant' => tenant('id')]);
     }
 
     public function ajax_get_product_size_edit_do(Request $request)
@@ -1023,11 +1023,11 @@ class DeliveryOrderController extends Controller
                 $customer = Customer::find($orders[0]->customer_id);
             } else {
                 Session::flash('fail_msg', 'Delivery Order has issued to invoice.');
-                return redirect()->route('do_listing');
+                return redirect()->route('do_listing', ['tenant' => tenant('id')]);
             }
         } else {
             Session::flash('fail_msg', 'Invalid Delivery Order! Please try again.');
-            return redirect()->route('do_listing');
+            return redirect()->route('do_listing', ['tenant' => tenant('id')]);
         }
 
         $payment_method = SettingPayment::get_sel();
@@ -1047,7 +1047,7 @@ class DeliveryOrderController extends Controller
     {
         $search['invoice_id'] = $iv_id;
         Session::put('invoice_search', $search);
-        return redirect()->route('invoice_listing');
+        return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
     }
 
     public function view_pdf(Request $request, $id, $encrypt)
@@ -1067,11 +1067,11 @@ class DeliveryOrderController extends Controller
             return $pdf->stream();
         } else {
             Session::flash('fail_msg', 'Invalid Delivery Order');
-            return redirect()->route('do_listing');
+            return redirect()->route('do_listing', ['tenant' => tenant('id')]);
         }
       }else{
         Session::flash('fail_msg', 'Invalid Delivery Order Encryption');
-        return redirect()->route('do_listing');
+        return redirect()->route('do_listing', ['tenant' => tenant('id')]);
       }
     }
 
@@ -1110,7 +1110,7 @@ class DeliveryOrderController extends Controller
             Session::flash('fail_msg', 'Unable to add expense to order.');
         }
 
-        return redirect()->route('do_listing');
+        return redirect()->route('do_listing', ['tenant' => tenant('id')]);
     }
 
     public function price_verification_approve_reject(Request $request)
@@ -1124,7 +1124,7 @@ class DeliveryOrderController extends Controller
 
         if (!$do) {
             Session::flash('failed_msg', "Invalid Delivery Order, Please Try Again...");
-            return redirect()->route('do_listing');
+            return redirect()->route('do_listing', ['tenant' => tenant('id')]);
         }
 
         if ($status == 'approve') {
@@ -1142,7 +1142,7 @@ class DeliveryOrderController extends Controller
             ]);
 
             Session::flash('success_msg', "Delivery Order Price Verification Approved");
-            return redirect()->route('do_listing');
+            return redirect()->route('do_listing', ['tenant' => tenant('id')]);
 
         } elseif ($status == 'reject') {
             $do->update([
@@ -1158,7 +1158,7 @@ class DeliveryOrderController extends Controller
                 'user_id' => $user->user_id,
             ]);
 
-            return redirect()->route('get_rejected_do', ['id' => $do_id]);
+            return redirect()->route('get_rejected_do', ['tenant' => tenant('id'), 'id' => $do_id]);
         }
     }
 
@@ -1170,12 +1170,12 @@ class DeliveryOrderController extends Controller
 
         if (!$delivery_order || @$delivery_order->invoice_id) {
             Session::flash("fail_msg", "Error, please try again later...");
-            return redirect()->route('do_listing');
+            return redirect()->route('do_listing', ['tenant' => tenant('id')]);
         }
 
         if (!$delivery_order_log_description) {
             Session::flash("fail_msg", "Remark field is required");
-            return redirect()->route('do_listing');
+            return redirect()->route('do_listing', ['tenant' => tenant('id')]);
         }
 
         $delivery_order->update([
@@ -1191,7 +1191,7 @@ class DeliveryOrderController extends Controller
         ]);
 
         Session::flash('success_msg', 'Successfully deleted delivery order - '.$delivery_order->delivery_order_no);
-        return redirect()->route('do_listing');
+        return redirect()->route('do_listing', ['tenant' => tenant('id')]);
     }
 
     public function revert(Request $request){
@@ -1203,12 +1203,12 @@ class DeliveryOrderController extends Controller
 
         if (!$delivery_order) {
             Session::flash("fail_msg", "Error, please try again later...");
-            return redirect()->route('do_listing');
+            return redirect()->route('do_listing', ['tenant' => tenant('id')]);
         }
         //
         if (!$delivery_order_log_description) {
             Session::flash("fail_msg", "Remark field is required");
-            return redirect()->route('do_listing');
+            return redirect()->route('do_listing', ['tenant' => tenant('id')]);
         }
 
         if ($invoice) {
@@ -1238,7 +1238,7 @@ class DeliveryOrderController extends Controller
         ]);
 
         Session::flash('success_msg', 'Successfully reverted delivery order - '.$delivery_order->delivery_order_no);
-        return redirect()->route('do_listing');
+        return redirect()->route('do_listing', ['tenant' => tenant('id')]);
     }
 
     public function ajax_find_do_with_id(Request $request)
@@ -1253,7 +1253,7 @@ class DeliveryOrderController extends Controller
         $search['delivery_order_id'] = $do_id;
         Session::put('filter_do', $search);
         Session::flash('fail_msg', "Delivery Order Price Verification Rejected. Please send the price verification form link to customer again");
-        return redirect()->route('do_listing');
+        return redirect()->route('do_listing', ['tenant' => tenant('id')]);
     }
 
     public function ajax_get_mobile_no_by_do_id(Request $request)

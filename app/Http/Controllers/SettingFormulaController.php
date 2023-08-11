@@ -44,7 +44,7 @@ class SettingFormulaController extends Controller
         $records = SettingFormula::get_records($search, $perpage);
 
         return view('setting_formula.listing', [
-            'submit' => route('setting_formula_listing','lang=en'),
+            'submit' => route('setting_formula_listing', ['tenant' => tenant('id')]),
             'title' => 'Formula',
             'records' => $records,
             'search' =>  $search,
@@ -110,13 +110,13 @@ class SettingFormulaController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully added '.$request->input('setting_formula_name'));
-                return redirect()->route('setting_formula_listing');
+                return redirect()->route('setting_formula_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('setting_formula.form', [
-            'submit' => route('setting_formula_add'),
+            'submit' => route('setting_formula_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post'=> $post,
             'setting_formula_category_sel' => SettingFormulaCategory::get_formula_category_sel(),
@@ -214,13 +214,13 @@ class SettingFormulaController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully edited '.$request->input('setting_formula_name'));
-                return redirect()->route('setting_formula_listing');
+                return redirect()->route('setting_formula_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('setting_formula.form', [
-            'submit' => route('setting_formula_edit', $setting_formula_id),
+            'submit' => route('setting_formula_edit', ['tenant' => tenant('id'), 'id' => $setting_formula_id]),
             'title' => 'Edit',
             'post'=> $post,
             'setting_formula_category_sel' => SettingFormulaCategory::get_formula_category_sel(),
@@ -237,7 +237,7 @@ class SettingFormulaController extends Controller
 
         if(!$setting_formula){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('setting_formula_listing');
+            return redirect()->route('setting_formula_listing', ['tenant' => tenant('id')]);
         }
 
        $setting_formula->update([
@@ -245,7 +245,7 @@ class SettingFormulaController extends Controller
        ]);
 
         Session::flash('success_msg', "Successfully deleted setting formula.");
-        return redirect()->route('setting_formula_listing');
+        return redirect()->route('setting_formula_listing', ['tenant' => tenant('id')]);
     }
 
     public function ajax_get_rm_name_for_placeholder(Request $request)

@@ -73,7 +73,7 @@ class UserTypeController extends Controller
             }
 
             Session::flash('success_msg', 'Manage Successfully');
-            return redirect()->route('user_type_listing');
+            return redirect()->route('user_type_listing', ['tenant' => tenant('id')]);
         }
 
         return view('user_type.referral', [
@@ -104,15 +104,15 @@ class UserTypeController extends Controller
                     'user_type_referral_discount_value' => $request->input('user_type_referral_discount_value'),
                     'is_stackable' => 1
                 ]);
-                return redirect()->route('manage_referral', ['id' => $user_type_id])->with('message', 'Referral created successfully!');
+                return redirect()->route('manage_referral', ['tenant' => tenant('id'), 'id' => $user_type_id])->with('message', 'Referral created successfully!');
             }
         }
 
         return view('user_type.referral_form', [
             'product_sel' => Product::get_product_sel(),
             'title' => 'Add',
-            'submit' => route('add_referral', ['user_type_id' => $user_type_id]),
-            'cancel' => route('manage_referral', [$user_type_id]),
+            'submit' => route('add_referral', ['tenant' => tenant('id'), 'user_type_id' => $user_type_id]),
+            'cancel' => route('manage_referral', ['tenant' => tenant('id'), 'id' => $user_type_id]),
             'post' => $request->all(),
         ])->withErrors($validator);
     }

@@ -18,7 +18,7 @@
 		<div class="d-flex align-items-center">
                     <h4 class="mb-0 font-size-18 mr-2">{{$title}}</h4>
                     {{-- @can('worker_type_manage')
-                    <a href="{{ route('worker_type_add') }}"
+                    <a href="{{ route('worker_type_add', ['tenant' => tenant('id')]) }}"
                         class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                             class="fas fa-plus"></i> ADD NEW</a>
                     @endcan --}}
@@ -109,7 +109,7 @@
 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('worker_type_delete') }}">
+            <form method="POST" action="{{ route('worker_type_delete', ['tenant' => tenant('id')]) }}">
                 @csrf
                 <div class="modal-body">
                     <h4>Delete this worker ?</h4>

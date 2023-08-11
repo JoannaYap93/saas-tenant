@@ -40,7 +40,7 @@ class MessageTemplateInvolveController extends Controller
             'page_title' => 'Message Template Involve Listing',
             'records' => $records,
             'search' =>  $search,
-            'submit' => route('message_template_involve_listing'),
+            'submit' => route('message_template_involve_listing', ['tenant' => tenant('id')]),
         ]);
     }
 
@@ -69,7 +69,7 @@ class MessageTemplateInvolveController extends Controller
                     'is_deleted' => 0
                 ]);
 
-                return redirect()->route('message_template_involve_listing');
+                return redirect()->route('message_template_involve_listing', ['tenant' => tenant('id')]);
             }
             $post = $request->all();
         }
@@ -77,7 +77,7 @@ class MessageTemplateInvolveController extends Controller
         return view('message_template_involve.form', [
             'page_title' => 'Add Message Template Involve',
             'post' => $post,
-            'submit' => route('message_template_involve_add'),
+            'submit' => route('message_template_involve_add', ['tenant' => tenant('id')]),
         ])->withErrors($validation);
     }
 
@@ -110,7 +110,7 @@ class MessageTemplateInvolveController extends Controller
                     'message_template_involve_updated' => now(),
                 ]);
 
-                return redirect()->route('message_template_involve_listing');
+                return redirect()->route('message_template_involve_listing', ['tenant' => tenant('id')]);
             }
             $post = $request->all();
         }
@@ -118,7 +118,7 @@ class MessageTemplateInvolveController extends Controller
         return view('message_template_involve.form', [
             'page_title' => 'Edit Message Involve Template',
             'post' => $post,
-            'submit' => route('message_template_involve_edit', ['id' => $message_template_involve_id]),
+            'submit' => route('message_template_involve_edit', ['tenant' => tenant('id'), 'id' => $message_template_involve_id]),
         ])->withErrors($validation);
     }
 
@@ -128,7 +128,7 @@ class MessageTemplateInvolveController extends Controller
 
         if(!$message_template_involve_id){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('message_template_involve_listing');
+            return redirect()->route('message_template_involve_listing', ['tenant' => tenant('id')]);
         }
 
         $message_template_involve_id->update([
@@ -137,6 +137,6 @@ class MessageTemplateInvolveController extends Controller
 
 
         Session::flash('success_msg', "Successfully delete Message Template Involve.");
-        return redirect()->route('message_template_involve_listing');
+        return redirect()->route('message_template_involve_listing', ['tenant' => tenant('id')]);
     }
 }

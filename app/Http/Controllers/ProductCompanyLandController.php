@@ -33,7 +33,7 @@ class ProductCompanyLandController extends Controller
             $check_land = CompanyLand::query()->where('company_id', auth()->user()->company_id)->where('company_land_id', $company_land_id)->first();
             if (!$check_land) {
                 Session::flash('fail_msg', 'Invalid Company Land. Please choose another.');
-                return redirect()->route('company_listing');
+                return redirect()->route('company_listing', ['tenant' => tenant('id')]);
             }
         }
 
@@ -304,13 +304,13 @@ class ProductCompanyLandController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully added product');
-                return redirect()->route('company_listing');
+                return redirect()->route('company_listing', ['tenant' => tenant('id')]);
             }
             $company_land = (object) $request->all();
             // dd($company_land);
         }
         return view('product_company_land.form', [
-            'submit' => route('product_company_land_add', $company_land_id),
+            'submit' => route('product_company_land_add', ['tenant' => tenant('id'), 'id' => $company_land_id]),
             'title' => 'Add',
             'company_land' => $company_land,
             'post' => $post,

@@ -70,7 +70,7 @@ class CompanyExpenseController extends Controller
         $search = session('listing') ?? array();
 
         return view('company_expense.listing', [
-            'submit' => route('company_expense_listing'),
+            'submit' => route('company_expense_listing', ['tenant' => tenant('id')]),
             'search' => $search,
             'records' => CompanyExpense::get_records($search),
             'company_land_sel' => CompanyLand::get_company_land_sel(),
@@ -492,7 +492,7 @@ class CompanyExpenseController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully Updated');
-                return redirect()->route('company_expense_listing');
+                return redirect()->route('company_expense_listing', ['tenant' => tenant('id')]);
             }
 
             $post = (object) $request->all();
@@ -500,7 +500,7 @@ class CompanyExpenseController extends Controller
         }
 
         return view('company_expense.form', [
-            'submit' => route('company_expense_edit', $company_expense_id),
+            'submit' => route('company_expense_edit', ['tenant' => tenant('id'), 'id' => $company_expense_id]),
             'title' => 'Edit',
             'worker' => $isworker,
             'records'=> $post,
@@ -834,12 +834,12 @@ class CompanyExpenseController extends Controller
                     ]);
                 }
                 Session::flash('success_msg', 'Successfully Added');
-                return redirect()->route('company_expense_listing');
+                return redirect()->route('company_expense_listing', ['tenant' => tenant('id')]);
             }
         }
 
         return view('company_expense.form', [
-            'submit' => route('company_expense_add'),
+            'submit' => route('company_expense_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'records' => $company_expense,
             'supplier_sel' => Supplier::supplier_sel(),
@@ -1055,13 +1055,13 @@ class CompanyExpenseController extends Controller
                         'query' => $query
                     ]);
                     Session::flash('success_msg', 'Successfully Added');
-                    return redirect()->route('company_expense_listing');
+                    return redirect()->route('company_expense_listing', ['tenant' => tenant('id')]);
                 }
             }
         }
 
         return view('company_expense.add_labour_form', [
-            'submit' => route('company_expense_add_labour'),
+            'submit' => route('company_expense_add_labour', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'records' => $company_expense,
             'expense_category_sel' => SettingExpenseCategory::get_existing_expense_category_sel(),
@@ -1265,7 +1265,7 @@ class CompanyExpenseController extends Controller
                     ]);
 
                     Session::flash('success_msg', 'Successfully Updated');
-                    return redirect()->route('company_expense_listing');
+                    return redirect()->route('company_expense_listing', ['tenant' => tenant('id')]);
             }
             $company_expense = (object) $request->all();
 
@@ -1273,7 +1273,7 @@ class CompanyExpenseController extends Controller
       }
 
         return view('company_expense.add_labour_form', [
-            'submit' => route('company_expense_edit_labour', $company_expense_id),
+            'submit' => route('company_expense_edit_labour', ['tenant' => tenant('id'), 'id' => $company_expense_id]),
             'title' => 'Edit',
             'records'=> $company_expense,
             'records_worker'=>$company_expense_worker,
@@ -1295,7 +1295,7 @@ class CompanyExpenseController extends Controller
       $company_id = $request->input('company_id');
       if(!$company_id){
         Session::flash('failed_msg', 'Company ID is required!');
-        return redirect()->route('company_listing');
+        return redirect()->route('company_listing', ['tenant' => tenant('id')]);
       }else{
         $company_expense = CompanyExpense::where('company_id', $company_id)->get();
         if($company_expense){
@@ -1312,7 +1312,7 @@ class CompanyExpenseController extends Controller
             ]);
           }
           Session::flash('success_msg', 'Successfully Updated Cost!');
-          return redirect()->route('company_listing');
+          return redirect()->route('company_listing', ['tenant' => tenant('id')]);
         }
       }
     }
@@ -1324,7 +1324,7 @@ class CompanyExpenseController extends Controller
 
         if(!$company_expense){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('company_expense_listing');
+            return redirect()->route('company_expense_listing', ['tenant' => tenant('id')]);
         }
 
        $company_expense->update([
@@ -1339,7 +1339,7 @@ class CompanyExpenseController extends Controller
         ]);
 
         Session::flash('success_msg', "Successfully deleted Company Expense.");
-        return redirect()->route('company_expense_listing');
+        return redirect()->route('company_expense_listing', ['tenant' => tenant('id')]);
     }
 
     public function ajax_get_image_by_ce_item_id(Request $request)

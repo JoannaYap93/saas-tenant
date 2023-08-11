@@ -40,7 +40,7 @@
 
 <div class="row">
     <div class="col-12">
-        <form method="POST" action="{{ route('land_tree_log_edit', $company_land_tree_log_id) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('land_tree_log_edit', ['tenant' => tenant('id'), 'id' => $company_land_tree_log_id]) }}" enctype="multipart/form-data">
             @csrf
             <div class="card">
                 <div class="card-body">
@@ -115,7 +115,7 @@
         let input_val = <?php echo json_encode($records->company_land_tree_log_value); ?>;
         $.ajax({
 
-            url: "{{ route('ajax_get_tree_action_by_id') }}",
+            url: "{{ route('ajax_get_tree_action_by_id', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",

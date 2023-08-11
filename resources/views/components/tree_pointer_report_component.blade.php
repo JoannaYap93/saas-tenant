@@ -39,7 +39,7 @@
                     @if(isset($recordpointer['pointer'][$company_id][$company_land_id]))
                         <td style="text-align: center; {{ $counter_row % 2 == 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }}; border:1px solid #eee">
                             @if (isset($component))
-                                <a class="popup" href="{{ route('tree_pointer_reporting_details', ['company_land_id' => @$company_land_id, 'setting_tree_age_upper' => @$search['setting_tree_age_upper'] ? $search['setting_tree_age_upper'] : count($age) , 'setting_tree_age_lower' => @$search['setting_tree_age_lower'] ? $search['setting_tree_age_lower'] : '1'])}}">{{number_format($recordpointer['pointer'][$company_id][$company_land_id],2)}}
+                                <a class="popup" href="{{ route('tree_pointer_reporting_details', ['tenant' => tenant('id'),'company_land_id' => @$company_land_id, 'setting_tree_age_upper' => @$search['setting_tree_age_upper'] ? $search['setting_tree_age_upper'] : count($age) , 'setting_tree_age_lower' => @$search['setting_tree_age_lower'] ? $search['setting_tree_age_lower'] : '1'])}}">{{number_format($recordpointer['pointer'][$company_id][$company_land_id],2)}}
                                 </a>
                             @else
                                 {{number_format($recordpointer['pointer'][$company_id][$company_land_id],2)}}
@@ -53,7 +53,7 @@
                     @if($company_count == 0)
                         @if((isset($recordpointer['total_pointer'][$company_id])))
                             <td rowspan="{{ $count_land }}" style="text-align: center; {{ $counter_row % 2 == 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }}; border:1px solid #eee">
-                                <a class="popup" href="{{ route('tree_pointer_reporting_details_total', ['company_id' => @$company_id, 'setting_tree_age_upper' => @$search['setting_tree_age_upper'] ? $search['setting_tree_age_upper'] : count($age) , 'setting_tree_age_lower' => @$search['setting_tree_age_lower'] ? $search['setting_tree_age_lower'] : '1'])}}">{{number_format($recordpointer['total_pointer'][$company_id],2)}}
+                                <a class="popup" href="{{ route('tree_pointer_reporting_details_total', ['tenant' => tenant('id'),'company_id' => @$company_id, 'setting_tree_age_upper' => @$search['setting_tree_age_upper'] ? $search['setting_tree_age_upper'] : count($age) , 'setting_tree_age_lower' => @$search['setting_tree_age_lower'] ? $search['setting_tree_age_lower'] : '1'])}}">{{number_format($recordpointer['total_pointer'][$company_id],2)}}
                                 </a>
                             </td>
                             @php

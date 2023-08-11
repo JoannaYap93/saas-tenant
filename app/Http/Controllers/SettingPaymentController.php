@@ -39,7 +39,7 @@ class SettingPaymentController extends Controller
         $search = session('filter_setting_payment') ? session('filter_setting_payment') : $search;
 
         return view('setting_payment.listing', [
-            'submit' => route('setting_payment_listing'),
+            'submit' => route('setting_payment_listing', ['tenant' => tenant('id')]),
             'records' => SettingPayment::get_records($search, $perpage),
             'title' => 'Setting Payment Listing',
             'status' => ['' => 'Please select status', '0' => 'Active', '1' => 'Inactive'],
@@ -73,13 +73,13 @@ class SettingPaymentController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully added ' . $request->input('setting_payment_name'));
-                return redirect()->route('setting_payment_listing');
+                return redirect()->route('setting_payment_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('setting_payment.form', [
-            'submit' => route('setting_payment_add'),
+            'submit' => route('setting_payment_add', ['tenant' => tenant('id')]),
             'edit' => false,
             'post' => $post,
             'title' => 'Add',
@@ -114,13 +114,13 @@ class SettingPaymentController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully edited ' . $request->input('setting_payment_name'));
-                return redirect()->route('setting_payment_listing');
+                return redirect()->route('setting_payment_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('setting_payment.form', [
-            'submit' => route('setting_payment_edit', $setting_payment_id),
+            'submit' => route('setting_payment_edit', ['tenant' => tenant('id'), 'setting_payment_id' => $setting_payment_id]),
             'edit' => true,
             'title' => 'Edit',
             'post' => $post,
@@ -136,7 +136,7 @@ class SettingPaymentController extends Controller
 
         if (!$setting_payment_id) {
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('setting_payment_listing');
+            return redirect()->route('setting_payment_listing', ['tenant' => tenant('id')]);
         }
 
         $setting_payment_id->update([
@@ -145,6 +145,6 @@ class SettingPaymentController extends Controller
 
 
         Session::flash('success_msg', "Successfully deleted Customer Category.");
-        return redirect()->route('setting_payment_listing');
+        return redirect()->route('setting_payment_listing', ['tenant' => tenant('id')]);
     }
 }

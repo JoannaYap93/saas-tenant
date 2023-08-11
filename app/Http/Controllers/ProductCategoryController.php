@@ -35,7 +35,7 @@ class ProductCategoryController extends Controller
         $search = session('filter_product_category') ??  $search;
         $product_category = ProductCategory::get_records($search);
         return view('product_category/listing', [
-            'submit' => route('product_category_listing'),
+            'submit' => route('product_category_listing', ['tenant' => tenant('id')]),
             'records' => $product_category,
             // 'product_category_sel'=> ProductCategory::get_product_category_sel(),
             'product_category_sel' => ['' => 'Please Select Category Status', 'drafted' => 'Drafted', 'published' => 'Published'],
@@ -73,14 +73,14 @@ class ProductCategoryController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully added ' . $request->input('product_category_name'));
-                return redirect()->route('product_category_listing');
+                return redirect()->route('product_category_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         $parent_id = ProductCategory::get_category_sel();
         return view('product_category.form', [
-            'submit' => route('product_category_add'),
+            'submit' => route('product_category_add', ['tenant' => tenant('id')]),
             'edit' => false,
             'post' => $post,
             'title' => 'Add',
@@ -103,7 +103,7 @@ class ProductCategoryController extends Controller
 
         if (!$post) {
             Session::flash('fail_msg', 'Invalid Product Category, Please try another one.');
-            return redirect()->route('product_category_listing');
+            return redirect()->route('product_category_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->isMethod('post')) {
@@ -129,14 +129,14 @@ class ProductCategoryController extends Controller
                 ];
                 $product_category->update($update_detail);
                 Session::flash('success_msg', 'Successfully Updated ');
-                return redirect()->route('product_category_listing');
+                return redirect()->route('product_category_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         $parent_id = ProductCategory::get_category_sel();
         return view('product_category/form', [
-            'submit' => route('product_category_edit', $product_category_id),
+            'submit' => route('product_category_edit', ['tenant' => tenant('id'), 'id' => $product_category_id]),
             'title' => 'Edit',
             'post' => $post,
             'status' => $status,
@@ -159,7 +159,7 @@ class ProductCategoryController extends Controller
 
         if (!$post) {
             Session::flash('fail_msg', 'Invalid Product Category, Please try another one.');
-            return redirect()->route('product_category_listing');
+            return redirect()->route('product_category_listing', ['tenant' => tenant('id')]);
         }
         // dd($product_category_id);
 
@@ -169,10 +169,10 @@ class ProductCategoryController extends Controller
                 'is_deleted' => 1
             ]);
             Session::flash('success_msg', 'Deleted successfully!');
-            return redirect()->route('product_category_listing');
+            return redirect()->route('product_category_listing', ['tenant' => tenant('id')]);
         } else {
             Session::flash('fail_msg', 'Product not found!');
-            return redirect()->route('product_category_listing');
+            return redirect()->route('product_category_listing', ['tenant' => tenant('id')]);
         }
     }
 }

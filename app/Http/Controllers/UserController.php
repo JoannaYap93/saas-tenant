@@ -57,7 +57,7 @@ class UserController extends Controller
         }
         $search = session('user_search') ? session('user_search') : $search;
         return view('user.listing', [
-            'submit'=> route('user_add'),
+            'submit'=> route('user_add', ['tenant' => tenant('id')]),
             'title'=> 'Add',
             'users'=>  User::get_record($search, 15),
             'search'=>  $search,
@@ -130,12 +130,12 @@ class UserController extends Controller
                     }
                 }
                 Session::flash('success_msg', 'Successfully added '.$request->input('user_fullname'));
-                return redirect()->route('user_listing');
+                return redirect()->route('user_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('user/form', [
-            'submit'=> route('user_add'),
+            'submit'=> route('user_add', ['tenant' => tenant('id')]),
             'title'=> 'Add',
             'post'=> $post,
             'user_type_sel'=> UserType::get_user_type_sel(),
@@ -209,12 +209,12 @@ class UserController extends Controller
                     $user->syncRoles([]);
                 }
                 Session::flash('success_msg', 'Successfully updated '. $request->input('user_email') .' user.');
-                return redirect()->route('user_listing');
+                return redirect()->route('user_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('user/form', [
-            'submit'=>route('user_edit',$user_id),
+            'submit'=>route('user_edit', ['tenant' => tenant('id'), 'id' => $user_id]),
             'title'=> 'Edit',
             'post'=> $post,
             'user_role'=> $user_role,
@@ -256,13 +256,13 @@ class UserController extends Controller
                         }
                         $user->syncPermissions($assign_permission);
                         Session::flash('success_msg', 'Successfully updated '. $user->user_email .' permission.');
-                        return redirect()->route('user_listing');
+                        return redirect()->route('user_listing', ['tenant' => tenant('id')]);
                         break;
                     case 'reset':
                         $role = Role::findById($role_id);
                         $user->syncRoles($role->name);
                         Session::flash('success_msg', 'Successfully reset '. $user->user_email .' permission.');
-                        return redirect()->route('assign_permission', $user_id);
+                        return redirect()->route('assign_permission', ['tenant' => tenant('id'), 'id' => $user_id]);
                         break;
                 }
 
@@ -272,7 +272,7 @@ class UserController extends Controller
 
         $roles = Role::get();
         return view('user/assign_permission', [
-            'submit'=>route('assign_permission',$user_id),
+            'submit'=>route('assign_permission', ['tenant' => tenant('id'), 'id' => $user_id]),
             'title'=> 'Assign Permission',
             'user'=> $user,
             'user_role'=> $user_role,
@@ -292,7 +292,7 @@ class UserController extends Controller
         $data['is_deleted'] = $action == 'activate' ? 0 : 1;
         $user->update($data);
         Session::flash('success_msg', "Successfully {$action} {$user->user_email} user.");
-        return redirect()->route('user_listing');
+        return redirect()->route('user_listing', ['tenant' => tenant('id')]);
     }
 
     public function profile(Request $request)
@@ -349,13 +349,13 @@ class UserController extends Controller
                 }
                 $post->update($update_detail);
                 Session::flash('success_msg', 'Successfully updated my profile.');
-                return redirect()->route('user_profile');
+                return redirect()->route('user_profile', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
             unset($post->user_profile_photo);
         }
         return view('user/profile', [
-            'submit'=>route('user_profile'),
+            'submit'=>route('user_profile', ['tenant' => tenant('id')]),
             'title'=> 'Profile',
             'post'=> $post,
             'user'=> $user,
@@ -394,7 +394,7 @@ class UserController extends Controller
                     $user->update($data);
 
                     Session::flash('success_msg', 'Successfully update my password.');
-                    return redirect()->route('user_change_password');
+                    return redirect()->route('user_change_password', ['tenant' => tenant('id')]);
                 } else {
                     Session::flash('fail_msg', 'The Old Password confirmation does not match.');
                 }
@@ -402,7 +402,7 @@ class UserController extends Controller
             $post = (object) $request->all();
         }
         return view('user/change_password', [
-            'submit'=>route('user_change_password'),
+            'submit'=>route('user_change_password', ['tenant' => tenant('id')]),
             'title'=> 'Change Password',
             'post'=> $post,
         ])->withErrors($validator);
@@ -439,7 +439,7 @@ class UserController extends Controller
                     $user->update($data);
 
                     Session::flash('success_msg', 'Successfully update ' . $user->user_fullname  . ' password.');
-                    return redirect()->route('admin_listing');
+                    return redirect()->route('admin_listing', ['tenant' => tenant('id')]);
                 } else {
                     Session::flash('fail_msg', 'The confirmation password does not match.');
                 }
@@ -447,7 +447,7 @@ class UserController extends Controller
             $post = (object) $request->all();
         }
         return view('user/change_password_by_super_admin', [
-            'submit'=>route('user_change_password_by_super_admin', $user_id),
+            'submit'=>route('user_change_password_by_super_admin', ['tenant' => tenant('id'), 'id' => $user_id]),
             'title'=> 'Change Password',
             'post'=> $post,
         ])->withErrors($validator);

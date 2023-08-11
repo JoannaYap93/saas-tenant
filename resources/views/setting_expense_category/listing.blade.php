@@ -17,7 +17,7 @@
                 <div class="d-flex align-items-center">
                     <h4 class="mb-0 font-size-18 mr-2">Expense Category Listing</h4>
                     @can('setting_expense')
-                        <a href="{{ route('expense_category_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
+                        <a href="{{ route('expense_category_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
                     @endcan
                 </div>
                 <div class="page-title-right">
@@ -102,7 +102,7 @@
                                         </td>
                                         <td>
                                             @if (auth()->user()->user_type_id == 1)
-                                                <a href="{{ route('expense_category_edit', $row->setting_expense_category_id) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
+                                                <a href="{{ route('expense_category_edit', ['tenant' => tenant('id'), 'id' => $row->setting_expense_category_id]) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                                 {{-- <button class="btn btn-sm btn-outline-danger delete" data-toggle="modal" data-target="#delete" data-id="{{ $row->setting_expense_id }}">Delete</button> --}}
                                             @endif
                                         </td>
@@ -126,7 +126,7 @@
 {{--         aria-hidden="true">--}}
 {{--        <div class="modal-dialog modal-dialog-centered" role="document">--}}
 {{--            <div class="modal-content">--}}
-{{--                <form method="POST" action="{{ route('expense_delete') }}">--}}
+{{--                <form method="POST" action="{{ route('expense_delete', ['tenant' => tenant('id')]) }}">--}}
 {{--                    @csrf--}}
 {{--                    <div class="modal-body">--}}
 {{--                        <h4>Delete this Expense ?</h4>--}}

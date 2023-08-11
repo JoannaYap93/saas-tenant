@@ -90,7 +90,7 @@ class CompanyLandZoneController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully updated zone');
-                return redirect()->route('land_zone_listing',['company_id'=>$request->input('company_id'), 'company_land_id' =>$request->input('company_land_id')]);
+                return redirect()->route('land_zone_listing', ['tenant' => tenant('id'), 'company_id'=>$request->input('company_id'), 'company_land_id' =>$request->input('company_land_id')]);
             }
 
         }
@@ -291,7 +291,7 @@ class CompanyLandZoneController extends Controller
               }
             }else{
               Session::flash('failed_msg', 'Wrong file type! Please ensure to insert excel files');
-              return redirect()->route('land_zone_listing',['company_id'=>auth()->user()->company_id, 'company_land_id' =>$company_land_id]);
+              return redirect()->route('land_zone_listing', ['tenant' => tenant('id'), 'company_id'=>auth()->user()->company_id, 'company_land_id' =>$company_land_id]);
             }
 
             $company_land_tree_total = CompanyLandTree::selectRaw('count(company_land_tree_id) as total_tree_zone')->where('company_land_zone_id', $company_land_zone_id)->first();
@@ -301,7 +301,7 @@ class CompanyLandZoneController extends Controller
             ]);
 
         Session::flash('success_msg', 'Successfully Imported.');
-        return redirect()->route('land_zone_listing',['company_id'=>auth()->user()->company_id, 'company_land_id' =>$company_land_id]);
+        return redirect()->route('land_zone_listing', ['tenant' => tenant('id'), 'company_id'=>auth()->user()->company_id, 'company_land_id' =>$company_land_id]);
       }else{
         if($excel_files && in_array($extension, ['xls', 'xlsx'])){
             // if($ekey == $key){
@@ -382,7 +382,7 @@ class CompanyLandZoneController extends Controller
             'company_land_zone_total_tree' => $company_land_tree_total->total_tree_zone,
           ]);
         Session::flash('success_msg', 'Successfully Imported.');
-        return redirect()->route('land_zone_listing',['company_id'=>auth()->user()->company_id, 'company_land_id' =>$company_land_id]);
+        return redirect()->route('land_zone_listing', ['tenant' => tenant('id'), 'company_id'=>auth()->user()->company_id, 'company_land_id' =>$company_land_id]);
       }
     }
 
@@ -391,7 +391,7 @@ class CompanyLandZoneController extends Controller
       $land_zone = CompanyLandZone::find($company_land_zone_id);
         if(!$land_zone){
             Session::flash('fail_msg', 'Invalid Tree, Please try again later.');
-            return redirect()->route('company_listing');
+            return redirect()->route('company_listing', ['tenant' => tenant('id')]);
         }
 
         $search = array();
@@ -421,7 +421,7 @@ class CompanyLandZoneController extends Controller
         $search = session('fix_product_data_listing_search') ?? $search;
         $product_sel = Product::get_by_company();
         return view('land_tree.fix_listing', [
-            'submit' => route('fix_product_data_listing', $company_land_zone_id),
+            'submit' => route('fix_product_data_listing', ['tenant' => tenant('id'), 'id' => $company_land_zone_id]),
             'records' => CompanyLandTree::get_land_tree_null_product($search),
             'search' => $search,
             'type' => "Fix",
@@ -493,13 +493,13 @@ class CompanyLandZoneController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Fixed tree');
-                return redirect()->route('fix_product_data_listing',['company_land_zone_id' =>$request->input('company_land_zone_id')]);
+                return redirect()->route('fix_product_data_listing', ['tenant' => tenant('id'), 'company_land_zone_id' =>$request->input('company_land_zone_id')]);
             }
         }
         $product_sel = Product::get_by_company();
         return view('land_tree.form', [
             'records' => CompanyLandTree::where('company_land_tree_id', $company_land_tree_id)->first(),
-            'submit' => route('fix_product_data', $company_land_tree_id),
+            'submit' => route('fix_product_data', ['tenant' => tenant('id'), 'id' => $company_land_tree_id]),
             'type' => "Fix",
             'product_sel' => $product_sel,
             'company_land_tree_id' => $company_land_tree_id,
@@ -516,10 +516,10 @@ class CompanyLandZoneController extends Controller
         if ($tree) {
             $tree->delete();
             Session::flash('success_msg', 'Tree Deleted successfully!');
-            return redirect()->route('fix_product_data_listing',['company_land_zone_id' =>$request->input('company_land_zone_id')]);
+            return redirect()->route('fix_product_data_listing', ['tenant' => tenant('id'), 'company_land_zone_id' =>$request->input('company_land_zone_id')]);
         } else {
             Session::flash('fail_msg', 'Tree not found!');
-            return redirect()->route('fix_product_data_listing',['company_land_zone_id' =>$request->input('company_land_zone_id')]);
+            return redirect()->route('fix_product_data_listing', ['tenant' => tenant('id'), 'company_land_zone_id' =>$request->input('company_land_zone_id')]);
         }
     }
 

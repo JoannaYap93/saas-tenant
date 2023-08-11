@@ -47,7 +47,7 @@
             $search = session('payroll_search') ?? array();
 
             return view('payroll.listing', [
-                'submit' => route('payroll_listing'),
+                'submit' => route('payroll_listing', ['tenant' => tenant('id')]),
                 'search' => $search,
                 'records' => Payroll::get_records($search),
                 'company_sel' => Company::get_company_sel(),
@@ -81,16 +81,16 @@
                             'payroll_status' => 'Pending',
                         ]);
 
-                        return redirect()->route('payroll_add', $payroll->payroll_id);
+                        return redirect()->route('payroll_add', ['tenant' => tenant('id'), 'id' => $payroll->payroll_id]);
 
                     }else{
                         Session::flash('fail_msg', 'Payroll exists for the selected company and month.');
-                        return redirect()->route('payroll_listing');
+                        return redirect()->route('payroll_listing', ['tenant' => tenant('id')]);
                     }
                 }
 
                 Session::flash('fail_msg', 'Please select a company and month to continue.');
-                return redirect()->route('payroll_listing');
+                return redirect()->route('payroll_listing', ['tenant' => tenant('id')]);
             }
         }
 
@@ -101,7 +101,7 @@
 
             if(is_null($payroll)){
                 Session::flash('fail_msg', 'Invalid payroll. Please try again.');
-                return redirect()->route('payroll_listing');
+                return redirect()->route('payroll_listing', ['tenant' => tenant('id')]);
             }
 
             $search['company_id'] = $payroll->company_id;
@@ -236,7 +236,7 @@
                     ]);
 
                     Session::flash('success_msg', 'Successfully Added Payroll');
-                    return redirect()->route('payroll_listing');
+                    return redirect()->route('payroll_listing', ['tenant' => tenant('id')]);
                 }
 
                 $payroll = (object) $request->all();
@@ -244,7 +244,7 @@
 
             return view('payroll.form', [
                 'title' => "Add",
-                'submit' => route('payroll_add', $payroll_id),
+                'submit' => route('payroll_add', ['tenant' => tenant('id'), 'id' => $payroll_id]),
                 'payroll' => $payroll,
                 'company_sel' => Company::get_company_sel(),
                 'company_expense_worker_list' => CompanyExpenseWorker::get_company_expense_worker_by_company($search),
@@ -262,7 +262,7 @@
 
             if(is_null($payroll)){
                 Session::flash('fail_msg', 'Invalid payroll. Please try again.');
-                return redirect()->route('payroll_listing');
+                return redirect()->route('payroll_listing', ['tenant' => tenant('id')]);
             }
 
             $search['company_id'] = $payroll->company_id;
@@ -484,13 +484,13 @@
                     ]);
 
                     Session::flash('success_msg', 'Successfully Updated Payroll');
-                    return redirect()->route('payroll_listing');
+                    return redirect()->route('payroll_listing', ['tenant' => tenant('id')]);
                 }
             }
 
             return view('payroll.form', [
                 'title' => "Edit",
-                'submit' => route('payroll_edit', $payroll_id),
+                'submit' => route('payroll_edit', ['tenant' => tenant('id'), 'id' => $payroll_id]),
                 'payroll' => $payroll,
                 'company_sel' => Company::get_company_sel(),
                 'company_expense_worker_list' => CompanyExpenseWorker::get_company_expense_worker_by_company($search),
@@ -507,7 +507,7 @@
 
             if (!$payroll) {
                 Session::flash("fail_msg", "Invalid payroll! Please try again.");
-                return redirect()->route('payroll_listing');
+                return redirect()->route('payroll_listing', ['tenant' => tenant('id')]);
             }
 
             $search['company_id'] = $payroll->company_id;
@@ -516,7 +516,7 @@
 
             return view('payroll.view_details', [
                 'title' => 'View',
-                'submit' => route('payroll_view', $payroll_id),
+                'submit' => route('payroll_view', ['tenant' => tenant('id'), 'id' => $payroll_id]),
                 'payroll' => $payroll,
                 'payroll_details' => Payroll::get_payroll_details($payroll_id),
                 'worker_role_list' => WorkerRole::all(),
@@ -537,7 +537,7 @@
 
             if (!$payroll) {
                 Session::flash("fail_msg", "Invalid payroll! Please try again.");
-                return redirect()->route('payroll_listing');
+                return redirect()->route('payroll_listing', ['tenant' => tenant('id')]);
             }
 
             switch($action){
@@ -546,7 +546,7 @@
 
                     if (!$payroll_log_remark) {
                         Session::flash("fail_msg", "Remark field is required");
-                        return redirect()->route('payroll_listing');
+                        return redirect()->route('payroll_listing', ['tenant' => tenant('id')]);
                     }
                     $payroll->update([
                         'payroll_status' => 'Deleted',
@@ -569,7 +569,7 @@
             ]);
 
             Session::flash('success_msg', 'Successfully ' . $action . 'd payroll');
-            return redirect()->route('payroll_listing');
+            return redirect()->route('payroll_listing', ['tenant' => tenant('id')]);
         }
 
         public function export($payroll_id)
@@ -578,7 +578,7 @@
 
             if (!$payroll) {
                 Session::flash("fail_msg", "Invalid payroll! Please try again.");
-                return redirect()->route('payroll_listing');
+                return redirect()->route('payroll_listing', ['tenant' => tenant('id')]);
             }
 
             $search['company_id'] = $payroll->company_id;

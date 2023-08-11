@@ -37,7 +37,7 @@ class DeliveryOrderExpenseController extends Controller
         $do_exp = DeliveryOrder::get_records_expense($search);
 
         return view('delivery_order_expense.listing', [
-            'submit' => route('delivery_order_expense'),
+            'submit' => route('delivery_order_expense', ['tenant' => tenant('id')]),
             'do_exp' =>  $do_exp,
             'search' =>  $search,
         ]);
@@ -66,12 +66,12 @@ class DeliveryOrderExpenseController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully added ' . $request->input('customer_term_name'));
-                return redirect()->route('customer_term_listing');
+                return redirect()->route('customer_term_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('customer_term.form', [
-            'submit' => route('customer_term_add'),
+            'submit' => route('customer_term_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
         ])->withErrors($validator);
@@ -91,7 +91,7 @@ class DeliveryOrderExpenseController extends Controller
 
         if (!$post) {
             Session::flash('fail_msg', 'Invalid Customer Term, Please try another one.');
-            return redirect()->route('customer_term_listing');
+            return redirect()->route('customer_term_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->isMethod('post')) {
@@ -112,12 +112,12 @@ class DeliveryOrderExpenseController extends Controller
                 $post->update($update_detail);
 
                 Session::flash('success_msg', 'Successfully edited ' . $request->input('customer_term_name'));
-                return redirect()->route('customer_term_listing');
+                return redirect()->route('customer_term_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('customer_term.form', [
-            'submit' => route('customer_term_edit', $customer_term_id),
+            'submit' => route('customer_term_edit', ['tenant' => tenant('id'), 'id' => $customer_term_id]),
             'title' => 'Edit',
             'post' => $post,
         ])->withErrors($validator);
@@ -135,7 +135,7 @@ class DeliveryOrderExpenseController extends Controller
 
         if (!$customer_term) {
             Session::flash('fail_msg', 'Invalid Customer Term, Please try another one.');
-            return redirect()->route('customer_term_listing');
+            return redirect()->route('customer_term_listing', ['tenant' => tenant('id')]);
         }
 
         $customer_term->update([
@@ -143,6 +143,6 @@ class DeliveryOrderExpenseController extends Controller
         ]);
 
         Session::flash('success_msg', "Successfully deleted Term.");
-        return redirect()->route('customer_term_listing');
+        return redirect()->route('customer_term_listing', ['tenant' => tenant('id')]);
     }
 }

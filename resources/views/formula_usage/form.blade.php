@@ -169,7 +169,7 @@
                             <div class="col-sm-6 mt-2">
                                 <span id="error_user"></span>
                                 <button type="submit" id="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                                <a href="{{route('formula_usage_listing')}}" class="btn btn-secondary" >Cancel</a>
+                                <a href="{{route('formula_usage_listing', ['tenant' => tenant('id')])}}" class="btn btn-secondary" >Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -226,7 +226,7 @@
                     let land = '<option value="">Please Select Land</option>';
                     $('#company_land_id').html('<option value="">Loading...</option>');
                     $.ajax({
-                        url: "{{ route('ajax_land_user') }}",
+                        url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                         method: "POST",
                         data: {
                             _token: "{{ csrf_token() }}",
@@ -388,7 +388,7 @@
           }
 
           $.ajax({
-              url: "{{ route('ajax_get_zone_by_land') }}",
+              url: "{{ route('ajax_get_zone_by_land', ['tenant' => tenant('id')]) }}",
               method: 'post',
               data: {
                   _token: '{{ csrf_token() }}',
@@ -457,7 +457,7 @@
           }
 
           $.ajax({
-              url: "{{ route('ajax_get_formula_by_category') }}",
+              url: "{{ route('ajax_get_formula_by_category', ['tenant' => tenant('id')]) }}",
               method: 'post',
               data: {
                   _token: '{{ csrf_token() }}',
@@ -506,7 +506,7 @@
           if(company_land_id != ''){
             // if( ((formula_cate_id == 2 || formula_cate_id == 3) && acres_value_input > 0) || formula_cate_id == 1){
               $.ajax({
-                  url: "{{ route('ajax_get_setting_formula_item') }}",
+                  url: "{{ route('ajax_get_setting_formula_item', ['tenant' => tenant('id')]) }}",
                   method: 'post',
                   data: {
                       _token: '{{ csrf_token() }}',
@@ -637,7 +637,7 @@
           if(company_land_id != ''){
             if(val_unit != '' && val_unit != 'g/Tree'){
               $.ajax({
-                  url: "{{ route('ajax_find_tree_w_product_by_land') }}",
+                  url: "{{ route('ajax_find_tree_w_product_by_land', ['tenant' => tenant('id')]) }}",
                   method: 'post',
                   data: {
                       _token: '{{ csrf_token() }}',

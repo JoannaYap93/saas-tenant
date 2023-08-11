@@ -75,7 +75,7 @@ class RawMaterialCompanyUsageController extends Controller
 
         $search = session('raw_material_company_usage_search') ?? array();
         return view('raw_material_company_usage.listing', [
-            'submit' => route('raw_material_company_usage_listing'),
+            'submit' => route('raw_material_company_usage_listing', ['tenant' => tenant('id')]),
             'records' => $raw_material_company_usage,
             'claim_user' => $claim_user,
             // 'status' => ProductStatus::get_records(),
@@ -137,7 +137,7 @@ class RawMaterialCompanyUsageController extends Controller
 
                     if(!is_null($supplier_do_item)){
                         Session::flash("fail_msg", "Supplier Delivery Order Item exist. Please update from supplier delivery order listing");
-                        return redirect()->route('raw_material_company_usage_listing');
+                        return redirect()->route('raw_material_company_usage_listing', ['tenant' => tenant('id')]);
                     }
 
                 }else{
@@ -216,13 +216,13 @@ class RawMaterialCompanyUsageController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Stock In Successfully!');
-                return redirect()->route('raw_material_company_usage_listing');
+                return redirect()->route('raw_material_company_usage_listing', ['tenant' => tenant('id')]);
             }
             Session::flash('fail_msg', 'Raw Material Company Not Found!');
-            return redirect()->route('raw_material_company_usage_listing');
+            return redirect()->route('raw_material_company_usage_listing', ['tenant' => tenant('id')]);
         }
         Session::flash('fail_msg', 'Something Went Wrong...');
-        return redirect()->route('raw_material_company_usage_listing');
+        return redirect()->route('raw_material_company_usage_listing', ['tenant' => tenant('id')]);
     }
 
     public function delete(Request $request)
@@ -236,10 +236,10 @@ class RawMaterialCompanyUsageController extends Controller
                 'is_deleted' => 1
             ]);
             Session::flash('success_msg', 'Deleted successfully!');
-            return redirect()->route('product_listing');
+            return redirect()->route('product_listing', ['tenant' => tenant('id')]);
         } else {
             Session::flash('fail_msg', 'Product not found!');
-            return redirect()->route('product_listing');
+            return redirect()->route('product_listing', ['tenant' => tenant('id')]);
         }
     }
 
@@ -263,7 +263,7 @@ class RawMaterialCompanyUsageController extends Controller
 
         $search['raw_material_company_usage_id'] = $raw_material_company_usage_ids;
         Session::put('raw_material_company_usage_search', $search);
-        return redirect()->route('raw_material_company_usage_listing');
+        return redirect()->route('raw_material_company_usage_listing', ['tenant' => tenant('id')]);
     }
 
     public function ajax_get_existing_raw_material_company(Request $request)

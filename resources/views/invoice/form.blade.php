@@ -273,7 +273,7 @@
                             <div class="col-12">
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary mr-3">Submit</button>
-                                    <a href="{{ route('invoice_listing') }}" class="btn btn-secondary">Cancel</a>
+                                    <a href="{{ route('invoice_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>
                         </div>

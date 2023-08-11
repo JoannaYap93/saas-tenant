@@ -69,7 +69,7 @@ class PaymentUrlController extends Controller
         return view('payment_url.listing', [
             'records' => $payment_url,
             'search' => $search,
-            'submit' => route('payment_url_listing'),
+            'submit' => route('payment_url_listing', ['tenant' => tenant('id')]),
             'pu_status' => PaymentUrl::get_payment_url_status(),
             'count_status' => PaymentUrl::count_status($search),
             'customer_sel' => ['' => 'Please Select Customer'] + Customer::get_customer_sel(),
@@ -127,7 +127,7 @@ class PaymentUrlController extends Controller
 
                 Session::flash('success_msg', 'Successfully Added New Payment Url');
                 Session::forget('payment_url_search');
-                    return redirect()->route('payment_url_listing');
+                    return redirect()->route('payment_url_listing', ['tenant' => tenant('id')]);
             } else {
                 Session::flash('fail_msg', 'Error when creating payment_url...');
                 return redirect()->back()->withErrors($validate);
@@ -139,7 +139,7 @@ class PaymentUrlController extends Controller
             'title' => 'Add',
             'customer_sel' => Customer::get_customer_sel(),
             'company_land_sel' => CompanyLand::get_company_land_sel(),
-            'submit' => route('payment_url_add'),
+            'submit' => route('payment_url_add', ['tenant' => tenant('id')]),
             'customer' => $customer,
             'invoice_id' => $invoice_id,
             'invoice' => $invoice,
@@ -161,7 +161,7 @@ class PaymentUrlController extends Controller
 
         if ($invoice == null) {
             Session::flash('fail_msg', 'Invalid Invoice');
-            return redirect()->route('invoice_listing');
+            return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->isMethod('post')) {
@@ -213,7 +213,7 @@ class PaymentUrlController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Update Invoice');
-                return redirect()->route('invoice_listing');
+                return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
             }
             $invoice = (object) $request->all();
         }
@@ -227,7 +227,7 @@ class PaymentUrlController extends Controller
             'type' => 'Edit',
             'do_txt' => $do,
             'customer' => $customer,
-            'submit' => route('invoice_edit', $id),
+            'submit' => route('invoice_edit', ['tenant' => tenant('id'), 'id' =>  $id]),
             'company' => Company::get_company_sel(),
             'company_land' => CompanyLand::get_company_land_sel(),
         ])->withErrors($validation);
@@ -241,7 +241,7 @@ class PaymentUrlController extends Controller
 
         if (!$payment_url_id) {
             Session::flash('failed_msg', "Invalid Invoice, Please Try Again...");
-            return redirect()->route('payment_url_listing');
+            return redirect()->route('payment_url_listing', ['tenant' => tenant('id')]);
         }
 
         $payment_url = PaymentUrl::get_payment_url_details_by_id($payment_url_id);
@@ -279,7 +279,7 @@ class PaymentUrlController extends Controller
             }
 
             Session::flash('success_msg', "Payment Approved");
-            return redirect()->route('payment_url_listing');
+            return redirect()->route('payment_url_listing', ['tenant' => tenant('id')]);
 
         } elseif ($status == 'reject') {
             $payment_url->update([
@@ -316,7 +316,7 @@ class PaymentUrlController extends Controller
                 }
             }
             Session::flash('success_msg', "Payment Rejected");
-            return redirect()->route('payment_url_listing');
+            return redirect()->route('payment_url_listing', ['tenant' => tenant('id')]);
         }
     }
 
@@ -422,7 +422,7 @@ class PaymentUrlController extends Controller
                     'invoice' => $invoice,
                     'company' => $company,
                     'do' => $do,
-                    'submit' => route('view_invoice', ['id' => $id, 'encryption' => $encryp])
+                    'submit' => route('view_invoice', ['tenant' => tenant('id'), 'id' => $id, 'encryption' => $encryp])
                 ]);
             } else {
                 return view('pages-404');
@@ -459,7 +459,7 @@ class PaymentUrlController extends Controller
         $company_invoice = Invoice::query()->where('invoice_id', $id)->where('company_id', auth()->user()->company_id);
         if (!$company_invoice && !$invoice) {
             Session::flash('fail_msg', 'Invalid Invoice. Please try another.');
-            return redirect()->route('invoice_listing');
+            return redirect()->route('invoice_listing', ['tenant' => tenant('id')]);
         }
 
         $encryp = md5($invoice->invoice_id . env('ENCRYPTION_KEY'));
@@ -530,10 +530,10 @@ class PaymentUrlController extends Controller
                 'customer_id' => $payment_url->customer_id,
             ]);
             Session::flash('success_msg', "Succefully Cancelled Payment Url");
-            return redirect()->route('payment_url_listing');
+            return redirect()->route('payment_url_listing', ['tenant' => tenant('id')]);
         }else{
             Session::flash('failed_msg', "Invalid Payment Url");
-            return redirect()->route('payment_url_listing');
+            return redirect()->route('payment_url_listing', ['tenant' => tenant('id')]);
         }
     }
 }

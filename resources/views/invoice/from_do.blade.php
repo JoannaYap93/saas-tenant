@@ -52,7 +52,7 @@
         </div>
     </div>
     <!-- end page title -->
-    <form id="submit_form" action="{{ route('invoice_add') }}" method="POST">
+    <form id="submit_form" action="{{ route('invoice_add', ['tenant' => tenant('id')]) }}" method="POST">
         @csrf
         <div class="row">
             <div class="col-12">
@@ -330,7 +330,7 @@
                             <div class="col-12">
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" id="submit_btn" class="btn btn-primary mr-3">Submit</button>
-                                    <a href="{{ route('do_listing') }}" class="btn btn-secondary">Cancel</a>
+                                    <a href="{{ route('do_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -444,7 +444,7 @@
         $('#customer_mobile').select2({
             ajax: {
                 minimumResultsForSearch: -1,
-                url: "{{ route('ajax_search_customer_by_mobile_no') }}",
+                url: "{{ route('ajax_search_customer_by_mobile_no', ['tenant' => tenant('id')]) }}",
                 dataType: 'json',
                 data: function(p) {
                     let query = {
@@ -468,7 +468,7 @@
             var value = $(this).val();
             // console.log(value);
             $.ajax({
-                url: "{{ route('ajax_search_customer_by_mobile_no') }}",
+                url: "{{ route('ajax_search_customer_by_mobile_no', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',

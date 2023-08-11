@@ -41,7 +41,7 @@ class CompanyPnlItemController extends Controller
             $search = session('company_pnl_item_search') ?? array();
 
         return view('company_pnl_item.listing', [
-            'submit' => route('company_pnl_item_listing'),
+            'submit' => route('company_pnl_item_listing', ['tenant' => tenant('id')]),
             'records' => CompanyPnlItem::get_record($search, $perpage),
             'search' => $search,
         ]);
@@ -106,14 +106,14 @@ class CompanyPnlItemController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Added! ');
-                return redirect()->route('company_pnl_item_listing');
+                return redirect()->route('company_pnl_item_listing', ['tenant' => tenant('id')]);
             }
 
             $post = (object) $request->all();
         }
 
         return view('company_pnl_item.form', [
-            'submit' => route('company_pnl_item_add'),
+            'submit' => route('company_pnl_item_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
             'company_pnl_item_type' => $this->get_pnl_type_enum(),
@@ -138,7 +138,7 @@ class CompanyPnlItemController extends Controller
 
         if ($post == null) {
             Session::flash('fail_msg', 'Invalid Company Profit & Loss Item, Please Try Again');
-            return redirect()->route('company_pnl_item_listing');
+            return redirect()->route('company_pnl_item_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->isMethod('post')) {
@@ -189,13 +189,13 @@ class CompanyPnlItemController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Updated!');
-                return redirect()->route('company_pnl_item_listing');
+                return redirect()->route('company_pnl_item_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('company_pnl_item.form', [
-            'submit' => route('company_pnl_item_edit', $company_pnl_item_id),
+            'submit' => route('company_pnl_item_edit', ['tenant' => tenant('id'), 'id' => $company_pnl_item_id]),
             'title' => 'Edit',
             'post' => $post,
             'company_pnl_item_type' => $this->get_pnl_type_enum(),

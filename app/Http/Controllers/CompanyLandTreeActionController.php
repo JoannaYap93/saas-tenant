@@ -44,7 +44,7 @@ class CompanyLandTreeActionController extends Controller
 
         return view('company_landtree_action.listing', [
             'records' => $action,
-            'submit' => route('company_landtree_listing'),
+            'submit' => route('company_landtree_listing', ['tenant' => tenant('id')]),
             'search' => $search,
             'company_sel' => Company::get_company_sel(),
             'company' => $company,
@@ -81,11 +81,11 @@ class CompanyLandTreeActionController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Updated');
-                return redirect()->route('company_landtree_listing');
+                return redirect()->route('company_landtree_listing', ['tenant' => tenant('id')]);
             }
         }
         return view('company_landtree_action.form', [
-            'submit' => route('add_default'),
+            'submit' => route('add_default', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
         ])->withErrors($validator);
@@ -120,13 +120,13 @@ class CompanyLandTreeActionController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully edited ');
-                return redirect()->route('company_landtree_listing');
+                return redirect()->route('company_landtree_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
 
         }
         return view('company_landtree_action.form', [
-            'submit' => route('edit_default', $company_land_tree_action_id),
+            'submit' => route('edit_default', ['tenant' => tenant('id'), 'id' => $company_land_tree_action_id]),
             'edit' => true,
             'title' => 'Edit',
             'post'=> $post,

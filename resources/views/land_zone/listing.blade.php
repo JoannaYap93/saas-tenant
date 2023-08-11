@@ -35,7 +35,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-12">
-                            <form method="POST" action="{{ route('land_zone_listing',['company_id'=>$company_id,'company_land_id'=> $company_land_id] ) }}">
+                            <form method="POST" action="{{ route('land_zone_listing', ['tenant' => tenant('id'),'company_id'=>$company_id,'company_land_id'=> $company_land_id] ) }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-4">
@@ -80,7 +80,7 @@
                                             value="reset">
                                             <i class="fas fa-times mr-1"></i> Reset
                                         </button>
-                                        <a  href="{{ route('company_listing') }}" class="btn btn-secondary waves-effect waves-light mr-2"
+                                        <a  href="{{ route('company_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary waves-effect waves-light mr-2"
                                             name="submit">
                                             <i class="fas fa-arrow-left mr-1"></i> Company Listing
                                         </a>
@@ -187,7 +187,7 @@
                                               @endif
                                                 <!-- <a href="#"
                                                     class="btn btn-sm btn-outline-warning waves-effect waves-light mr-2 mb-1">Export Tree</a> -->
-                                                <a href="{{route('land_tree_listing', $zone->company_land_zone_id)}}"
+                                                <a href="{{route('land_tree_listing', ['tenant' => tenant('id'), 'id' => $zone->company_land_zone_id])}}"
                                                     class="btn btn-sm btn-outline-success waves-effect waves-light mr-1 mb-1">Manage Tree(s)</a>
                                               @if(auth()->user()->user_type_id == 2)
                                                 @can('company_land_zone_manage')
@@ -199,7 +199,7 @@
                                                         data-tree-count="{{count(@$zone->company_land_tree)}}"
                                                         data-target="#import">Import</button>
                                                 @else
-                                                <a href="{{route('fix_product_data_listing', $zone->company_land_zone_id)}}"
+                                                <a href="{{route('fix_product_data_listing', ['tenant' => tenant('id'), 'id' => $zone->company_land_zone_id])}}"
                                                     class="btn btn-sm btn-outline-danger waves-effect waves-light mr-1 mb-1">Fix Data</a>
                                                 @endif
                                                 <button class="btn btn-sm btn-outline-info mr-1 mb-1 import1"
@@ -239,7 +239,7 @@
                 <h4 id="zone_name">Import tree data for </h4>
                 <br>
             </div>
-            <form action="{{ route('restructure_zone_tree')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('restructure_zone_tree', ['tenant' => tenant('id')])}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="col-6" id="pick_date">
@@ -324,7 +324,7 @@
           $('#item_table').html('Loading...');
           // console.log(company_pnl_sub_item);
           $.ajax({
-							url: "{{ route('ajax_tree_total_code_zone') }}",
+							url: "{{ route('ajax_tree_total_code_zone', ['tenant' => tenant('id')]) }}",
 							method: "POST",
 							data: {
 									_token: "{{ csrf_token() }}",

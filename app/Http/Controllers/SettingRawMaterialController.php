@@ -49,7 +49,7 @@ class SettingRawMaterialController extends Controller
 
         return view('setting_raw_material.listing', [
             'page_title' => 'Setting Raw Material',
-            'submit' => route('setting_raw_material_listing'),
+            'submit' => route('setting_raw_material_listing', ['tenant' => tenant('id')]),
             'search' => $search,
             'records' => SettingRawMaterial::get_records($search),
             'raw_material_status_sel'=>[''=>'Please select status','active' =>'Active', 'pending' => 'Pending', 'deleted' =>'Deleted'],
@@ -137,12 +137,12 @@ class SettingRawMaterialController extends Controller
                     }
                 }
                 Session::flash('success_msg', 'Successfully Updated');
-                return redirect()->route('setting_raw_material_listing');
+                return redirect()->route('setting_raw_material_listing', ['tenant' => tenant('id')]);
             }
         }
 
         return view('setting_raw_material.form', [
-            'submit' => route('setting_raw_material_add'),
+            'submit' => route('setting_raw_material_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
             'raw_material_status_sel'=>[''=>'Please select status','active' =>'Active', 'pending' => 'Pending', 'deleted' =>'Deleted'],
@@ -342,12 +342,12 @@ class SettingRawMaterialController extends Controller
                         }
                 }
                 Session::flash('success_msg', 'Successfully edited ');
-                return redirect()->route('setting_raw_material_listing');
+                return redirect()->route('setting_raw_material_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('setting_raw_material.form', [
-            'submit' => route('setting_raw_material_edit', $raw_material_id),
+            'submit' => route('setting_raw_material_edit', ['tenant' => tenant('id'), 'id' => $raw_material_id]),
             'edit' => true,
             'title' => 'Edit',
             'post'=> $post,

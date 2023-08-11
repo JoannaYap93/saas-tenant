@@ -38,7 +38,7 @@
 
 <div class="row">
     <div class="col-12">
-        <form method="POST" action="{{ route('search_listing')}}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('search_listing', ['tenant' => tenant('id')])}}" enctype="multipart/form-data">
             @csrf
             <div class="card">
                 <div class="card-body">
@@ -106,7 +106,7 @@
     function get_company_land(company_id){
         let land = '';
         $.ajax({
-            url: "{{ route('ajax_get_company_land') }}",
+            url: "{{ route('ajax_get_company_land', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
@@ -127,7 +127,7 @@
         console.log(company_id, company_land_id)
         let land = '';
         $.ajax({
-            url: "{{ route('ajax_get_land_zone') }}",
+            url: "{{ route('ajax_get_land_zone', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",

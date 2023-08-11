@@ -278,7 +278,7 @@
                         <div class="col-sm-6">
                             <span id="error_user"></span>
                             <button type="submit" id="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                            <a href="{{ route('customer_listing') }}" class="btn btn-secondary" >Cancel</a>
+                            <a href="{{ route('customer_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary" >Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -333,7 +333,7 @@
     //         let user_mobile = $(this).val();
     //
     //         $.ajax({
-    //             url: "{{ route('ajax_check_user_mobile') }}",
+    //             url: "{{ route('ajax_check_user_mobile', ['tenant' => tenant('id')]) }}",
     //             method: 'post',
     //             data: {
     //                 user_mobile: user_mobile,
@@ -361,7 +361,7 @@
         //         var error_slug = '';
         //         $.ajax({
         //             type: 'POST',
-        //             url: "{{route('ajax_check_user_slug')}}",
+        //             url: "{{route('ajax_check_user_slug', ['tenant' => tenant('id')])}}",
         //             data: {
         //                 user_slug: $(this).val(),
         //                 user_id: user_id,
@@ -470,7 +470,7 @@
             $('#customer_pic_mobile_no_' + input_id).html('Loading...');
 
             $.ajax({
-                url: "{{ route('ajax_check_pic') }}",
+                url: "{{ route('ajax_check_pic', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -505,7 +505,7 @@
     $('#customer_name').select2({
             ajax: {
                 minimumResultsForSearch: -1,
-                url: "{{ route('ajax_search_customer_by_customer_name') }}",
+                url: "{{ route('ajax_search_customer_by_customer_name', ['tenant' => tenant('id')]) }}",
                 dataType: 'json',
                 data: function(p) {
                     let query = {
@@ -541,7 +541,7 @@
             $("#customer_code").empty();
             var value = $(this).val();
             $.ajax({
-                url: "{{ route('ajax_search_customer_by_customer_name') }}",
+                url: "{{ route('ajax_search_customer_by_customer_name', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',

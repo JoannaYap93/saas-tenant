@@ -49,7 +49,7 @@ class SupplierDeliveryOrderController extends Controller
 
         return view('supplier_delivery_order.listing', [
             'records' => SupplierDeliveryOrder::get_records($search),
-            'submit' => route('supplier_do_listing'),
+            'submit' => route('supplier_do_listing', ['tenant' => tenant('id')]),
             'search' => $search,
             'company_sel' => Company::get_company_sel(),
             'raw_material_category_sel' => SettingRawMaterialCategory::get_category_sel(),
@@ -221,14 +221,14 @@ class SupplierDeliveryOrderController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully added supplier delivery order.');
-                return redirect()->route('supplier_do_listing');
+                return redirect()->route('supplier_do_listing', ['tenant' => tenant('id')]);
             }
 
             $supplier_do = (object) $request->all();
         }
 
         return view('supplier_delivery_order.form', [
-            'submit' => route('supplier_do_add'),
+            'submit' => route('supplier_do_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'supplier_do' => $supplier_do,
             'company_sel' => Company::get_company_sel(),
@@ -245,7 +245,7 @@ class SupplierDeliveryOrderController extends Controller
 
         if($supplier_do == null){
             Session::flash('fail_msg', 'Invalid Supplier Delivery Order, Please Try Again');
-            return redirect()->route('supplier_do_listing');
+            return redirect()->route('supplier_do_listing', ['tenant' => tenant('id')]);
         }
 
         if($request->isMethod('post')){
@@ -513,14 +513,14 @@ class SupplierDeliveryOrderController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully updated supplier delivery order.');
-                return redirect()->route('supplier_do_listing');
+                return redirect()->route('supplier_do_listing', ['tenant' => tenant('id')]);
             }
 
             $supplier_do = (object) $request->all();
         }
 
         return view('supplier_delivery_order.form', [
-            'submit' => route('supplier_do_edit', $supplier_delivery_order_id),
+            'submit' => route('supplier_do_edit', ['tenant' => tenant('id'), 'id' => $supplier_delivery_order_id]),
             'title' => 'Edit',
             'supplier_do' => $supplier_do,
             'company_sel' => Company::get_company_sel(),
@@ -536,7 +536,7 @@ class SupplierDeliveryOrderController extends Controller
 
         if($supplier_do == null){
             Session::flash('fail_msg', 'Invalid Supplier Delivery Order, Please Try Again');
-            return redirect()->route('supplier_do_listing');
+            return redirect()->route('supplier_do_listing', ['tenant' => tenant('id')]);
         }
 
         if($request->isMethod('post')){
@@ -555,7 +555,7 @@ class SupplierDeliveryOrderController extends Controller
 
             if(!$check_changes){
                 Session::flash('fail_msg', 'Supplier Delivery Order not updated. No changes detected');
-                return redirect()->route('supplier_do_listing');
+                return redirect()->route('supplier_do_listing', ['tenant' => tenant('id')]);
             }
 
             if(!$validator->fails())
@@ -689,12 +689,12 @@ class SupplierDeliveryOrderController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully returned supplier delivery order.');
-                return redirect()->route('supplier_do_listing');
+                return redirect()->route('supplier_do_listing', ['tenant' => tenant('id')]);
             }
         }
 
         return view('supplier_delivery_order.supplier_do_return', [
-            'submit' => route('supplier_do_return', $supplier_delivery_order_id),
+            'submit' => route('supplier_do_return', ['tenant' => tenant('id'), 'id' => $supplier_delivery_order_id]),
             'title' => 'Return',
             'supplier_do' => $supplier_do,
         ])->withErrors($validator);
@@ -707,7 +707,7 @@ class SupplierDeliveryOrderController extends Controller
 
         if($supplier_do == null){
             Session::flash('fail_msg', 'Invalid Supplier Delivery Order, Please Try Again');
-            return redirect()->route('supplier_do_listing');
+            return redirect()->route('supplier_do_listing', ['tenant' => tenant('id')]);
         }
 
         $supplier_do_items = SupplierDeliveryOrderItem::query()
@@ -729,7 +729,7 @@ class SupplierDeliveryOrderController extends Controller
                     if($raw_material_company_usage->raw_material_company_usage_total_value_remaining != $supplier_do_item_total_value)
                     {
                         Session::flash('fail_msg', 'Insufficient raw material to return.');
-                        return redirect()->route('supplier_do_listing');
+                        return redirect()->route('supplier_do_listing', ['tenant' => tenant('id')]);
                     }
                 }
             }
@@ -820,7 +820,7 @@ class SupplierDeliveryOrderController extends Controller
         }
 
         Session::flash('success_msg', 'Successfully deleted supplier delivery order');
-        return redirect()->route('supplier_do_listing');
+        return redirect()->route('supplier_do_listing', ['tenant' => tenant('id')]);
     }
 }
 

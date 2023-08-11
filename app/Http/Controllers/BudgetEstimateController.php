@@ -49,7 +49,7 @@ class BudgetEstimateController extends Controller
 
         return view('budget_estimate_reporting.listing', [
             'search' => $search,
-            'submit' => route('budget_estimate_report_listing'),
+            'submit' => route('budget_estimate_report_listing', ['tenant' => tenant('id')]),
             'company_sel' => Company::get_company_sel(),
             'records' => BudgetEstimated::get_budget_estimated($search),
         ]);
@@ -81,7 +81,7 @@ class BudgetEstimateController extends Controller
 
         return view('report.budget_estimated_reporting.listing', [
             'search' => $search,
-            'submit' => route('budget_estimate_report_listing_reporting'),
+            'submit' => route('budget_estimate_report_listing_reporting', ['tenant' => tenant('id')]),
             'company_sel' => Company::get_company_sel(),
             'records' => BudgetEstimated::get_budget_estimated($search),
         ]);
@@ -134,7 +134,7 @@ class BudgetEstimateController extends Controller
         return view('report.budget_estimated_reporting.report', [
             'search' => $search,
             'year' => $years,
-            'submit' => route('view_monthly_budget_estimate_report',$budget_estimated_id),
+            'submit' => route('view_monthly_budget_estimate_report', ['tenant' => tenant('id'), 'id' => $budget_estimated_id]),
             'products' => Product::get_by_company_budget_estimate2($company->company_id),
             'product_category' =>ProductCategory::get_product_category_for_report(),
             'expense_category' => SettingExpenseCategory::get_expense_category_for_company_expense_report(),
@@ -184,7 +184,7 @@ class BudgetEstimateController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully added ' . $request->input('title'));
-                return redirect()->route('budget_estimate_report_listing');
+                return redirect()->route('budget_estimate_report_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
@@ -256,7 +256,7 @@ class BudgetEstimateController extends Controller
 
         if(!$budget_estimate){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('budget_estimate_report_listing');
+            return redirect()->route('budget_estimate_report_listing', ['tenant' => tenant('id')]);
         }
 
         $budget_estimate->update([
@@ -271,6 +271,6 @@ class BudgetEstimateController extends Controller
         ]);
 
         Session::flash('success_msg', "Successfully Deleted Budget Estimate.");
-        return redirect()->route('budget_estimate_report_listing');
+        return redirect()->route('budget_estimate_report_listing', ['tenant' => tenant('id')]);
     }
 }

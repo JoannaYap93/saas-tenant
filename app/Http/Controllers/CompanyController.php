@@ -55,7 +55,7 @@ class CompanyController extends Controller
         $search = session('company_search') ?? $search;
 
         return view('company.listing', [
-            'submit' => route('company_listing'),
+            'submit' => route('company_listing', ['tenant' => tenant('id')]),
             'records' => Company::get_record($search, 10),
             'search' =>  $search,
             'title' => 'Add',
@@ -84,7 +84,7 @@ class CompanyController extends Controller
 
         if ($post == null) {
             Session::flash('fail_msg', 'Invalid Company, Please Try Again');
-            return redirect()->route('company_listing');
+            return redirect()->route('company_listing', ['tenant' => tenant('id')]);
         }
         $company = Company::find($company_id);
 
@@ -198,7 +198,7 @@ class CompanyController extends Controller
                         }
                     } else {
                         Session::flash('Error while adding company land. Please check again.');
-                        return redirect()->route('company_listing');
+                        return redirect()->route('company_listing', ['tenant' => tenant('id')]);
                     }
 
                     if(!is_null($request->input('company_bank_acc_no'))){
@@ -246,13 +246,13 @@ class CompanyController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully Updated ');
-                return redirect()->route('company_listing');
+                return redirect()->route('company_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('company/form', [
-            'submit' => route('company_edit', $company_id),
+            'submit' => route('company_edit', ['tenant' => tenant('id'), 'id' => $company_id]),
             'title' => 'Edit',
             'post' => $post,
             'admin' => false,
@@ -405,14 +405,14 @@ class CompanyController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully added ' . $request->input('company_name'));
-                return redirect()->route('company_listing');
+                return redirect()->route('company_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
             $post->hasMedia = false;
         }
 
         return view('company.form', [
-            'submit' => route('company_add'),
+            'submit' => route('company_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
             'admin' => false,
@@ -440,7 +440,7 @@ class CompanyController extends Controller
 
         if (!$company) {
             Session::flash('fail_msg', 'Invalid Company! Please try another one.');
-            return redirect()->route('company_listing');
+            return redirect()->route('company_listing', ['tenant' => tenant('id')]);
         }
 
         $company_media = Company::find($id);
@@ -507,14 +507,14 @@ class CompanyController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully updated company');
-                return redirect()->route('company_listing');
+                return redirect()->route('company_listing', ['tenant' => tenant('id')]);
             }
 
             $company = (object) $request->all();
         }
 
         return view('company.form', [
-            'submit' => route('company_edit_land', $id),
+            'submit' => route('company_edit_land', ['tenant' => tenant('id') , 'id' => $id]),
             'title' => 'Edit Details - ',
             'post' => $company,
             'admin' => true,
@@ -543,16 +543,16 @@ class CompanyController extends Controller
                 $data2['company_status'] = $action;
                 $company->update($data2);
                 Session::flash('success_msg', "Successfully {$action} {$company->company_name} and all users.");
-                return redirect()->route('company_listing');
+                return redirect()->route('company_listing', ['tenant' => tenant('id')]);
             }else{
                 $data['company_status'] = $action;
                 $company->update($data);
                 Session::flash('success_msg', "Successfully {$action} {$company->company_name}.");
-                return redirect()->route('company_listing');
+                return redirect()->route('company_listing', ['tenant' => tenant('id')]);
             }
         }else{
             Session::flash('failed_msg', "Invalid Company");
-            return redirect()->route('company_listing');
+            return redirect()->route('company_listing', ['tenant' => tenant('id')]);
         }
     }
 
@@ -595,13 +595,13 @@ class CompanyController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully added company bank details');
-                return redirect()->route('company_listing');
+                return redirect()->route('company_listing', ['tenant' => tenant('id')]);
             }else{
                 $company = (object) $request->all();
             }
         }
         return view('company_bank.form', [
-            'submit' => route('add_company_bank', $company_id),
+            'submit' => route('add_company_bank', ['tenant' => tenant('id'), 'id' => $company_id]),
             'title' => 'Add',
             'company' => $company,
             'company_land' => CompanyLand::get_company_land_by_company_id($company_id),
@@ -623,7 +623,7 @@ class CompanyController extends Controller
 
         if (!$company) {
             Session::flash('fail_msg', 'Invalid Company! Please try another one.');
-            return redirect()->route('company_listing');
+            return redirect()->route('company_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->isMethod('post')) {
@@ -675,13 +675,13 @@ class CompanyController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully Updated PIC for '. $company->company_name);
-                return redirect()->route('company_listing');
+                return redirect()->route('company_listing', ['tenant' => tenant('id')]);
             }
             $company = (object) $request->all();
         }
 
         return view('company.form_pic', [
-            'submit' => route('claim_pic', $company->company_id),
+            'submit' => route('claim_pic', ['tenant' => tenant('id'), 'id' => $company->company_id]),
             'title' => 'Edit',
             'post' => $company,
             'user_sel' => User::get_user_sel(),

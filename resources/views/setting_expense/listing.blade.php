@@ -19,7 +19,7 @@
                 <div class="d-flex align-items-center">
                     <h4 class="mb-0 font-size-18 mr-2">Expense Listing</h4>
                     @can('setting_expense')
-                         <a href="{{ route('expense_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
+                         <a href="{{ route('expense_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
                     @endcan
                 </div>
                 <div class="page-title-right">
@@ -205,23 +205,23 @@
                                     <td>
                                         @if (auth()->user()->user_type_id == 1)
                                             <a class="btn btn-outline-warning btn-sm mr-2"
-                                                href="{{ route('expense_edit', $row->setting_expense_id) }}">
+                                                href="{{ route('expense_edit', ['tenant' => tenant('id'), 'id' => $row->setting_expense_id]) }}">
                                                 Edit
                                             </a>
                                             @if(@$row->setting_expense_status == 'active')
                                             <a class="btn btn-outline-danger btn-sm mr-2"
-                                                href="{{ route('expense_activation', ['id' => $row->setting_expense_id, 'status' => 'inactive']) }}">
+                                                href="{{ route('expense_activation', ['tenant' => tenant('id'), 'id' => $row->setting_expense_id, 'status' => 'inactive']) }}">
                                                 Deactivate
                                             </a>
                                             @else
                                             <a class="btn btn-outline-primary btn-sm mr-2"
-                                                href="{{ route('expense_activation', ['id' => $row->setting_expense_id, 'status' => 'active']) }}">
+                                                href="{{ route('expense_activation', ['tenant' => tenant('id'), 'id' => $row->setting_expense_id, 'status' => 'active']) }}">
                                                 Activate
                                             </a>
                                             @endif
                                         @else
                                             @if (@$row->expense_overwrite->company_id === auth()->user()->company_id)
-                                                <a href="{{ route('expense_overwrite', ['company_id' => auth()->user()->company_id, 'setting_expense_id' => $row->setting_expense_id]) }}" class="btn btn-outline-warning btn-sm mr-1">
+                                                <a href="{{ route('expense_overwrite', ['tenant' => tenant('id'), 'company_id' => auth()->user()->company_id, 'setting_expense_id' => $row->setting_expense_id]) }}" class="btn btn-outline-warning btn-sm mr-1">
                                                     Edit
                                                 </a>
                                                 <button class="btn btn-sm btn-outline-danger delete" data-toggle="modal"
@@ -229,7 +229,7 @@
                                                 </button>
                                             @else
                                                 <a class="btn btn-outline-primary btn-sm mr-2"
-                                                    href="{{ route('expense_overwrite', ['company_id' => auth()->user()->company_id, 'setting_expense_id' => $row->setting_expense_id]) }}">
+                                                    href="{{ route('expense_overwrite', ['tenant' => tenant('id'), 'company_id' => auth()->user()->company_id, 'setting_expense_id' => $row->setting_expense_id]) }}">
                                                     Overwrite
                                                 </a>
                                             @endif
@@ -255,7 +255,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('expense_overwrite_delete') }}">
+                <form method="POST" action="{{ route('expense_overwrite_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Cancel this Expense Overwrite ?</h4>
@@ -286,7 +286,7 @@
             $('#overwrite-detail').html('');
             $.ajax({
                 type: 'POST',
-                url: '{{ route("expense_overwrite_detail_modal") }}',
+                url: '{{ route("expense_overwrite_detail_modal", ['tenant' => tenant('id')]) }}',
                 data: {
                     _token: '{{csrf_token()}}',
                     setting_expense_id: setting_expense_id,

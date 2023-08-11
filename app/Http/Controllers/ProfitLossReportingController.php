@@ -190,7 +190,7 @@ class ProfitLossReportingController extends Controller
         }
 
         $return_arr = [
-            'submit' => route('profit_loss_reporting'),
+            'submit' => route('profit_loss_reporting', ['tenant' => tenant('id')]),
             'title' => 'Profit & Loss Reporting',
             'search' => $search,
             'company' => Company::get_company_sel(),
@@ -253,7 +253,7 @@ class ProfitLossReportingController extends Controller
         $records = ProfitLossReporting::profit_loss_reporting_detail($company_id, $setting_expense_id, $year);
 
         return view('report.profit_loss_reporting_detail', [
-            'submit' => route('profit_loss_reporting_detail'),
+            'submit' => route('profit_loss_reporting_detail', ['tenant' => tenant('id')]),
             'profit_loss' => $records,
             'setting_expense' => SettingExpense::get_setting_expense_for_report(),
             'company_expense' => CompanyExpense::get_company_expense_for_report_detail($company_id, $setting_expense_id, $year),
@@ -271,7 +271,7 @@ class ProfitLossReportingController extends Controller
         $recordslastyear = ProfitLossReporting::profit_loss_y2y_reporting_detail($search, true);
 
         return view('report.profit_loss_y2y_reporting_detail', [
-            'submit' => route('profit_loss_y2y_reporting_detail'),
+            'submit' => route('profit_loss_y2y_reporting_detail', ['tenant' => tenant('id')]),
             'profit_loss' => $records,
             'profitloss' => $recordslastyear,
             'search' => $search,
@@ -287,7 +287,7 @@ class ProfitLossReportingController extends Controller
         $records = ProfitLossReporting::profit_loss_m2m_reporting_detail($company_id, $setting_expense_id, $year, $month);
 
         return view('report.profit_loss_m2m_reporting_detail', [
-            'submit' => route('profit_loss_m2m_reporting_detail'),
+            'submit' => route('profit_loss_m2m_reporting_detail', ['tenant' => tenant('id')]),
             'profit_loss' => $records,
             'search' => $search,
             'month_sel' => Reporting::get_month(),
@@ -302,7 +302,7 @@ class ProfitLossReportingController extends Controller
         $records = ProfitLossReporting::profit_loss_reporting_detail_by_land($search, $company_id, $setting_expense_id, $year);
 
         return view('report.profit_loss_reporting_detail_by_land', [
-            'submit' => route('profit_loss_reporting_detail_by_land'),
+            'submit' => route('profit_loss_reporting_detail_by_land', ['tenant' => tenant('id')]),
             'profit_loss' => $records,
             'setting_expense' => SettingExpense::get_setting_expense_for_report(),
             'company_expense' => CompanyExpense::get_company_expense_for_report_detail($company_id, $setting_expense_id, $year),
@@ -321,7 +321,7 @@ class ProfitLossReportingController extends Controller
         $recordslastyear = ProfitLossReporting::profit_loss_y2y_reporting_detail_by_land($search, true);
 
         return view('report.profit_loss_y2y_reporting_detail_by_land', [
-            'submit' => route('profit_loss_y2y_reporting_detail_by_land'),
+            'submit' => route('profit_loss_y2y_reporting_detail_by_land', ['tenant' => tenant('id')]),
             'profit_loss' => $records,
             'profitloss' => $recordslastyear,
             'search' => $search,
@@ -338,7 +338,7 @@ class ProfitLossReportingController extends Controller
         $records = ProfitLossReporting::profit_loss_m2m_reporting_detail_by_land($search, $company_id, $setting_expense_id, $year, $month);
 
         return view('report.profit_loss_m2m_reporting_detail_by_land', [
-            'submit' => route('profit_loss_m2m_reporting_detail_by_land'),
+            'submit' => route('profit_loss_m2m_reporting_detail_by_land', ['tenant' => tenant('id')]),
             'profit_loss' => $records,
             'search' => $search,
             'month_sel' => Reporting::get_month(),

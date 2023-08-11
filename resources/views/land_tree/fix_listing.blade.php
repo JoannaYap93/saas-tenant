@@ -34,7 +34,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <form method="POST" action="{{ route('fix_product_data_listing', $company_land_zone_id)}}">
+                        <form method="POST" action="{{ route('fix_product_data_listing', ['tenant' => tenant('id'), 'id' => $company_land_zone_id])}}">
                             @csrf
                             <div class="row">
                                 <div class="col-md-3">
@@ -79,7 +79,7 @@
                                         value="reset">
                                         <i class="fas fa-times mr-1"></i> Reset
                                     </button>
-                                    <a  href="{{ route('land_zone_listing', [ 'company_id' => $company_land->company->company_id, 'company_land_id' => $company_land->company_land_id]) }}" class="btn btn-secondary waves-effect waves-light mr-2"
+                                    <a  href="{{ route('land_zone_listing', ['tenant' => tenant('id'), 'company_id' => $company_land->company->company_id, 'company_land_id' => $company_land->company_land_id]) }}" class="btn btn-secondary waves-effect waves-light mr-2"
                                         name="submit">
                                         <i class="fas fa-arrow-left mr-1"></i> Zone Listing
                                     </a>
@@ -159,7 +159,7 @@
                                             <td>
                                             @can('company_land_tree_manage')
                                                 {{-- @if(auth()->user()->user_type_id == 2) --}}
-                                                <a href="{{ route('fix_product_data', $row->company_land_tree_id)}}" class="btn btn-sm btn-outline-warning waves-effect waves-light mr-1 mb-1">Fix Data</a>
+                                                <a href="{{ route('fix_product_data', ['tenant' => tenant('id'), 'id' => $row->company_land_tree_id])}}" class="btn btn-sm btn-outline-warning waves-effect waves-light mr-1 mb-1">Fix Data</a>
                                                 <button class="btn btn-sm btn-outline-danger delete" data-toggle="modal"
                                                 data-target="#delete" data-id="{{ $row->company_land_tree_id }}">Delete
                                                 </button>
@@ -188,7 +188,7 @@
  aria-hidden="true">
  <div class="modal-dialog modal-dialog-centered" role="document">
      <div class="modal-content">
-         <form method="POST" action="{{ route('tree_delete_fix') }}">
+         <form method="POST" action="{{ route('tree_delete_fix', ['tenant' => tenant('id')]) }}">
              @csrf
              <div class="modal-body">
                  <h4>Delete this Tree ?</h4>

@@ -86,7 +86,7 @@
                         <h4 class="card-title mb-4">{{ $data->budget_estimated_title }}</h4>
                         <div class="row mb-4">
                             <div class="col-sm-12">
-                                <a  href="{{ route('budget_estimate_report_listing') }}" class="btn btn-secondary waves-effect waves-light mr-2"
+                                <a  href="{{ route('budget_estimate_report_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary waves-effect waves-light mr-2"
                                     name="submit">
                                     <i class="fas fa-arrow-left mr-1"></i> Budget Estimate Listing
                                 </a>
@@ -131,7 +131,7 @@
             sum();
 
             $.ajax({
-                url: "{{ route('budget_estimate_report_edit', $data->budget_estimated_id) }}",
+                url: "{{ route('budget_estimate_report_edit', ['tenant' => tenant('id'), 'id' => $data->budget_estimated_id]) }}",
                 type: "POST",
                 dataType: 'json',
                 data: {
@@ -150,7 +150,7 @@
         });
 
         $('.update').editable({
-            url: "{{ route('budget_estimate_report_edit', $data->budget_estimated_id) }}",
+            url: "{{ route('budget_estimate_report_edit', ['tenant' => tenant('id'), 'id' => $data->budget_estimated_id]) }}",
             type: 'number',
             step: '0.01',
             pk: 1,

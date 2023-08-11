@@ -16,7 +16,7 @@
                 <div class="d-flex align-items-center">
                     <h4 class="mb-0 font-size-18 mr-2">{{$page_title}}</h4>
                     @can('setting_message_template')
-                    <a href="{{ route('message_template_add') }}"
+                    <a href="{{ route('message_template_add', ['tenant' => tenant('id')]) }}"
                         class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                             class="fas fa-plus"></i> ADD NEW</a>
                     @endcan
@@ -72,7 +72,7 @@
                                             name="submit" value="search">
                                             <i class="fas fa-search mr-1"></i> Search
                                         </button>
-                                        <a href="{{route('message_template_listing','reset=1')}}" class="btn btn-danger waves-effect waves-light mr-2"><i class="fas fa-times mr-1"></i> Reset</a>
+                                        <a href="{{route('message_template_listing', ['tenant' => tenant('id')])}}" class="btn btn-danger waves-effect waves-light mr-2"><i class="fas fa-times mr-1"></i> Reset</a>
                                     </div>
                                 </div>
                             </form>
@@ -126,7 +126,7 @@
                                     </td>
                                     <td>
                                         @can('setting_message_template')
-                                            <a href="{{ route('message_template_edit', $rows->message_template_id) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
+                                            <a href="{{ route('message_template_edit', ['tenant' => tenant('id'), 'id' => $rows->message_template_id]) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                         @endcan
                                         @can('setting_message_template')
                                             <button class="btn btn-sm btn-outline-danger delete mr-2" data-toggle="modal" data-target="#delete" data-id="{{ $rows->message_template_id }}">Delete</button>
@@ -155,7 +155,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('message_template_delete') }}">
+                <form method="POST" action="{{ route('message_template_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this Message Template ?</h4>

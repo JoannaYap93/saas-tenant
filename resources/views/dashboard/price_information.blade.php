@@ -77,15 +77,15 @@
             <div class="row">
                 @can('dashboard_sales_analysis')
                 {{-- @if(auth()->user()->user_type_id == 1) --}}
-                    <a style="color: black" href="{{ route('dashboard_sales_analysis') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav "><span
+                    <a style="color: black" href="{{ route('dashboard_sales_analysis', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav "><span
                     class="transaction-font">Sales Analysis</span></a>
                 {{-- @endif --}}
                 @endcan
-                <a style="color: black" href="{{ route('dashboard') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav active"><span
+                <a style="color: black" href="{{ route('dashboard', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav active"><span
                     class="transaction-font">Price Information</span></a>
-                <a style="color: black" href="{{ route('dashboard_price_analysis') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav"><span
+                <a style="color: black" href="{{ route('dashboard_price_analysis', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav"><span
                     class="transaction-font">Price Analysis</span></a>
-                <a style="color: black" href="{{ route('dashboard_profit_loss_analysis') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav"><span
+                <a style="color: black" href="{{ route('dashboard_profit_loss_analysis', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav"><span
                     class="transaction-font">Profit & Loss</span></a>
             </div>
         </div>
@@ -200,12 +200,12 @@
                                                                 <td style="text-align: center;{{$count%2 == 0 ? 'background-color: #e4e4e4;':''}}">
                                                                     @if (isset($price_information[$p][$name]['min']))
                                                                         @if ($price_information[$p][$name]['min'] == $price_information[$p][$name]['max'])
-                                                                            <a class="popup" href="{{route('min_max_detail',['search_date' => @$search['date'], 'product'=> $p,'company_farm_name'=>$name])}}">
+                                                                            <a class="popup" href="{{route('min_max_detail',[ 'tenant' => tenant('id'), 'search_date' => @$search['date'], 'product'=> $p,'company_farm_name'=>$name])}}">
                                                                                 {{ $price_information[$p][$name]['min'] }}
                                                                             </a>
                                                                         @else
                                                                             {{-- <a class="popup" href="{{route('min_max_detail',['search_date' => @$search['date'],'min'=>$price_information[$p][$name]['min'], 'max'=>$price_information[$p][$name]['max'], 'product'=> $p,'company_farm_name'=>$name])}}"> --}}
-                                                                            <a class="popup" href="{{route('min_max_detail',['search_date' => @$search['date'], 'product'=> $p,'company_farm_name'=>$name])}}">
+                                                                            <a class="popup" href="{{route('min_max_detail',[ 'tenant' => tenant('id'), 'search_date' => @$search['date'], 'product'=> $p,'company_farm_name'=>$name])}}">
 
                                                                                 {{ $price_information[$p][$name]['min'] }} - {{ $price_information[$p][$name]['max'] }}
                                                                             </a>
@@ -220,7 +220,7 @@
                                                                                     'product' => $p,
                                                                                 ]
                                                                             @endphp
-                                                                            <a href="{{route('price_information_add',$detail)}}">-</a>
+                                                                            <a href="{{route('price_information_add',[ 'tenant' => tenant('id'), 'search_date' => @$search['date'], 'product'=> $p,'company_farm_name'=>$name])}}">-</a>
                                                                         {{-- @else
                                                                             - --}}
                                                                         {{-- @endif --}}
@@ -256,7 +256,7 @@
                     <div class="row mt-3">
                         @if (count($customer_category) <= 1)
                             <div class="col-md-3">
-                                <a href="{{ route('customer_category_add') }}">
+                                <a href="{{ route('customer_category_add', ['tenant' => tenant('id')]) }}">
                                     <div class="p-3 w-100 shadow d-flex align-center m-auto hover-zoom"
                                         style="background-color: rgb(213, 221, 255); border-radius: 1rem">
                                         <div style="width: 0.25rem; background-color: #89a8c8" class="mr-2">
@@ -268,7 +268,7 @@
                         @endif
                         @if (count($warehouse) <= 1)
                             <div class="col-md-3">
-                                <a href="{{ route('setting_warehouse_add') }}">
+                                <a href="{{ route('setting_warehouse_add', [ 'tenant' => tenant('id')]) }}">
                                     <div class="p-3 w-100 shadow d-flex align-center m-auto hover-zoom"
                                         style="background-color: rgb(213, 221, 255); border-radius: 1rem">
                                         <div style="width: 0.25rem; background-color:#89a8c8" class="mr-2">
@@ -280,7 +280,7 @@
                         @endif
                         @if ($product == false)
                             <div class="col-md-3">
-                                <a href="{{ route('company_listing') }}">
+                                <a href="{{ route('company_listing', ['tenant' => tenant('id')]) }}">
                                     <div class="p-3 w-100 shadow d-flex align-center m-auto hover-zoom"
                                         style="background-color: rgb(213, 221, 255); border-radius: 1rem">
                                         <div style="width: 0.25rem; background-color:#89a8c8" class="mr-2">
@@ -300,7 +300,7 @@
         @if (count($product_category) <= 1 || $product == false)
             @if (count($product_category) <= 1)
                 <div class="col-md-3">
-                    <a href="{{ route('product_category_add') }}">
+                    <a href="{{ route('product_category_add', ['tenant' => tenant('id')]) }}">
                         <div class="p-3 w-100 shadow d-flex align-center m-auto hover-zoom"
                             style="background-color: rgb(213, 221, 255); border-radius: 1rem">
                             <div style="width: 0.25rem; background-color:#89a8c8" class="mr-2">
@@ -312,7 +312,7 @@
             @endif
             @if ($product == false)
                 <div class="col-md-3">
-                    <a href="{{ route('product_add') }}">
+                    <a href="{{ route('product_add', ['tenant' => tenant('id')]) }}">
                         <div class="p-3 w-100 shadow d-flex align-center m-auto hover-zoom"
                             style="background-color: rgb(213, 221, 255); border-radius: 1rem">
                             <div style="width: 0.25rem; background-color:#89a8c8" class="mr-2">

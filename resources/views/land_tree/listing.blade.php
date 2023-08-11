@@ -17,7 +17,7 @@
                 <span class="mr-2">Company Land Tree Listing</span>
                 @can('company_land_tree_manage')
                 {{-- @if(auth()->user()->user_type_id == 2) --}}
-                    <a href="{{route('land_tree_add', $company_land_zone_id)}}"
+                    <a href="{{route('land_tree_add', ['tenant' => tenant('id'), 'id' => $company_land_zone_id])}}"
                             class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                                     class="fas fa-plus"></i> ADD NEW</a>
                     {{-- @endif --}}
@@ -41,7 +41,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <form method="POST" action="{{ route('land_tree_listing', $company_land_zone_id)}}">
+                        <form method="POST" action="{{ route('land_tree_listing', ['tenant' => tenant('id'), 'id' => $company_land_zone_id])}}">
                             @csrf
                             <div class="row">
                                 <div class="col-md-3">
@@ -102,7 +102,7 @@
                                         value="reset">
                                         <i class="fas fa-times mr-1"></i> Reset
                                     </button>
-                                    <a  href="{{ route('land_zone_listing', [ 'company_id' => $company_land->company->company_id, 'company_land_id' => $company_land->company_land_id]) }}" class="btn btn-secondary waves-effect waves-light mr-2"
+                                    <a  href="{{ route('land_zone_listing', ['tenant' => tenant('id'), 'company_id' => $company_land->company->company_id, 'company_land_id' => $company_land->company_land_id]) }}" class="btn btn-secondary waves-effect waves-light mr-2"
                                         name="submit">
                                         <i class="fas fa-arrow-left mr-1"></i> Zone Listing
                                     </a>
@@ -192,7 +192,7 @@
                                                 <b>{{@$row->product->product_name}}</b>
                                             @else
                                                 @if(auth()->user()->user_type_id == 2)
-                                                    <a href="{{ route('fix_product_data', $row->company_land_tree_id)}}"><b style= "color: red">No Data</b></a>
+                                                    <a href="{{ route('fix_product_data', ['tenant' => tenant('id'), 'id' => $row->company_land_tree_id])}}"><b style= "color: red">No Data</b></a>
                                                 @else
                                                 <b style= "color: red">No Data</b></a>
                                                 @endif
@@ -234,7 +234,7 @@
                                             <td>
                                             @can('company_land_tree_manage')
                                                 {{-- @if(auth()->user()->user_type_id == 2) --}}
-                                                <a href="{{ route('land_tree_edit', $row->company_land_tree_id)}}" class="btn btn-sm btn-outline-warning waves-effect waves-light mr-1 mb-1">Edit</a>
+                                                <a href="{{ route('land_tree_edit', ['tenant' => tenant('id'), 'id' => $row->company_land_tree_id])}}" class="btn btn-sm btn-outline-warning waves-effect waves-light mr-1 mb-1">Edit</a>
                                                 <button
 
                                                     data-id="{{$row->company_land_tree_id}}"
@@ -242,7 +242,7 @@
                                                     class="btn btn-sm btn-outline-success waves-effect waves-light mr-1 mb-1 manage_indi_tree">Manage</button>
                                                 {{-- @endif --}}
                                             @endcan
-                                            <a href="{{ route('land_tree_log_listing', ['land_id' => 0, 'id' => $row->company_land_tree_id])}}" class="btn btn-sm btn-outline-dark waves-effect waves-light mr-1 mb-1">Log</a>
+                                            <a href="{{ route('land_tree_log_listing', ['tenant' => tenant('id'), 'land_id' => 0, 'id' => $row->company_land_tree_id])}}" class="btn btn-sm btn-outline-dark waves-effect waves-light mr-1 mb-1">Log</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -265,7 +265,7 @@
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('manage_tree', $company_land_zone_id) }}">
+            <form method="POST" action="{{ route('manage_tree', ['tenant' => tenant('id'), 'id' => $company_land_zone_id]) }}">
                 @csrf
                 <div class="modal-body">
                     <h4 class="card-title mb-4">Manage Tree</h4>
@@ -358,7 +358,7 @@
               }
 
               $.ajax({
-                  url: "{{ route('ajax_get_tree_action') }}",
+                  url: "{{ route('ajax_get_tree_action', ['tenant' => tenant('id')]) }}",
                   method: 'post',
                   data: {
                       _token: '{{ csrf_token() }}',

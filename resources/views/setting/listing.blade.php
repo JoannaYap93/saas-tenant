@@ -87,7 +87,7 @@
                                         @if (auth()->user()->user_type_id == 1)
                                             <td>
                                                 @if ($row->is_editable == 1)
-                                                    <a href="{{ route('setting_edit', $row->setting_id) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
+                                                    <a href="{{ route('setting_edit', ['tenant' => tenant('id'), 'id' => $row->setting_id]) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                                 @endif
                                             </td>
                                         @endif

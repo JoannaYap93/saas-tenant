@@ -77,15 +77,15 @@
             <div class="row">
                 @can('dashboard_sales_analysis')
                 {{-- @if(auth()->user()->user_type_id == 1) --}}
-                <a style="color: black" href="{{ route('dashboard_sales_analysis') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav active"><span
+                <a style="color: black" href="{{ route('dashboard_sales_analysis', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav active"><span
                     class="transaction-font">Sales Analysis</span></a>
                 {{-- @endif --}}
                 @endcan
-                <a style="color: black" href="{{ route('dashboard') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav "><span
+                <a style="color: black" href="{{ route('dashboard', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav "><span
                     class="transaction-font">Price Information</span></a>
-                <a style="color: black" href="{{ route('dashboard_price_analysis') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav"><span
+                <a style="color: black" href="{{ route('dashboard_price_analysis', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav"><span
                     class="transaction-font">Price Analysis</span></a>
-                <a style="color: black" href="{{ route('dashboard_profit_loss_analysis') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav"><span
+                <a style="color: black" href="{{ route('dashboard_profit_loss_analysis', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav"><span
                     class="transaction-font">Profit & Loss</span></a>
             </div>
         </div>
@@ -392,7 +392,7 @@
           //
           // function disableProduct(selected_val){
           //   $.ajax({
-          //       url: "{{ route('ajax_get_products_multi_company') }}",
+          //       url: "{{ route('ajax_get_products_multi_company', ['tenant' => tenant('id')]) }}",
           //       method: "POST",
           //       data: {
           //           _token: "{{ csrf_token() }}",

@@ -20,7 +20,8 @@ class UserTypeVerify
     {
         if (Auth::user()->user_type_id != 2 || Auth::user()->company_id == 0) {
             Session::flash('fail_msg', 'Forbidden! Permission is not allowed.');
-            return redirect(RouteServiceProvider::HOME);
+            // return redirect(RouteServiceProvider::HOME);
+            return redirect()->route('main.index', ['tenant' => tenant('id')]);
         }
 
         return $next($request);

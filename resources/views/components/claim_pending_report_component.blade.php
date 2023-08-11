@@ -20,7 +20,7 @@
                                 <td style="text-align: center; {{ $key % 2 != 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }} border:1px solid #eee">
                                     @if (@$records['claim_data_company'][$companies->company_id][$key] > 0)
                                         @if (@$component)
-                                            {{-- <a class="popup" href="{{ route('claim_pending_detail_report_superadmin', ['year' => $search['year'], 'month' => $key, 'company_id' => $companies->company_id])}}"> --}}
+                                            {{-- <a class="popup" href="{{ route('claim_pending_detail_report_superadmin', ['tenant' => tenant('id'), 'year' => $search['year'], 'month' => $key, 'company_id' => $companies->company_id])}}"> --}}
                                             {{number_format($records['claim_data_company'][$companies->company_id][$key], 2)}}
                                         {{-- </a> --}}
                                         @else
@@ -45,7 +45,7 @@
                                             <td style="text-align: center; {{ $key % 2 != 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }} border:1px solid #eee">
                                                 @if (@$records['claim_data_farm_manager'][$companies->company_id][$key][$manager->worker_id] > 0)
                                                     @if (@$component)
-                                                        <a class="popup" href="{{ route('claim_pending_detail_report_admin', ['year' => $search['year'], 'month' => $key, 'company_id' => $companies->company_id, 'farm_manager' => $manager->worker_id])}}">
+                                                        <a class="popup" href="{{ route('claim_pending_detail_report_admin', ['tenant' => tenant('id'), 'year' => $search['year'], 'month' => $key, 'company_id' => $companies->company_id, 'farm_manager' => $manager->worker_id])}}">
                                                             {{number_format($records['claim_data_farm_manager'][$companies->company_id][$key][$manager->worker_id], 2)}}
                                                             {{-- @dump($records['claim_data_farm_manager'][$companies->company_id]) --}}
                                                         </a>

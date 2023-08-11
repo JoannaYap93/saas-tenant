@@ -49,7 +49,7 @@
                         <td rowspan="{{ $count_row }}" style="text-align: center"><b>{{ $loop->iteration }}</b></td>
                         <td rowspan="{{ $count_row }}" style="text-align: center">
                             @if (@$component)
-                            <a class="popup" href="{{ route('company_land_tree_pointer_age_report_detail', ['company_id' => $company_id])}}">
+                            <a class="popup" href="{{ route('company_land_tree_pointer_age_report_detail', ['tenant' => tenant('id'), 'company_id' => $company_id])}}">
                                 {{ $records['company'][$company_id] }}
                             </a>
                             @else
@@ -63,7 +63,7 @@
                             @if ($company_land_count == 0)
                                 <td rowspan="{{ count($records['product'][$company_id][$company_land_id]) }}" style="text-align: center">
                                     @if (@$component)
-                                        <a class="popup" href="{{ route('company_land_tree_report_detail', ['company_land_id' => $company_land_id])}}">
+                                        <a class="popup" href="{{ route('company_land_tree_report_detail', ['tenant' => tenant('id'), 'company_land_id' => $company_land_id])}}">
                                             {{ $records['company_land'][$company_id][$company_land_id] }}
                                         </a>
                                     @else
@@ -88,7 +88,7 @@
                                         <td style="text-align: center">{{ $product['lt5'] > 0 ? $product['lt5'] : '-' }}</td>
                                         <td style="text-align: center">{{ $product['healthy'] > 0 ? $product['healthy'] : '-' }}</td>
                                         <td style="text-align: center">
-                                        <a class="popup" href="{{ route('company_land_tree_report_sick_tree_detail', ['company_land_id' => $company_land_id, 'product_id' => $product['product_id']])}}">
+                                        <a class="popup" href="{{ route('company_land_tree_report_sick_tree_detail', ['tenant' => tenant('id'), 'company_land_id' => $company_land_id, 'product_id' => $product['product_id']])}}">
                                             {{ $product['sick'] > 0 ? $product['sick'] : '-' }}
                                         </a>
                                         </td>
@@ -130,7 +130,7 @@
                                             <td style="text-align: center">{{ $product['lt5'] > 0 ? $product['lt5'] : '-' }}</td>
                                             <td style="text-align: center">{{ $product['healthy'] > 0 ? $product['healthy'] : '-' }}</td>
                                             <td style="text-align: center">
-                                                <a class="popup" href="{{ route('company_land_tree_report_sick_tree_detail', ['company_land_id' => $company_land_id, 'product_id' => $product['product_id']])}}">
+                                                <a class="popup" href="{{ route('company_land_tree_report_sick_tree_detail', ['tenant' => tenant('id'), 'company_land_id' => $company_land_id, 'product_id' => $product['product_id']])}}">
                                                 {{ $product['sick'] > 0 ? $product['sick'] : '-' }}
                                                 </a>
                                             </td>
@@ -166,7 +166,7 @@
                                         <tr>
                                             <td rowspan="{{ count($records['product'][$company_id][$company_land_id]) }}" style="text-align: center">
                                                 @if (@$component)
-                                                    <a class="popup" href="{{ route('company_land_tree_report_detail', ['company_land_id' => $company_land_id])}}">
+                                                    <a class="popup" href="{{ route('company_land_tree_report_detail', ['tenant' => tenant('id'), 'company_land_id' => $company_land_id])}}">
                                                         {{ $records['company_land'][$company_id][$company_land_id] }}
                                                     </a>
                                                 @else
@@ -185,7 +185,7 @@
                                             <td style="text-align: center">{{ $product['lt5'] > 0 ? $product['lt5'] : '-' }}</td>
                                             <td style="text-align: center">{{ $product['healthy'] > 0 ? $product['healthy'] : '-' }}</td>
                                             <td style="text-align: center">
-                                                <a class="popup" href="{{ route('company_land_tree_report_sick_tree_detail', ['company_land_id' => $company_land_id, 'product_id' => $product['product_id']])}}">
+                                                <a class="popup" href="{{ route('company_land_tree_report_sick_tree_detail', ['tenant' => tenant('id'), 'company_land_id' => $company_land_id, 'product_id' => $product['product_id']])}}">
                                                     {{ $product['sick'] > 0 ? $product['sick'] : '-' }}
                                                 </a>
                                             </td>

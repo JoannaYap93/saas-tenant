@@ -99,12 +99,12 @@ class UserRoleController extends Controller
                 $role = Role::create(['name' =>  $request->input('name'), 'company_id' => $company_id]);
                 $permissions = $request->input('permissions');
                 $role->givePermissionTo($permissions);
-                return redirect()->route('user_role_listing')->with('message', 'Successfully added New Role');
+                return redirect()->route('user_role_listing', ['tenant' => tenant('id')])->with('message', 'Successfully added New Role');
             }
             $post = (object) $request->all();
         }
         return view('user_role/form', [
-            'submit' => route('user_role_add'),
+            'submit' => route('user_role_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
             'permissions' => Permission::orderBy('group_name', 'asc')->get(),
@@ -152,12 +152,12 @@ class UserRoleController extends Controller
                 $permissions = $request->input('permissions');
                 $role->syncPermissions($permissions);
                 Session::flash('success_msg', 'Successfully updaterd ' . $request->input('name') . ' role.');
-                return redirect()->route('user_role_listing');
+                return redirect()->route('user_role_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('user_role/form', [
-            'submit' => route('user_role_edit', $role_id),
+            'submit' => route('user_role_edit', ['tenant' => tenant('id'), 'id' => $role_id]),
             'title' => 'Edit',
             'post' => $post,
             'permissions' => Permission::orderBy('group_name', 'asc')->get(),

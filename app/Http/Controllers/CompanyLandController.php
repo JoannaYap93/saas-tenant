@@ -40,7 +40,7 @@ class CompanyLandController extends Controller
         }
         $search = session('company_land_search') ?? $search;
         return view('company_land/listing', [
-            'submit'=> route('company_land_listing'),
+            'submit'=> route('company_land_listing', ['tenant' => tenant('id')]),
             'records'=> CompanyLand::get_record($search,15),
             'search'=>  $search,
             'company_name_sel'=> Company::get_company_sel(),
@@ -62,7 +62,7 @@ class CompanyLandController extends Controller
 
         if ($post == null) {
             Session::flash('fail_msg', 'Invalid Company Land, Please Try Again');
-            return redirect()->route('land_area_listing');
+            return redirect()->route('land_area_listing', ['tenant' => tenant('id')]);
         }
 
         if($request->isMethod('post')){
@@ -93,13 +93,13 @@ class CompanyLandController extends Controller
                 // $company_land->company_land_category_id = $request->input('company_land_category_id');
                 // $company_land->save();
                 Session::flash('success_msg', 'Successfully Updated ');
-                return redirect()->route('land_area_listing');
+                return redirect()->route('land_area_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('land_area/form', [
-            'submit'=>route('land_area_edit',$company_land_id),
+            'submit'=>route('land_area_edit', ['tenant' => tenant('id'), 'id' => $company_land_id]),
             'title'=> 'Edit',
             'post'=> $post,
             'company_land_category_sel'=> CompanyLandCategory::get_land_category_sel(),
@@ -144,12 +144,12 @@ class CompanyLandController extends Controller
                     'company_id' => $user->company_id ?? $request->input('company_id'),
                 ]);
                 Session::flash('success_msg', 'Successfully added '.$request->input('company_name'));
-                return redirect()->route('land_area_listing');
+                return redirect()->route('land_area_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('land_area/form', [
-            'submit'=> route('land_area_add'),
+            'submit'=> route('land_area_add', ['tenant' => tenant('id')]),
             'title'=> 'Add',
             'post'=> $post,
             'company_land_category_sel'=> CompanyLandCategory::get_land_category_sel(),

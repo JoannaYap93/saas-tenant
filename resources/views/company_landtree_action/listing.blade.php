@@ -16,7 +16,7 @@
                 <div class="d-flex align-items-center">
                   <h4 class="mb-0 font-size-18 mr-2">Tree Action Listing</h4>
                   @can('company_land_tree_manage')
-                      <a href="{{ route('add_default') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
+                      <a href="{{ route('add_default', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
                   @endcan
                 </div>
                 <div class="page-title-right">
@@ -110,7 +110,7 @@
                                         @can('company_land_tree_manage')
                                         <td>
                                             {{-- @if (auth()->user()->company_id == $action->company_id ) --}}
-                                                <a href="{{ route('edit_default', $action->company_land_tree_action_id) }}"
+                                                <a href="{{ route('edit_default', ['tenant' => tenant('id'), 'id' => $action->company_land_tree_action_id) }}"
                                                 class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                             {{-- @endif --}}
                                         </td>

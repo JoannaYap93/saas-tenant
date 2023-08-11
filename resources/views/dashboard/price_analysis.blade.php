@@ -72,14 +72,14 @@
         <div class="col-12">
             <div class="row">
                 @can('dashboard_sales_analysis')
-                    <a style="color: black" href="{{ route('dashboard_sales_analysis') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav "><span class="transaction-font">Sales Analysis</span></a>
+                    <a style="color: black" href="{{ route('dashboard_sales_analysis', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav "><span class="transaction-font">Sales Analysis</span></a>
                 @endcan
-                <a style="color: black" href="{{ route('dashboard') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav">
+                <a style="color: black" href="{{ route('dashboard', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav">
                 <span class="transaction-font">Price Information</span></a>
-                <a style="color: black" href="{{ route('dashboard_price_analysis') }}"
+                <a style="color: black" href="{{ route('dashboard_price_analysis', ['tenant' => tenant('id')]) }}"
                     class="button_status transaction-card-col btn-nav-list float-left dashboard-nav active"><span
                         class="transaction-font">Price Analysis</span></a>
-                <a style="color: black" href="{{ route('dashboard_profit_loss_analysis') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav"><span
+                <a style="color: black" href="{{ route('dashboard_profit_loss_analysis', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav"><span
                     class="transaction-font">Profit & Loss</span></a>
             </div>
         </div>
@@ -233,7 +233,7 @@
 
         function chart(date_from,date_to,company_id,company_farm_id,company_land_id,product_id,product_size_id){
             $.ajax({
-                    url: "{{ route('ajax_price_analysis') }}",
+                    url: "{{ route('ajax_price_analysis', ['tenant' => tenant('id')]) }}",
                     method: 'POST',
                     data: {
                         date_from: date_from,
@@ -332,7 +332,7 @@
 
 
                 var request = $.ajax({
-                    url: "{{ route('ajax_get_farm_by_company_id') }}",
+                    url: "{{ route('ajax_get_farm_by_company_id', ['tenant' => tenant('id')]) }}",
                     method: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -358,7 +358,7 @@
             $('#company_land_id').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_land_by_company_farm_id') }}",
+                url: "{{ route('ajax_get_land_by_company_farm_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -391,7 +391,7 @@
                     $('#show_product').attr('disabled', true);
                 }
                 $.ajax({
-                    url: "{{ route('ajax_get_product_sel_by_company_land_id') }}",
+                    url: "{{ route('ajax_get_product_sel_by_company_land_id', ['tenant' => tenant('id')]) }}",
                     method: 'post',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -425,7 +425,7 @@
             }
 
             $.ajax({
-                url: "{{ route('ajax_get_setting_size_by_product_id') }}",
+                url: "{{ route('ajax_get_setting_size_by_product_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

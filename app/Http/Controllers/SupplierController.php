@@ -48,7 +48,7 @@ class SupplierController extends Controller
         $search = session('supplier_search') ?? $search;
 
         return view('supplier.listing', [
-            'submit' => route('supplier_listing'),
+            'submit' => route('supplier_listing', ['tenant' => tenant('id')]),
             'search' =>  $search,
             'records' => Supplier::get_records($search, 15),
             'company_sel' => Company::get_company_sel(),
@@ -203,14 +203,14 @@ class SupplierController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully added '.$request->input('supplier_name'));
-                return redirect()->route('supplier_listing');
+                return redirect()->route('supplier_listing', ['tenant' => tenant('id')]);
             }
 
             $supplier = (object) $request->all();
         }
 
         return view('supplier.form', [
-            'submit' => route('supplier_add'),
+            'submit' => route('supplier_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'supplier' => $supplier,
             'company_sel' => Company::get_company_check_box(),
@@ -229,7 +229,7 @@ class SupplierController extends Controller
 
         if ($supplier == null) {
             Session::flash('fail_msg', 'Invalid Supplier, Please Try Again');
-            return redirect()->route('supplier_listing');
+            return redirect()->route('supplier_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->isMethod('post')) {
@@ -403,13 +403,13 @@ class SupplierController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully Updated Supplier ' . $request->input('supplier_name'));
-                return redirect()->route('supplier_listing');
+                return redirect()->route('supplier_listing', ['tenant' => tenant('id')]);
             }
             $supplier = (object) $request->all();
         }
 
         return view('supplier.form', [
-            'submit' => route('supplier_edit', $supplier_id),
+            'submit' => route('supplier_edit', ['tenant' => tenant('id'), 'id' => $supplier_id]),
             'title' => 'Edit',
             'supplier' => $supplier,
             'company_sel' => Company::get_company_check_box(),

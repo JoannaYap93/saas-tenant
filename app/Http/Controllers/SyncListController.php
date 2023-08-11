@@ -79,7 +79,7 @@ class SyncListController extends Controller
             'company_land_sel' => CompanyLand::get_company_land_sel(),
             'company_sel' => Company::get_company_sel(),
             'user_sel' => ['' => 'Please select user'] + User::get_user_sel(),
-            'submit'=> route('sync_listing'),
+            'submit'=> route('sync_listing', ['tenant' => tenant('id')]),
         ]);
     }
 
@@ -112,7 +112,7 @@ class SyncListController extends Controller
             $search = session('sync_company_expense_listing') ?? array();
 
         return view('sync_list.sync_company_expense', [
-            'submit' => route('sync_company_expense_listing'),
+            'submit' => route('sync_company_expense_listing', ['tenant' => tenant('id')]),
             'search' => $search,
             'records' => SyncCompanyExpense::get_records($search),
             'company_land_sel' => CompanyLand::get_company_land_sel(),
@@ -155,7 +155,7 @@ class SyncListController extends Controller
         // $formula_usage = FormulaUsage::get_records($search);
         $search = session('sync_formula_usage_search') ?? array();
         return view('sync_list.sync_formula_usage', [
-            'submit' => route('sync_formula_usage_listing'),
+            'submit' => route('sync_formula_usage_listing', ['tenant' => tenant('id')]),
             'records' => SyncFormulaUsage::get_records($search),
             // 'status' => ProductStatus::get_records(),
             'product_tree' => CompanyLandTree::get_tree_w_product_by_land(),
@@ -212,7 +212,7 @@ class SyncListController extends Controller
         $start = ($pageNumber * $perpage)- $perpage;
 
         return view('sync_list.deliveryOrder', [
-            'submit'=> route('sync_delivery_order_listing'),
+            'submit'=> route('sync_delivery_order_listing', ['tenant' => tenant('id')]),
             'records'=> $syncDeliveryOrder,
             'title'=> 'Add',
             // 'syncDeliveryOrder'=>  $syncDeliveryOrder,
@@ -241,7 +241,7 @@ class SyncListController extends Controller
         $start = ($pageNumber * $perpage)- $perpage;
 
         return view('sync_list.deliveryOrderItems', [
-            'submit'=> route('syncDeliveryOrderItems_listing'),
+            'submit'=> route('syncDeliveryOrderItems_listing', ['tenant' => tenant('id')]),
             'records'=> $syncDeliveryOrderItems,
             'title'=> 'Add',
             'syncDeliveryOrderItems'=>  $syncDeliveryOrderItems,
@@ -254,7 +254,7 @@ class SyncListController extends Controller
         {
             $search['sync_delivery_order_id'] = $id;
             Session::put('filter_deliveryOrderItems', $search);
-            return redirect()->route('syncDeliveryOrderItems_listing');
+            return redirect()->route('syncDeliveryOrderItems_listing', ['tenant' => tenant('id')]);
         }
 
     public function SyncCustomer(Request $request){
@@ -290,7 +290,7 @@ class SyncListController extends Controller
         $start = ($pageNumber * $perpage)- $perpage;
 
         return view('sync_list.customer', [
-            'submit'=> route('synccustomer_listing'),
+            'submit'=> route('synccustomer_listing', ['tenant' => tenant('id')]),
             'records'=> $syncCustomer,
             'title'=> 'Add',
             'syncCustomer'=>  $syncCustomer,
@@ -341,7 +341,7 @@ class SyncListController extends Controller
         $start = ($pageNumber * $perpage)- $perpage;
 
         return view('sync_list.daily', [
-            'submit'=> route('daily_listing'),
+            'submit'=> route('daily_listing', ['tenant' => tenant('id')]),
             'records' => $syncDaily,
             'title'=> 'Add',
             'syncDaily'=>  $syncDaily,
@@ -389,7 +389,7 @@ class SyncListController extends Controller
                                 //     'message' => 'Empty .txt file'
                                 // ];
                                 Session::flash('fail_msg', 'Data is empty!');
-                                return redirect()->route('sync_zip_file');
+                                return redirect()->route('sync_zip_file', ['tenant' => tenant('id')]);
 
                             }
                             $data = (object)json_decode($txt_file)->data;
@@ -650,10 +650,10 @@ class SyncListController extends Controller
                 }
                 if($sync_id){
                     Session::flash('success_msg', 'Successfully synced. ');
-                    return redirect()->route('sync_listing');
+                    return redirect()->route('sync_listing', ['tenant' => tenant('id')]);
                 }else{
                     Session::flash('fail_msg', 'Invalid data in zip file');
-                    return redirect()->route('sync_zip_file');
+                    return redirect()->route('sync_zip_file', ['tenant' => tenant('id')]);
                 }
             }
 
@@ -662,7 +662,7 @@ class SyncListController extends Controller
         }
 
         return view('sync_list/form', [
-            'submit' => route('sync_zip_file'),
+            'submit' => route('sync_zip_file', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
 
@@ -674,12 +674,12 @@ class SyncListController extends Controller
         $sync = Sync::find($sync_id);
         if(!$sync){
             Session::flash("fail_msg", "Error, please try again later...");
-            return redirect()->route('sync_listing');
+            return redirect()->route('sync_listing', ['tenant' => tenant('id')]);
         }
         $is_revertable = DeliveryOrder::check_is_revertable($sync_id);
         if(!$is_revertable){
             Session::flash("fail_msg", "Sync could not be reverted");
-            return redirect()->route('sync_listing');
+            return redirect()->route('sync_listing', ['tenant' => tenant('id')]);
         }
 
         $delivery_order = DeliveryOrder::with('delivery_order_items','delivery_order_expense')
@@ -729,7 +729,7 @@ class SyncListController extends Controller
         ]);
 
         Session::flash("success_msg", "Successfully reverted sync");
-        return redirect()->route('sync_listing');
+        return redirect()->route('sync_listing', ['tenant' => tenant('id')]);
 
     }
 
@@ -740,7 +740,7 @@ class SyncListController extends Controller
 
         if(!$sync || !@$sync->is_reverted){
             Session::flash("fail_msg", "Error, please try again later...");
-            return redirect()->route('sync_listing');
+            return redirect()->route('sync_listing', ['tenant' => tenant('id')]);
         }
 
         $media_url = $sync->getMedia('zip_files')->last()->getUrl();
@@ -760,7 +760,7 @@ class SyncListController extends Controller
                     $txt_file = $zip_archive->getFromIndex($i);
                     if(!$txt_file){
                         Session::flash("fail_msg", "Error, no .txt file...");
-                        return redirect()->route('sync_listing');
+                        return redirect()->route('sync_listing', ['tenant' => tenant('id')]);
                     }
                     $data = (object)json_decode($txt_file)->data;
 
@@ -992,7 +992,7 @@ class SyncListController extends Controller
                     ]);
 
                     Session::flash("success_msg", "Successfully resynced");
-                    return redirect()->route('sync_listing');
+                    return redirect()->route('sync_listing', ['tenant' => tenant('id')]);
                 }
             }
         }
@@ -1003,42 +1003,42 @@ class SyncListController extends Controller
     {
         $search['sync_id'] = $sync_id;
         Session::put('sync_company_expense_listing', $search);
-        return redirect()->route('sync_company_expense_listing');
+        return redirect()->route('sync_company_expense_listing', ['tenant' => tenant('id')]);
     }
 
     public function view_sync_formula_usage($sync_id)
     {
         $search['sync_id'] = $sync_id;
         Session::put('sync_formula_usage_search', $search);
-        return redirect()->route('sync_formula_usage_listing');
+        return redirect()->route('sync_formula_usage_listing', ['tenant' => tenant('id')]);
     }
 
     public function view_sync_do($sync_id)
     {
         $search['sync_id'] = $sync_id;
         Session::put('filter_syncDeliveryOrder', $search);
-        return redirect()->route('sync_delivery_order_listing');
+        return redirect()->route('sync_delivery_order_listing', ['tenant' => tenant('id')]);
     }
 
     public function view_sync_customer($sync_id)
     {
         $search['sync_id'] = $sync_id;
         Session::put('filter_syncCustomer', $search);
-        return redirect()->route('synccustomer_listing');
+        return redirect()->route('synccustomer_listing', ['tenant' => tenant('id')]);
     }
 
     public function view_sync_daily($sync_id)
     {
         $search['sync_id'] = $sync_id;
         Session::put('filter_syncDaily', $search);
-        return redirect()->route('daily_listing');
+        return redirect()->route('daily_listing', ['tenant' => tenant('id')]);
     }
 
     public function view_sync_listing($sync_id)
     {
         $search['sync_id'] = $sync_id;
         Session::put('sync_listing', $search);
-        return redirect()->route('sync_listing');
+        return redirect()->route('sync_listing', ['tenant' => tenant('id')]);
     }
 
     public function ajax_find_sync_formula_usage_item_details(Request $request)

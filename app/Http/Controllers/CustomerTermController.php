@@ -36,7 +36,7 @@ class CustomerTermController extends Controller
         $search = session('customer_term_search') ? session('customer_term_search') : $search;
 
         return view('customer_term.listing', [
-            'submit' => route('customer_term_listing'),
+            'submit' => route('customer_term_listing', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'records' =>  CustomerTerm::get_record($search, $perpage),
             'search' =>  $search,
@@ -66,12 +66,12 @@ class CustomerTermController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully added ' . $request->input('customer_term_name'));
-                return redirect()->route('customer_term_listing');
+                return redirect()->route('customer_term_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('customer_term.form', [
-            'submit' => route('customer_term_add'),
+            'submit' => route('customer_term_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
         ])->withErrors($validator);
@@ -91,7 +91,7 @@ class CustomerTermController extends Controller
 
         if (!$post) {
             Session::flash('fail_msg', 'Invalid Customer Term, Please try another one.');
-            return redirect()->route('customer_term_listing');
+            return redirect()->route('customer_term_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->isMethod('post')) {
@@ -112,12 +112,12 @@ class CustomerTermController extends Controller
                 $post->update($update_detail);
 
                 Session::flash('success_msg', 'Successfully edited ' . $request->input('customer_term_name'));
-                return redirect()->route('customer_term_listing');
+                return redirect()->route('customer_term_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('customer_term.form', [
-            'submit' => route('customer_term_edit', $customer_term_id),
+            'submit' => route('customer_term_edit', ['tenant' => tenant('id'), 'id' => $customer_term_id]),
             'title' => 'Edit',
             'post' => $post,
         ])->withErrors($validator);
@@ -135,7 +135,7 @@ class CustomerTermController extends Controller
 
         if (!$customer_term_id) {
             Session::flash('fail_msg', 'Invalid Customer Term, Please try another one.');
-            return redirect()->route('customer_term_listing');
+            return redirect()->route('customer_term_listing', ['tenant' => tenant('id')]);
         }
 
         $customer_term_id->update([
@@ -143,6 +143,6 @@ class CustomerTermController extends Controller
         ]);
 
         Session::flash('success_msg', "Successfully deleted Term.");
-        return redirect()->route('customer_term_listing');
+        return redirect()->route('customer_term_listing', ['tenant' => tenant('id')]);
     }
 }

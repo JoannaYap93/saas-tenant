@@ -65,7 +65,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                            <a href="{{ route('setting_currency') }}" class="btn btn-secondary">Cancel</a>
+                            <a href="{{ route('setting_currency', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </div>
                 </div>

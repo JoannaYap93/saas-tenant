@@ -35,7 +35,7 @@ class SettingRewardCategoryController extends Controller
 
         return view('setting_reward_category.listing', [
             'page_title' => 'Setting Reward Category',
-            'submit' => route('setting_reward_category'),
+            'submit' => route('setting_reward_category', ['tenant' => tenant('id')]),
             'search' => $search,
             'records' => SettingRewardCategory::get_records($search, $perpage),
         ]);
@@ -60,12 +60,12 @@ class SettingRewardCategoryController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Updated');
-                return redirect()->route('setting_reward_category');
+                return redirect()->route('setting_reward_category', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('setting_reward_category.form', [
-            'submit' => route('setting_reward_category_add'),
+            'submit' => route('setting_reward_category_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
         ])->withErrors($validator);
@@ -88,12 +88,12 @@ class SettingRewardCategoryController extends Controller
                     'setting_reward_category_name' => $request->input('setting_reward_category_name'),
                 ]);
                 Session::flash('success_msg', 'Successfully edited ');
-                return redirect()->route('setting_reward_category');
+                return redirect()->route('setting_reward_category', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('setting_reward_category.form', [
-            'submit' => route('setting_reward_category_edit', $setting_reward_category_id),
+            'submit' => route('setting_reward_category_edit', ['tenant' => tenant('id'), 'id' => $setting_reward_category_id]),
             'edit' => true,
             'title' => 'Edit',
             'post'=> $post,
@@ -106,12 +106,12 @@ class SettingRewardCategoryController extends Controller
 
         if(!$currency){
             Session::flash('failed_msg', 'Error, Please try again later..');
-            return redirect()->route('setting_reward_category');
+            return redirect()->route('setting_reward_category', ['tenant' => tenant('id')]);
         }
 
         $currency->delete();
 
         Session::flash('success_msg', "Successfully deleted reward category.");
-        return redirect()->route('setting_reward_category');
+        return redirect()->route('setting_reward_category', ['tenant' => tenant('id')]);
     }
 }

@@ -15,7 +15,7 @@
 			<h4 class="mb-0 font-size-18">
 				<span class="mr-2">Admin Listing</span>
 				@can('admin_manage')
-					<a href="{{ route('admin_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1" ><i class="fas fa-plus"></i> Add New</a>
+					<a href="{{ route('admin_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1" ><i class="fas fa-plus"></i> Add New</a>
 				@endcan
 			</h4>
 			<div class="page-title-right">
@@ -129,11 +129,11 @@
                                         case 'active':
                                             $status = "<span class='badge badge-primary font-size-11'>{$user->user_status}</span>";
 
-                                            $assign_permission = "<a href='" . route('assign_permission', $user->user_id) . "' class='btn btn-sm btn-outline-primary waves-effect waves-light mb-1'>Assign Permission</a>";
+                                            $assign_permission = "<a href='" . route('assign_permission', ['tenant' => tenant('id'), 'id' => $user->user_id]) . "' class='btn btn-sm btn-outline-primary waves-effect waves-light mb-1'>Assign Permission</a>";
 
-                                            $change_password = "<a href='" . route('user_change_password_by_super_admin', $user->user_id) . "' class='btn btn-sm btn-outline-primary waves-effect waves-light mb-1'>Change Password</a>";
+                                            $change_password = "<a href='" . route('user_change_password_by_super_admin', ['tenant' => tenant('id'), 'id' => $user->user_id]) . "' class='btn btn-sm btn-outline-primary waves-effect waves-light mb-1'>Change Password</a>";
 
-                                            $action = "<a href='" . route('admin_edit', $user->user_id) . "' class='btn btn-sm btn-outline-warning waves-effect waves-light mb-1'>Edit</a>
+                                            $action = "<a href='" . route('admin_edit', ['tenant' => tenant('id'), 'id' => $user->user_id]) . "' class='btn btn-sm btn-outline-warning waves-effect waves-light mb-1'>Edit</a>
                                                     {$assign_permission}
                                                     <span data-toggle='modal' data-target='#suspend' data-id='$user->user_id' class='suspend'><a href='javascript:void(0);' class='btn btn-sm btn-outline-danger waves-effect waves-light mb-1'>Suspend</a></span>";
 
@@ -208,7 +208,7 @@
 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<form method="POST" action="{{ route('admin_status') }}">
+			<form method="POST" action="{{ route('admin_status', ['tenant' => tenant('id')]) }}">
 				@csrf
 				<div class="modal-body">
 					<h4>Delete this user ?</h4>
@@ -227,7 +227,7 @@
 <div class="modal fade" id="suspend" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
-			<form method="POST" action="{{ route('admin_status') }}">
+			<form method="POST" action="{{ route('admin_status', ['tenant' => tenant('id')]) }}">
 				@csrf
 				<div class="modal-body">
 					<h4>Suspend this user ?</h4>
@@ -246,7 +246,7 @@
 <div class="modal fade" id="activate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
-			<form method="POST" action="{{ route('admin_status') }}">
+			<form method="POST" action="{{ route('admin_status', ['tenant' => tenant('id')]) }}">
 				@csrf
 				<div class="modal-body">
 					<h4>Activate this user ?</h4>

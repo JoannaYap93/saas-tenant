@@ -53,7 +53,7 @@
                 @foreach($monthSel as $month_num => $month_name)
                     <td style="text-align: center; {{ $month_num % 2 == 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }} border:1px solid #eee">
                       @if(@$component)
-                      <a class="popup" href="{{route('formula_usage_report_sa_detail', [ 'year' => $search['year'], 'month' => $month_num, 'setting_formula_category_id' => $sfckey])}}">{{ isset($formulaUsage[$month_num][$sfckey]['value']) ? number_format($formulaUsage[$month_num][$sfckey]['value'], 2, '.', '') : '-' }}</a>
+                      <a class="popup" href="{{route('formula_usage_report_sa_detail', ['tenant' => tenant('id'), 'year' => $search['year'], 'month' => $month_num, 'setting_formula_category_id' => $sfckey])}}">{{ isset($formulaUsage[$month_num][$sfckey]['value']) ? number_format($formulaUsage[$month_num][$sfckey]['value'], 2, '.', '') : '-' }}</a>
                       @else
                       {{ isset($formulaUsage[$month_num][$sfckey]['value']) ? number_format($formulaUsage[$month_num][$sfckey]['value'], 2, '.', '') : '-' }}
                       @endif

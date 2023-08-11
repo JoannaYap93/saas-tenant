@@ -37,7 +37,7 @@ class FormulaUsageSAExport implements FromView, WithEvents, ShouldAutoSize,WithC
           'companyLandSel' => CompanyLand::get_company_land_sel(),
           'companySel' => Company::get_company_sel(),
           'userSel' => ['' => 'Please Select User'] + User::get_user_sel(),
-          'submit' => route('formula_usage_report_sa'),
+          'submit' => route('formula_usage_report_sa', ['tenant' => tenant('id')]),
           'search' => $this->search,
           'company_cb' => Company::get_company_check_box(),
           'product_cb' => Product::all(),

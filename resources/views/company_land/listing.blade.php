@@ -15,7 +15,7 @@
       <div class="d-flex align-items-center">
                       <h4 class="mb-0 font-size-18 mr-2">Company Land Listing</h4>
 					  {{-- @can('company_land_manage')
-                      <a href="{{ route('land_area_add') }}"
+                      <a href="{{ route('land_area_add', ['tenant' => tenant('id')]) }}"
                           class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                               class="fas fa-plus"></i> ADD NEW</a>
 					  @endcan --}}
@@ -38,7 +38,7 @@
 			<div class="card-body">
                 <div class="row mb-2">
 					<div class="col-sm-8">
-						<form method="POST" action="{{ route('company_land_listing') }}">
+						<form method="POST" action="{{ route('company_land_listing', ['tenant' => tenant('id')]) }}">
 							@csrf
 							<div class="row">
 								<div class="col-md-4">
@@ -74,7 +74,7 @@
 					{{-- @can('user_manage')
 					<div class="col-sm-4">
 						<div class="text-sm-right">
-							<a href="{{ route('user_add') }}">
+							<a href="{{ route('user_add', ['tenant' => tenant('id')]) }}">
 								<button type="button" class="btn btn-success  waves-effect waves-light mb-2 mr-2">
 									<i class="mdi mdi-plus mr-1"></i> Add New User
 								</button>
@@ -110,7 +110,7 @@
 										<i>{{ $company_land->company->company_name }}</i>
                                     </td>
 									@can('company_land_manage')
-                                    <td><a href="{{ route('land_zone_listing',['company_id' => $company_land->company_id, 'company_land_id' => $company_land->company_land_id] ) }}"
+                                    <td><a href="{{ route('land_zone_listing', ['tenant' => tenant('id'), 'company_id' => $company_land->company_id, 'company_land_id' => $company_land->company_land_id] ) }}"
 											class='btn btn-sm btn-outline-primary waves-effect waves-light mr-2 mb-1'>ZONE</a>
                                     </td>
 									@endcan

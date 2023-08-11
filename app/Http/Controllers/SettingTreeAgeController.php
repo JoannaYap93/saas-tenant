@@ -35,7 +35,7 @@ class SettingTreeAgeController extends Controller
 
         return view('setting_tree_age.listing', [
             'page_title' => 'Setting Tree Age',
-            'submit' => route('setting_tree_age_listing'),
+            'submit' => route('setting_tree_age_listing', ['tenant' => tenant('id')]),
             'search' => $search,
             'records' => SettingTreeAge::get_records($search, $perpage),
         ]);
@@ -83,13 +83,13 @@ class SettingTreeAgeController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully Updated');
-                return redirect()->route('setting_tree_age_listing');
+                return redirect()->route('setting_tree_age_listing', ['tenant' => tenant('id')]);
             }
 
             $post = (object) $request->all();
         }
         return view('setting_tree_age.form', [
-            'submit' => route('setting_tree_age_add'),
+            'submit' => route('setting_tree_age_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
             'company_pnl_sub_item_code_sel' => CompanyPnlSubItem::get_company_pnl_sub_item_code_sel(),
@@ -104,7 +104,7 @@ class SettingTreeAgeController extends Controller
 
         if (is_null($setting_tree_age)) {
             Session::flash('fail_msg', 'Invalid Setting Tree Age, Please Try Again');
-            return redirect()->route('setting_tree_age_listing');
+            return redirect()->route('setting_tree_age_listing', ['tenant' => tenant('id')]);
         }
 
         if ($request->isMethod('post')) {
@@ -154,12 +154,12 @@ class SettingTreeAgeController extends Controller
                 }
 
                 Session::flash('success_msg', 'Successfully edited ');
-                return redirect()->route('setting_tree_age_listing');
+                return redirect()->route('setting_tree_age_listing', ['tenant' => tenant('id')]);
             }
             $setting_tree_age = (object) $request->all();
         }
         return view('setting_tree_age.form', [
-            'submit' => route('setting_tree_age_edit', $setting_tree_age_id),
+            'submit' => route('setting_tree_age_edit', ['tenant' => tenant('id'), 'id' => $setting_tree_age_id]),
             'title' => 'Edit',
             'post' => $post,
             'company_pnl_sub_item_code_sel' => CompanyPnlSubItem::get_company_pnl_sub_item_code_sel(),
@@ -203,7 +203,7 @@ class SettingTreeAgeController extends Controller
                         Session::forget('setting_tree_age_pointer');
                         break;
                 }
-                return redirect()->route('setting_tree_age_pointer');
+                return redirect()->route('setting_tree_age_pointer', ['tenant' => tenant('id')]);
             }
         }
 
@@ -213,7 +213,7 @@ class SettingTreeAgeController extends Controller
 
         return view('setting_tree_age.pointer', [
             'search' => $search,
-            'submit' => route('setting_tree_age_pointer'),
+            'submit' => route('setting_tree_age_pointer', ['tenant' => tenant('id')]),
             'title' => 'Setting Tree Age Pointer',
             'products' => $get_product,
             'records' => $setting_tree_age,

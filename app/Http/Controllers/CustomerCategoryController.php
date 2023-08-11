@@ -40,7 +40,7 @@ class CustomerCategoryController extends Controller
         $customerCategory = CustomerCategory::get_records($search, 10);
 
         return view('customer_category.listing', [
-            'submit' => route('customer_category_listing'),
+            'submit' => route('customer_category_listing', ['tenant' => tenant('id')]),
             'records' => $customerCategory,
             'title' => 'Add',
             'customerCategory' =>  $customerCategory, //User::get_record($search, 15, $pageNumber, [1]),
@@ -76,13 +76,13 @@ class CustomerCategoryController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully added ' . $request->input('customer_category_name'));
-                return redirect()->route('customer_category_listing');
+                return redirect()->route('customer_category_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('customer_category.form', [
-            'submit' => route('customer_category_add'),
+            'submit' => route('customer_category_add', ['tenant' => tenant('id')]),
             'edit' => false,
             'post' => $post,
             'title' => 'Add',
@@ -96,7 +96,7 @@ class CustomerCategoryController extends Controller
 
         if (!$post) {
             Session::flash('fail_msg', 'Invalid Customer Category! Please try another one.');
-            return redirect()->route('customer_category_listing');
+            return redirect()->route('customer_category_listing', ['tenant' => tenant('id')]);
         }
 
         $validation = null;
@@ -120,13 +120,13 @@ class CustomerCategoryController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully edited ' . $request->input('customer_category_name'));
-                return redirect()->route('customer_category_listing');
+                return redirect()->route('customer_category_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('customer_category.form', [
-            'submit' => route('customer_category_edit', $customer_category_id),
+            'submit' => route('customer_category_edit', ['tenant' => tenant('id'), 'id' => $customer_category_id]),
             'edit' => true,
             'title' => 'Edit',
             'post' => $post,
@@ -142,7 +142,7 @@ class CustomerCategoryController extends Controller
 
         if (!$customer_category_id) {
             Session::flash('fail_msg', 'Invalid Customer Category! Please try another one.');
-            return redirect()->route('customer_category_listing');
+            return redirect()->route('customer_category_listing', ['tenant' => tenant('id')]);
         }
 
         $customer_category_id->update([
@@ -150,6 +150,6 @@ class CustomerCategoryController extends Controller
         ]);
 
         Session::flash('success_msg', "Successfully deleted Customer Category.");
-        return redirect()->route('customer_category_listing');
+        return redirect()->route('customer_category_listing', ['tenant' => tenant('id')]);
     }
 }

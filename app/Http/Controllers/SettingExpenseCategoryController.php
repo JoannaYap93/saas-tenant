@@ -37,7 +37,7 @@ class SettingExpenseCategoryController extends Controller
 
         return view('setting_expense_category.listing', [
             'page_title' => 'Setting Expense Category',
-            'submit' => route('expense_category_listing'),
+            'submit' => route('expense_category_listing', ['tenant' => tenant('id')]),
             'search' => $search,
             'records' => SettingExpenseCategory::get_records($search, $perpage),
         ]);
@@ -73,7 +73,7 @@ class SettingExpenseCategoryController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Created A New Expense Category');
-                return redirect()->route('expense_category_listing');
+                return redirect()->route('expense_category_listing', ['tenant' => tenant('id')]);
             }
             $post = (object)$request->all();
         }
@@ -81,7 +81,7 @@ class SettingExpenseCategoryController extends Controller
         return view('setting_expense_category.form', [
             'post' => $post,
             'title' => 'Add',
-            'submit' => route('expense_category_add'),
+            'submit' => route('expense_category_add', ['tenant' => tenant('id')]),
             'setting_expense_category_group_sel' => ['' => 'Please Select Expense Category Group', 'Cost' => 'Cost', 'Expense' => 'Expense'],
 
         ])->withErrors($validator);
@@ -119,7 +119,7 @@ class SettingExpenseCategoryController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Update ' . $request->input('setting_expense_category_name_en'));
-                return redirect()->route('expense_category_listing');
+                return redirect()->route('expense_category_listing', ['tenant' => tenant('id')]);
             }
 
             $post = (object) $request->all();
@@ -128,7 +128,7 @@ class SettingExpenseCategoryController extends Controller
         return view('setting_expense_category.form', [
             'post' => $post,
             'title' => 'Edit',
-            'submit' => route('expense_category_edit', $setting_expense_category_id),
+            'submit' => route('expense_category_edit', ['tenant' => tenant('id'), 'id' => $setting_expense_category_id]),
             'setting_expense_category_group_sel' => ['' => 'Please Select Expense Category Group', 'Cost' => 'Cost', 'Expense' => 'Expense'],
 
         ])->withErrors($validator);
@@ -141,7 +141,7 @@ class SettingExpenseCategoryController extends Controller
 
         if(!$new_car_tag){
             Session::flash('fail_msg', 'Error, Please try again later..');
-            return redirect()->route('new_car_tag_listing');
+            return redirect()->route('new_car_tag_listing', ['tenant' => tenant('id')]);
         }
 
         $new_car_tag->update([
@@ -149,6 +149,6 @@ class SettingExpenseCategoryController extends Controller
         ]);
 
         Session::flash('success_msg', "Successfully delete new car tag.");
-        return redirect()->route('new_car_tag_listing');
+        return redirect()->route('new_car_tag_listing', ['tenant' => tenant('id')]);
     }
 }

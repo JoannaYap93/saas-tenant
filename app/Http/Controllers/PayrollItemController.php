@@ -40,7 +40,7 @@
             $search = session('payroll_item_search') ?? array();
 
             return view('payroll_item.listing', [
-                'submit' => route('payroll_item_listing'),
+                'submit' => route('payroll_item_listing', ['tenant' => tenant('id')]),
                 'records' => PayrollItem::get_records($search),
                 'search' => $search,
                 'payroll_item_status_sel' => ['' => 'Please Select Status'] + PayrollItem::get_enum_sel('payroll_item_status'),
@@ -89,14 +89,14 @@
 
                     }
                     Session::flash('success_msg', 'Successfully added payroll item ' . $request->input('payroll_item_name')).'.';
-                    return redirect()->route('payroll_item_listing');
+                    return redirect()->route('payroll_item_listing', ['tenant' => tenant('id')]);
                 }
                 $payroll_item = (object) $request->all();
             }
 
             return view('payroll_item.form', [
                 'title' => "Add",
-                'submit' => route('payroll_item_add'),
+                'submit' => route('payroll_item_add', ['tenant' => tenant('id')]),
                 'payroll_item' => $payroll_item,
                 'setting_expense_sel' =>SettingExpense::get_item_expense_payroll_item(),
                 'worker_roles' => WorkerRole::get(),
@@ -111,7 +111,7 @@
 
             if($payroll_item == null){
                 Session::flash('fail_msg', 'Invalid Payroll Item, Please Try Again.');
-                return redirect()->route('payroll_item_listing');
+                return redirect()->route('payroll_item_listing', ['tenant' => tenant('id')]);
             }
 
             if ($request->isMethod('post')) {
@@ -155,7 +155,7 @@
                     }
 
                     Session::flash('success_msg', 'Successfully edited payroll item ' . $request->input('payroll_item_name'));
-                    return redirect()->route('payroll_item_listing');
+                    return redirect()->route('payroll_item_listing', ['tenant' => tenant('id')]);
                 }
                 $payroll_item = (object) $request->all();
             }
@@ -163,7 +163,7 @@
 
             return view('payroll_item.form', [
                 'title' => "Edit",
-                'submit' => route('payroll_item_edit', $payroll_item_id),
+                'submit' => route('payroll_item_edit', ['tenant' => tenant('id'), 'id' => $payroll_item_id]),
                 'worker_roles' => WorkerRole::get(),
                 'setting_expense_sel' =>SettingExpense::get_item_expense_payroll_item(),
                 'payroll_item' => $payroll_item,
@@ -177,7 +177,7 @@
 
             if(!$payroll){
                 Session::flash('failed_msg', 'Error, Please try again later..');
-                return redirect()->route('payroll_item_listing');
+                return redirect()->route('payroll_item_listing', ['tenant' => tenant('id')]);
             }
 
             $payroll->update([
@@ -185,7 +185,7 @@
             ]);
 
             Session::flash('success_msg', "Successfully deleted payroll item.");
-            return redirect()->route('payroll_item_listing');
+            return redirect()->route('payroll_item_listing', ['tenant' => tenant('id')]);
         }
     }
 ?>

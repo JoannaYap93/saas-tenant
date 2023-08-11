@@ -125,7 +125,7 @@
                         <div class="row">
                             <div class="col-12 my-2">
                                 <button type="submit" class="btn btn-primary mr-2" name="submit" value="manual">Add</button>
-                                <a href="{{route('claim_item_listing',$claim->claim_id)}}" class="btn btn-secondary">Cancel</a>
+                                <a href="{{route('claim_item_listing', ['tenant' => tenant('id'), 'id' => $claim->claim_id])}}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div>
                     </div>

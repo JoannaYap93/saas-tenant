@@ -35,7 +35,7 @@ class LandCategoryController extends Controller
         }
         $search = session('land_category_search') ?? $search;
         return view('land_category/listing', [
-            'submit' => route('land_category_listing'),
+            'submit' => route('land_category_listing', ['tenant' => tenant('id')]),
             'records' => CompanyLandCategory::get_record($search, 15),
             'search' =>  $search,
             'company_land_category_sel' => CompanyLandCategory::get_land_category_sel(),
@@ -70,13 +70,13 @@ class LandCategoryController extends Controller
                 ];
                 $company->update($update_detail);
                 Session::flash('success_msg', 'Successfully Updated ');
-                return redirect()->route('land_category_listing');
+                return redirect()->route('land_category_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
 
         return view('land_category/form', [
-            'submit' => route('land_category_edit', $company_land_category_id),
+            'submit' => route('land_category_edit', ['tenant' => tenant('id'), 'id' => $company_land_category_id]),
             'title' => 'Edit',
             'post' => $post,
             'company_land_category_sel' => CompanyLandCategory::get_land_category_sel(),
@@ -116,12 +116,12 @@ class LandCategoryController extends Controller
                     'compang_farm_id' => 0
                 ]);
                 Session::flash('success_msg', 'Successfully added ' . $request->input('company_land_category_name'));
-                return redirect()->route('land_category_listing');
+                return redirect()->route('land_category_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
         }
         return view('land_category/form', [
-            'submit' => route('land_category_add'),
+            'submit' => route('land_category_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
             'company_land_category_sel' => CompanyLandCategory::get_land_category_sel(),
@@ -140,10 +140,10 @@ class LandCategoryController extends Controller
                 'is_deleted' => 1
             ]);
             Session::flash('success_msg', 'Deleted successfully!');
-            return redirect()->route('land_category_listing');
+            return redirect()->route('land_category_listing', ['tenant' => tenant('id')]);
         } else {
             Session::flash('fail_msg', 'Product not found!');
-            return redirect()->route('land_category_listing');
+            return redirect()->route('land_category_listing', ['tenant' => tenant('id')]);
         }
     }
 }

@@ -292,7 +292,7 @@
                                             </td>
                                             <td>
                                                 @if ($row->sync_id)
-                                                    <a href="{{ route('get_sync_listing', $row->sync_id) }}"
+                                                    <a href="{{ route('get_sync_listing', ['tenant' => tenant('id'), 'id' => $row->sync_id]) }}"
                                                         class="btn btn-sm btn-outline-primary">View Sync Listing</a>
                                                 @endif
                                                 @can('delivery_order_company_land_edit')
@@ -321,7 +321,7 @@
     <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('collect_delete') }}">
+                <form method="POST" action="{{ route('collect_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this Collect ? </h4>
@@ -345,7 +345,7 @@
     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('collect_edit') }}">
+                <form method="POST" action="{{ route('collect_edit', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Edit Collect ? </h4>
@@ -430,7 +430,7 @@
                         let details = '';
 
                         $.ajax({
-                            url: "{{ route('ajax_get_image_by_ce_item_id') }}",
+                            url: "{{ route('ajax_get_image_by_ce_item_id', ['tenant' => tenant('id')]) }}",
                             method: "POST",
                             data: {
                                 _token: "{{ csrf_token() }}",
@@ -497,7 +497,7 @@
             $('#product').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_product_by_product_category_id') }}",
+                url: "{{ route('ajax_get_product_by_product_category_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 async: true,
                 data: {
@@ -527,7 +527,7 @@
             $('#size_id').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_setting_size_by_product_id') }}",
+                url: "{{ route('ajax_get_setting_size_by_product_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

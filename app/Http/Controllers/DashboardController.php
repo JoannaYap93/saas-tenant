@@ -56,7 +56,7 @@ class DashboardController extends Controller
 
         $price_information = Invoice::get_price_information($search);
         return view('dashboard.price_information', [
-            'submit' => route('dashboard'),
+            'submit' => route('dashboard', ['tenant' => tenant('id')]),
             'search' => $search,
             'customer_category' => CustomerCategory::get_customer_category_sel(),
             'product_category' => ProductCategory::get_product_category_sel(),
@@ -115,7 +115,7 @@ class DashboardController extends Controller
 
 
         return view('dashboard.price_analysis', [
-            'submit' => route('dashboard_price_analysis'),
+            'submit' => route('dashboard_price_analysis', ['tenant' => tenant('id')]),
             'search' => $search,
             'product_sel' => $product_sel,
             'product_size_sel' => $product_size_sel,
@@ -186,7 +186,7 @@ class DashboardController extends Controller
         // dd($sales_analysis_invoice, $sales_analysis_do);
 
         return view('dashboard.sales_analysis', [
-            'submit' => route('dashboard_sales_analysis'),
+            'submit' => route('dashboard_sales_analysis', ['tenant' => tenant('id')]),
             'search' => $search,
             'company' => $company,
             // 'sales_analysis_do' => $sales_analysis_do,
@@ -362,7 +362,7 @@ class DashboardController extends Controller
         }
 
         $return_arr = [
-            'submit' => route('dashboard_profit_loss_analysis'),
+            'submit' => route('dashboard_profit_loss_analysis', ['tenant' => tenant('id')]),
             'title' => 'Dashboard Profit & Loss Analysis',
             'search' => $search,
             'company' => Company::get_company_sel(),
@@ -497,7 +497,7 @@ class DashboardController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully added price information');
-                return redirect()->route('dashboard',$request->input('search_date'));
+                return redirect()->route('dashboard', ['tenant' => tenant('id'), 'search' => $request->input('search_date')]);
             }
         }
         if($company_farm_name){
@@ -507,7 +507,7 @@ class DashboardController extends Controller
         $post = (object) $request->all();
 
         return view('price_information.form',[
-            'submit' => route('price_information_add',$detail),
+            'submit' => route('price_information_add', ['tenant' => tenant('id'), 'search_date' => @$search_date, 'company_farm_name' => $company_farm_name, 'product' => $product]),
             'post' => $post,
             'title' => 'Add',
             'search_date' => $search_date,
@@ -524,7 +524,7 @@ class DashboardController extends Controller
     {
         $data = Invoice::get_min_max_detail($search_date, $product, $company_farm_name);
         return view('dashboard.min_max_detail', [
-            // 'submit' => route('dashboard'),
+            // 'submit' => route('dashboard', ['tenant' => tenant('id')]),
             'data' => $data,
             'search_date' => $search_date,
             'product' => $product,

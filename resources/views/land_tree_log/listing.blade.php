@@ -58,7 +58,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <form method="POST"
-                                action="{{ route('land_tree_log_listing', ['land_id' => $land->company_land_id ?? 0, 'id' => $company_land_tree_id]) }}">
+                                action="{{ route('land_tree_log_listing', ['tenant' => tenant('id'), 'land_id' => $land->company_land_id ?? 0, 'id' => $company_land_tree_id]) }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-3">
@@ -160,12 +160,12 @@
                                             <i class="fas fa-times mr-1"></i> Reset
                                         </button>
                                         @if (@$zone)
-                                            <a href="{{ route('land_tree_listing', $zone->company_land_zone_id) }}"
+                                            <a href="{{ route('land_tree_listing', ['tenant' => tenant('id'), 'id' => $zone->company_land_zone_id]) }}"
                                                 class="btn btn-secondary waves-effect waves-light mr-2" name="submit">
                                                 <i class="fas fa-arrow-left mr-1"></i> Tree Listing
                                             </a>
                                         @else
-                                            <a href="{{ route('company_listing') }}"
+                                            <a href="{{ route('company_listing', ['tenant' => tenant('id')]) }}"
                                                 class="btn btn-secondary waves-effect waves-light mr-2" name="submit">
                                                 <i class="fas fa-arrow-left mr-1"></i> Company Listing
                                             </a>
@@ -249,7 +249,7 @@
                                                     <span data-toggle='modal' data-target='#fulfill'
                                                         data-id='{{ @$row->company_land_zone_id }}' class='fulfill'>
                                                         @if (auth()->user()->user_type_id == 2)
-                                                            <a href="{{ route('land_tree_log_edit', @$row->company_land_tree_log_id) }}"
+                                                            <a href="{{ route('land_tree_log_edit', ['tenant' => tenant('id'), 'id' => @$row->company_land_tree_log_id]) }}"
                                                                 class="btn btn-sm btn-outline-warning waves-effect waves-light mr-1 mb-1">Edit</a>
                                                             <!-- <a href="#"
                                                                         class="btn btn-sm btn-outline-warning waves-effect waves-light mr-2 mb-1">Export Tree</a> -->
@@ -321,7 +321,7 @@
             $('#company_land_id').html('<option value="">Loading...</option>');
             $('#user_id').html('<option value="">Loading...</option>');
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -359,7 +359,7 @@
             let sland = "{{ @$search['company_land_id'] ?? null }}";
             let suser = "{{ @$search['user_id'] ?? null }}";
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -412,7 +412,7 @@
 
             $('#company_land_tree_id').html('<option value="">Loading...</option>');
             $.ajax({
-                url: "{{ route('ajax_tree_log_by_zone') }}",
+                url: "{{ route('ajax_tree_log_by_zone', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

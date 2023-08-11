@@ -183,7 +183,7 @@ class ClaimItem extends Model implements HasMedia
         if($this->claim_item_type == 'company_expense_item_id'){
             $company_expense_id = CompanyExpenseItem::where('company_expense_item_id', $this->claim_item_type_value)->value('company_expense_id');
             if($company_expense_id){
-                $route = route('company_expense_edit',$company_expense_id);
+                $route = route('company_expense_edit', ['tenant' => tenant('id'), 'id' => $company_expense_id]);
             }
         }
         return $route;

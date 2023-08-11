@@ -26,7 +26,7 @@ class CompanyLandTreeController extends Controller
         $land_zone = CompanyLandZone::find($company_land_zone_id);
         if(!$land_zone){
             Session::flash('fail_msg', 'Invalid Tree, Please try again later.');
-            return redirect()->route('company_listing');
+            return redirect()->route('company_listing', ['tenant' => tenant('id')]);
         }
 
         $search = array();
@@ -59,7 +59,7 @@ class CompanyLandTreeController extends Controller
         $search = session('company_land_tree_search') ?? $search;
         $product_sel = Product::get_by_company();
         return view('land_tree.listing', [
-            'submit' => route('land_tree_listing', $company_land_zone_id),
+            'submit' => route('land_tree_listing', ['tenant' => tenant('id'), 'id' => $company_land_zone_id]),
             'records' => CompanyLandTree::get_records($search),
             'search' => $search,
             'company_land_zone_id' => $company_land_zone_id,
@@ -77,7 +77,7 @@ class CompanyLandTreeController extends Controller
         $land_zone = CompanyLandZone::find($company_land_zone_id);
         if(!$land_zone){
             Session::flash('fail_msg', 'Invalid Tree, Please try again later.');
-            return redirect()->route('company_listing');
+            return redirect()->route('company_listing', ['tenant' => tenant('id')]);
         }
 
         $validator = null;
@@ -133,13 +133,13 @@ class CompanyLandTreeController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Added tree');
-                return redirect()->route('land_tree_listing',$company_land_zone_id);
+                return redirect()->route('land_tree_listing', ['tenant' => tenant('id'), 'id' => $company_land_zone_id]);
             }
         }
         $product_sel = Product::get_by_company();
         return view('land_tree.form', [
             'records' => null,
-            'submit' => route('land_tree_add', $company_land_zone_id),
+            'submit' => route('land_tree_add', ['tenant' => tenant('id'), 'id' => $company_land_zone_id]),
             'type' => "Add",
             'product_sel' => $product_sel,
             'status_sel' => ['' => 'Please Select Status', 'alive' => 'Alive', 'dead' => 'Dead', 'saw off' => 'Saw Off'],
@@ -202,13 +202,13 @@ class CompanyLandTreeController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully updated tree');
-                return redirect()->route('land_tree_listing',['company_land_zone_id' =>$request->input('company_land_zone_id')]);
+                return redirect()->route('land_tree_listing', ['tenant' => tenant('id'), 'company_land_zone_id' =>$request->input('company_land_zone_id')]);
             }
         }
         $product_sel = Product::get_by_company();
         return view('land_tree.form', [
             'records' => CompanyLandTree::where('company_land_tree_id', $company_land_tree_id)->first(),
-            'submit' => route('land_tree_edit', $company_land_tree_id),
+            'submit' => route('land_tree_edit', ['tenant' => tenant('id'), 'id' => $company_land_tree_id]),
             'type' => "Edit",
             'product_sel' => $product_sel,
             'company_land_tree_id' => $company_land_tree_id,
@@ -271,12 +271,12 @@ class CompanyLandTreeController extends Controller
                     }
                 }
                 Session::flash('success_msg', 'Successfully Managed Tree');
-                return redirect()->route('land_tree_listing', $company_land_zone_id);
+                return redirect()->route('land_tree_listing', ['tenant' => tenant('id'), 'id' => $company_land_zone_id]);
             }
             $post = (object) $request->all();
         }
         Session::flash('fail_msg', 'Invalid Tree');
-        return redirect()->route('land_tree_listing', $company_land_zone_id);
+        return redirect()->route('land_tree_listing', ['tenant' => tenant('id'), 'id' => $company_land_zone_id]);
 
         // return view('land_tree.listing', [
         //     'post' => $post,
@@ -296,7 +296,7 @@ class CompanyLandTreeController extends Controller
 
             if(!$validation->fails()){
                 $company_land_zone_id = $request->input('company_land_zone_id');
-                return redirect()->route('land_tree_listing',$company_land_zone_id);
+                return redirect()->route('land_tree_listing', ['tenant' => tenant('id'), 'id' => $company_land_zone_id]);
             }
         }
 

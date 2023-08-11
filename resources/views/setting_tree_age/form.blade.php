@@ -120,7 +120,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <button type="submit" id="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                                <a href="{{ route('setting_tree_age_listing') }}" class="btn btn-secondary">Cancel</a>
+                                <a href="{{ route('setting_tree_age_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div>
                     </div>

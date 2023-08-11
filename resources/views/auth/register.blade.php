@@ -39,7 +39,7 @@ Register
                                     </a>
                                 </div>
                                 <div class="p-2">
-                                    <form method="POST" class="form-horizontal mt-4" action="{{ route('register') }}">
+                                    <form method="POST" class="form-horizontal mt-4" action="{{ route('register', ['tenant' => tenant('id')]) }}">
                                         @csrf
                                         <div class="form-group">
                                             <label for="useremail">Email</label>

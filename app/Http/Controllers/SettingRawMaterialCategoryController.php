@@ -39,7 +39,7 @@ class SettingRawMaterialCategoryController extends Controller
 
         return view('setting_raw_material_category.listing', [
             'page_title' => 'Setting Raw Material',
-            'submit' => route('setting_raw_material_category_listing'),
+            'submit' => route('setting_raw_material_category_listing', ['tenant' => tenant('id')]),
             'search' => $search,
             'records' => SettingRawMaterialCategory::get_records($search),
             ]);
@@ -72,11 +72,11 @@ class SettingRawMaterialCategoryController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Updated');
-                return redirect()->route('setting_raw_material_category_listing');
+                return redirect()->route('setting_raw_material_category_listing', ['tenant' => tenant('id')]);
             }
         }
         return view('setting_raw_material_category.form', [
-            'submit' => route('setting_raw_material_category_add'),
+            'submit' => route('setting_raw_material_category_add', ['tenant' => tenant('id')]),
             'title' => 'Add',
             'post' => $post,
         ])->withErrors($validator);
@@ -105,13 +105,13 @@ class SettingRawMaterialCategoryController extends Controller
                   'raw_material_category_name' => json_encode($category_name_multi_lang),
                 ]);
                 Session::flash('success_msg', 'Successfully edited ');
-                return redirect()->route('setting_raw_material_category_listing');
+                return redirect()->route('setting_raw_material_category_listing', ['tenant' => tenant('id')]);
             }
             $post = (object) $request->all();
 
         }
         return view('setting_raw_material_category.form', [
-            'submit' => route('setting_raw_material_category_edit', $raw_material_category_id),
+            'submit' => route('setting_raw_material_category_edit', ['tenant' => tenant('id'), 'id' => $raw_material_category_id]),
             'edit' => true,
             'title' => 'Edit',
             'post'=> $post,

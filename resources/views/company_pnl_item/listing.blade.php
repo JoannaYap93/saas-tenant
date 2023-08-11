@@ -14,7 +14,7 @@
                 <span class="mr-2">Profit & Loss Item Listing</span>
                 {{-- @if (auth()->user()->user_type_id == 1) --}}
                     @can('pnl_item_manage')
-                        <a href="{{ route('company_pnl_item_add') }}"
+                        <a href="{{ route('company_pnl_item_add', ['tenant' => tenant('id')]) }}"
                             class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1">
                             <i class="fas fa-plus"></i> Add New</a>
                     @endcan
@@ -95,7 +95,7 @@
                                     @can('pnl_item_manage')
                                         <td>
                                             <span>
-                                                <a href="{{ route('company_pnl_item_edit', $rows->company_pnl_item_id) }}" class="btn btn-sm btn-outline-warning mr-2 mb-1">Edit</a>
+                                                <a href="{{ route('company_pnl_item_edit', ['tenant' => tenant('id'), 'id' => $rows->company_pnl_item_id]) }}" class="btn btn-sm btn-outline-warning mr-2 mb-1">Edit</a>
                                             </span>
                                         </td>
                                     @endcan

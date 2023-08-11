@@ -24,7 +24,7 @@
 			<div class="page-title-right">
 				<ol class="breadcrumb m-0">
 					<li class="breadcrumb-item">
-						<a href="{{route('invoice_listing')}}">Invoice Listing</a>
+						<a href="{{route('invoice_listing', ['tenant' => tenant('id')])}}">Invoice Listing</a>
 					</li>
 					<li class="breadcrumb-item active">Import</li>
 				</ol>
@@ -73,7 +73,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                            <a href="{{ route('invoice_listing') }}" class="btn btn-secondary">Cancel</a>
+                            <a href="{{ route('invoice_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -187,7 +187,7 @@
             $('#company_land_id').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_company_land') }}",
+                url: "{{ route('ajax_get_company_land', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

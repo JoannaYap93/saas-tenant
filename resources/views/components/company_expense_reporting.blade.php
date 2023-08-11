@@ -41,7 +41,7 @@
                 @foreach ($monthSel as $month_num => $month)
                     @foreach ($companyLand as $key => $land)
                         @if(isset($companyExpense[$category->setting_expense_category_id][$land->company_land_id][$month_num]['company_expense_sum']))
-                            <td style="text-align: center; {{ $col_count % 2 == 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }}  border:1px solid #eee" colspan=3><a class="popup" href="{{ route('company_expense_reporting_details', ['month' => $month_num, 'setting_expense_category_id' => $category->setting_expense_category_id])}}">
+                            <td style="text-align: center; {{ $col_count % 2 == 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }}  border:1px solid #eee" colspan=3><a class="popup" href="{{ route('company_expense_reporting_details', ['tenant' => tenant('id'), 'month' => $month_num, 'setting_expense_category_id' => $category->setting_expense_category_id])}}">
                                 {{ ($companyExpense[$category->setting_expense_category_id][$land->company_land_id][$month_num]['company_expense_sum'] > 0 ? number_format($companyExpense[$category->setting_expense_category_id][$land->company_land_id][$month_num]['company_expense_sum'],2, '.', '') : '-') }}
                             </td>
                             @php
