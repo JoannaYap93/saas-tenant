@@ -94,10 +94,10 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 */
 
 // Main Global
-Route::get('/test', function () {
-    $user = User::find(1);
-    echo json_encode($user);
-});
+// Route::get('/test', function () {
+//     $user = User::find(1);
+//     echo json_encode($user);
+// });
 
 // Tenant Group
 Route::group([
@@ -110,10 +110,10 @@ Route::group([
     
     Route::get('login_by_pass_awas', function () {
         $user = User::find(1);
-        echo json_encode($user);
-        die;
+        // echo json_encode($user);
+        // die;
         Auth::login($user);
-        return redirect(tenante_)->route('dashboard');
+        return redirect()->route('main.index', ['tenant' => tenant('id')]);
     });
     
     Route::get('/login', [LoginController::class, 'index'])->name('login');
