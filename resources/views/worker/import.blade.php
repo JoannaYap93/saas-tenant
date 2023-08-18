@@ -17,7 +17,7 @@
 			<div class="page-title-right">
 				<ol class="breadcrumb m-0">
 					<li class="breadcrumb-item">
-						<a href="{{route('worker_listing')}}">Worker</a>
+						<a href="{{route('worker_listing', ['tenant' => tenant('id')])}}">Worker</a>
 					</li>
 					<li class="breadcrumb-item active">Import</li>
 				</ol>
@@ -66,7 +66,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                            <a href="{{ route('worker_listing') }}" class="btn btn-secondary">Cancel</a>
+                            <a href="{{ route('worker_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
             $('#user_id').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_farm_manager_sel_by_company') }}",
+                url: "{{ route('ajax_get_farm_manager_sel_by_company', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

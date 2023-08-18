@@ -63,7 +63,7 @@
                                         name="submit" value="reset">
                                         <i class="fas fa-times mr-1"></i> Reset
                                     </button>
-                                    <a  href="{{ route('budget_estimate_report_listing_reporting') }}" class="btn btn-secondary waves-effect waves-light mr-2"
+                                    <a  href="{{ route('budget_estimate_report_listing_reporting', ['tenant' => tenant('id')]) }}" class="btn btn-secondary waves-effect waves-light mr-2"
                                     name="submit">
                                     <i class="fas fa-arrow-left mr-1"></i> Budget Estimate Report Listing
                                 </a>

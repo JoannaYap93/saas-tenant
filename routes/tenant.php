@@ -117,6 +117,7 @@ Route::group([
     });
     
     Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout.user');
     Route::post('/login-user', [LoginController::class, 'login'])->name('login.user');
 
     // Route::get('{any}', [HomeController::class, 'index']);

@@ -176,7 +176,7 @@
                                 <div class="col-sm-6">
                                     <button type="submit"
                                             class="btn btn-primary waves-effect waves-light mr-1">Update</button>
-                                    <a href="{{ route('expense_listing') }}" class="btn btn-secondary">Cancel</a>
+                                    <a href="{{ route('expense_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>
                         </div>

@@ -17,7 +17,7 @@
 		    <div class="d-flex align-items-center">
                 <h4 class="mb-0 font-size-18 mr-2">{{$title}}</h4>
                 @can('worker_manage')
-                    <a href="{{ route('worker_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1">
+                    <a href="{{ route('worker_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1">
                     <i class="fas fa-plus"></i> ADD NEW</a>
                 @endcan
             </div>
@@ -121,7 +121,7 @@
                                     </button>
 
                                     @can('worker_manage')
-                                        <a href="{{ route('worker_import') }}" class="btn btn-success waves-effect waves-light mr-2">
+                                        <a href="{{ route('worker_import', ['tenant' => tenant('id')]) }}" class="btn btn-success waves-effect waves-light mr-2">
                                             <i class="fas fa-file-import mr-1"></i>Import
                                         </a>
                                         <a href="{{ URL::asset('assets/sample/sample-import-worker.xls') }}" target="_blank" class="btn btn-info waves-effect waves-light mr-2">
@@ -250,7 +250,7 @@
                                                     {{$sub_worker->worker_role->worker_role_name}}</span>
                                                     @endif
                                                     @if($sub_worker->worker_role_id==2)
-                                                    <a class="badge badge-success font-size-11 popup" href="{{ route('worker_wallet_details', $sub_worker->worker_id) }}">Wallet: RM{{$sub_worker->worker_wallet_amount??0}}</a>
+                                                    <a class="badge badge-success font-size-11 popup" href="{{ route('worker_wallet_details', ['tenant' => tenant('id'), 'id' => $sub_worker->worker_id]) }}">Wallet: RM{{$sub_worker->worker_wallet_amount??0}}</a>
                                                     @endif
                                                     <br>{{ $sub_worker->worker_ic}}<br>
                                                     {{ $sub_worker->worker_mobile}}<br>
@@ -272,9 +272,9 @@
                                                 </td>
                                                 @can('worker_manage')
                                                     <td>
-                                                        <a href="{{ route('worker_edit', $sub_worker->worker_id) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
+                                                        <a href="{{ route('worker_edit', ['tenant' => tenant('id'), 'id' => $sub_worker->worker_id]) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                                         @if($sub_worker->worker_role_id==2)
-                                                        <a href="{{ route('worker_wallet_adjustment', $sub_worker->worker_id) }}" class='btn btn-sm btn-outline-success waves-effect waves-light'>Adjust Wallet</a>
+                                                        <a href="{{ route('worker_wallet_adjustment', ['tenant' => tenant('id'), 'id' => $sub_worker->worker_id]) }}" class='btn btn-sm btn-outline-success waves-effect waves-light'>Adjust Wallet</a>
                                                         @endif
                                                         <button class="btn btn-sm btn-outline-danger delete" data-toggle="modal" data-target="#delete" data-id="{{ $sub_worker->worker_id }}">Delete</button>
                                                     </td>
@@ -303,7 +303,7 @@
  <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('worker_delete') }}">
+            <form method="POST" action="{{ route('worker_delete', ['tenant' => tenant('id')]) }}">
                 @csrf
                 <div class="modal-body">
                     <h4>Delete this worker ?</h4>
@@ -362,7 +362,7 @@
         let user = '<option value="">Please Select Farm Manager</option>';
         $('#user_id').html('<option value="">Loading...</option>');
         $.ajax({
-            url: "{{ route('ajax_get_farm_manager_sel_by_company') }}",
+            url: "{{ route('ajax_get_farm_manager_sel_by_company', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",

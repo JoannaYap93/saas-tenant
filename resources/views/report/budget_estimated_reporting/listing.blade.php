@@ -124,7 +124,7 @@
                                                 <i>{{ @$budget->budget_estimated_user->user_fullname }}</i>
                                             </td>
                                                 <td>
-                                                    <a href="{{ route('view_monthly_budget_estimate_report', $budget->budget_estimated_id) }}" class="btn btn-sm btn-outline-success">View</a>
+                                                    <a href="{{ route('view_monthly_budget_estimate_report', ['tenant' => tenant('id'), 'id' => $budget->budget_estimated_id]) }}" class="btn btn-sm btn-outline-success">View</a>
                                                 </td>
                                         </tr>
                                     @endforeach

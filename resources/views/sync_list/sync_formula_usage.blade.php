@@ -234,7 +234,7 @@
 									</td>
 									<!-- <td align="left">
 										@if(auth()->user()->user_type_id == 2 && $fu->formula_usage_status != 'deleted')
-										<a href="{{route('formula_usage_edit', $fu->formula_usage_id)}}"
+										<a href="{{route('formula_usage_edit', ['tenant' => tenant('id'), 'id' => $fu->formula_usage_id])}}"
 											 class="btn btn-sm btn-outline-warning waves-effect waves-light mr-1 mb-1">Edit</a>
 											<a href="#" data-toggle='modal' data-target='#delete' id="delete_btn_{{@$fui->formula_usage_item_id}}" data-id="{{@$fui->formula_usage_id}}"
 												 class="btn btn-sm btn-outline-danger waves-effect waves-light mr-1 mb-1 delete_btn">Delete</a>
@@ -298,7 +298,7 @@
 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-						<form method="POST" action="{{ route('delete_formula_usage') }}">
+						<form method="POST" action="{{ route('delete_formula_usage', ['tenant' => tenant('id')]) }}">
 								@csrf
 								<div class="modal-body">
 										<h4>Delete this Formula Usage ?</h4>
@@ -337,7 +337,7 @@
 					$('#total_rounding_user').html("Loading...")
 					// console.log(formula_usage_id, user_id);
 					$.ajax({
-							url: "{{ route('ajax_find_sync_formula_usage_item_details') }}",
+							url: "{{ route('ajax_find_sync_formula_usage_item_details', ['tenant' => tenant('id')]) }}",
 							method: "POST",
 							data: {
 									_token: "{{ csrf_token() }}",
@@ -381,7 +381,7 @@
 						$('#company_land_id').html('<option value="">Loading...</option>');
 						$('#user_id').html('<option value="">Loading...</option>');
 						$.ajax({
-								url: "{{ route('ajax_land_user') }}",
+								url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
 								method: "POST",
 								data: {
 										_token: "{{ csrf_token() }}",
@@ -417,7 +417,7 @@
 						let sland = "{{ @$search['company_land_id'] ?? null }}";
 						let suser = "{{ @$search['user_id'] ?? null }}";
 						$.ajax({
-								url: "{{ route('ajax_land_user') }}",
+								url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
 								method: "POST",
 								data: {
 										_token: "{{ csrf_token() }}",

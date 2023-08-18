@@ -167,10 +167,10 @@
                                                 {!! $status !!}
                                             </td>
                                             <td>
-                                                <a href="{{ route('payroll_view', $payroll->payroll_id) }}" class="btn btn-sm btn-outline-primary">View Details</a>
+                                                <a href="{{ route('payroll_view', ['tenant' => tenant('id'), 'id' => $payroll->payroll_id]) }}" class="btn btn-sm btn-outline-primary">View Details</a>
                                                 @can('payroll_manage')
                                                     @if($payroll->payroll_status != "Completed")
-                                                        <a href="{{ route('payroll_edit', $payroll->payroll_id) }}" class="btn btn-sm btn-outline-warning">Edit</a>
+                                                        <a href="{{ route('payroll_edit', ['tenant' => tenant('id'), 'id' => $payroll->payroll_id]) }}" class="btn btn-sm btn-outline-warning">Edit</a>
                                                     @endif
                                                     @if($payroll->payroll_status != "Deleted" && $payroll->payroll_status != "Completed")
                                                         <span data-toggle='modal' data-target='#complete' data-id='{{ $payroll->payroll_id }}' class='complete'>
@@ -180,7 +180,7 @@
                                                             <a href='javascript:void(0);' class='btn btn-sm btn-outline-danger waves-effect waves-light'>Delete</a>
                                                         </span>
                                                     @endif
-                                                    <a href="{{ route('payroll_export', $payroll->payroll_id) }}" class="btn btn-sm btn-outline-success">Export</a>
+                                                    <a href="{{ route('payroll_export', ['tenant' => tenant('id'), 'id' => $payroll->payroll_id]) }}" class="btn btn-sm btn-outline-success">Export</a>
                                                 @endcan
                                             </td>
                                         </tr>
@@ -202,7 +202,7 @@
     <div class="modal fade" id="add_payroll_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('payroll_generate') }}">
+                <form method="POST" action="{{ route('payroll_generate', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title">Add Monthly Worker Expense</h5>
@@ -249,7 +249,7 @@
     <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('payroll_status') }}">
+                <form method="POST" action="{{ route('payroll_status', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this Monthly Worker Expense ? </h4>
@@ -274,7 +274,7 @@
     <div class="modal fade" id="complete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('payroll_status') }}">
+                <form method="POST" action="{{ route('payroll_status', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Complete this Monthly Worker Expense ? </h4>
@@ -367,7 +367,7 @@
         function check_payroll_exists(company_id, payroll_date){
 
             $.ajax({
-                url: "{{ route('ajax_check_payroll_exists') }}",
+                url: "{{ route('ajax_check_payroll_exists', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

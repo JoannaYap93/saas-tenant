@@ -107,7 +107,7 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return $this->loggedOut($request) ?: redirect()->route('main.index', ['tenant', tenant('id')]);
+        return $this->loggedOut($request) ?: redirect()->route('main.index', ['tenant' => tenant('id')]);
     }
 
     protected function attemptLogin(Request $request)

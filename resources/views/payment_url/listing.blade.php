@@ -69,7 +69,7 @@
                 <div class="d-flex align-items-center">
                     <h4 class="mb-0 font-size-18 mr-1">Payment Url Listing</h4>
                     @can('payment_url_manage')
-                        <a href="{{ route('payment_url_add') }}"
+                        <a href="{{ route('payment_url_add', ['tenant' => tenant('id')]) }}"
                         class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                         class="fas fa-plus"></i> Add New</a>
                     @endcan
@@ -357,7 +357,7 @@
     <div class="modal fade" id="cancel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('payment_url_cancel') }}">
+                <form method="POST" action="{{ route('payment_url_cancel', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Cancel Payment Url?</h4>
@@ -405,7 +405,7 @@
                 <div id="invoice_no" class="modal-header">
 
                 </div>
-                <form action="{{ route('payment_url_approve_reject') }}" method="POST">
+                <form action="{{ route('payment_url_approve_reject', ['tenant' => tenant('id')]) }}" method="POST">
                     @csrf
                     <div id="check_body" class="modal-body">
                         <div class="row">
@@ -493,7 +493,7 @@
             let details = '';
 
             $.ajax({
-                url: "{{ route('ajax_get_mobile_no_by_payment_url_id') }}",
+                url: "{{ route('ajax_get_mobile_no_by_payment_url_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -595,7 +595,7 @@
             let scust = '{{ @$search['customer_id'] }}' ?? null;
             $('#customer_id').html('<option value="">Loading...</option>');
             $.ajax({
-                url: "{{ route('ajax_get_customer_by_category') }}",
+                url: "{{ route('ajax_get_customer_by_category', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -628,7 +628,7 @@
             let scust = '{{ @$search['customer_id'] }}' ?? null;
             let scust_cat = '{{ @$search['customer_category_id'] }}' ?? null;
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -689,7 +689,7 @@
             $('#image_checking').html('Checking For Bank Slip...');
             let payment_url_id = $(this).attr('data-id');
             $.ajax({
-                url: "{{ route('ajax_find_payment_url_with_id') }}",
+                url: "{{ route('ajax_find_payment_url_with_id', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',

@@ -94,7 +94,7 @@
                                     name="submit" value="search">
                                     <i class="fas fa-search mr-1"></i> Search
                                 </button>
-                                <a href="{{route('claim_report','reset=1')}}" class="btn btn-danger waves-effect waves-light mr-2"><i class="fas fa-times mr-1"></i> Reset</a>
+                                <a href="{{route('claim_report', ['tenant' => tenant('id')])}}" class="btn btn-danger waves-effect waves-light mr-2"><i class="fas fa-times mr-1"></i> Reset</a>
                             </div>
                         </div>
                     </form>
@@ -136,7 +136,7 @@
                                         @php
                                             $total_company_claim = 0;
                                             $total_company_pending = 0;
-                                            // $total_link = route('claim_detail_report',['year'=>$search['year'],'month'=>$key, 'company_id' => $company_id]);
+                                            // $total_link = route('claim_detail_report', ['tenant' => tenant('id'), 'year'=>$search['year'],'month'=>$key, 'company_id' => $company_id]);
                                         @endphp
                                         @php
                                             if (@$search['company_id']) {
@@ -160,9 +160,9 @@
                                                         $total_month_pending[$key] = @$records[$company_id][$key]['claim_pending'];
                                                     }
 
-                                                    // $link = route('claim_detail_report',['year'=>$search['year'],'month'=>$key, 'company_id' => $company_id]);
-                                                    $link1 = route('claim_detail_report',['year' => $search['year'], 'month' => $key, 'company_id' => $company_id, 'claim_status_id' => 6]);
-                                                    $link2 = route('claim_detail_report',['year' => $search['year'], 'month' => $key, 'company_id' => $company_id, 'claim_status_id' => 5]);
+                                                    // $link = route('claim_detail_report', ['tenant' => tenant('id'), 'year'=>$search['year'],'month'=>$key, 'company_id' => $company_id]);
+                                                    $link1 = route('claim_detail_report', ['tenant' => tenant('id'), 'year' => $search['year'], 'month' => $key, 'company_id' => $company_id, 'claim_status_id' => 6]);
+                                                    $link2 = route('claim_detail_report', ['tenant' => tenant('id'), 'year' => $search['year'], 'month' => $key, 'company_id' => $company_id, 'claim_status_id' => 5]);
                                                 @endphp
 
                                                 <td style="text-align: center; font-weight: bold; {{ $key % 2 != 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }} border:1px solid #eee">{!!@$records[$company_id][$key]['claim'] ? '<a  class="popup" href="'.$link1.'">'.number_format($records[$company_id][$key]['claim'],2).'</a>' : '-'!!}</td>

@@ -190,7 +190,7 @@
             $('#supplier').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_supplier_by_company_id') }}",
+                url: "{{ route('ajax_get_supplier_by_company_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

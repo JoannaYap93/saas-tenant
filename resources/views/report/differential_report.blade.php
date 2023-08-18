@@ -447,7 +447,7 @@
             $('#company_land_id').html('<option value="">Loading...</option>');
             $('#user_id').html('<option value="">Loading...</option>');
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -483,7 +483,7 @@
             let sland = "{{ @$search['company_land_id'] ?? null }}";
             let suser = "{{ @$search['user_id'] ?? null }}";
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

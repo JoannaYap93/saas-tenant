@@ -150,7 +150,7 @@
                                             <td>
                                                 <b>{{ $stock->product_stock_transfer_remark }}</b><br>
                                                 @if (substr($stock->product_stock_transfer_description, 0, 1) == '#')
-                                                    <a href="{{ route('find_do_no', substr($stock->product_stock_transfer_description, 1)) }}"
+                                                    <a href="{{ route('find_do_no', ['tenant' => tenant('id'), 'id' => substr($stock->product_stock_transfer_description, 1)]) }}"
                                                         target="_blank">
                                                         {{ $stock->product_stock_transfer_description }} <br>
                                                     </a>
@@ -199,7 +199,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('product_stock_transfer_add') }}">
+                <form method="POST" action="{{ route('product_stock_transfer_add', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4 class="card-title mb-4">Stock Transfer Details</h4>
@@ -283,7 +283,7 @@
                 // console.log($('#product_id').val());
                 // console.log($('#show_product_size').val());
                 $.ajax({
-                    url: "{{ route('ajax_get_current_warehouse_qty') }}",
+                    url: "{{ route('ajax_get_current_warehouse_qty', ['tenant' => tenant('id')]) }}",
                     method: 'post',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -320,7 +320,7 @@
                 $('#product_id').val(value);
                 // console.log(value);
                 $.ajax({
-                    url: "{{ route('ajax_get_setting_size_by_product_id') }}",
+                    url: "{{ route('ajax_get_setting_size_by_product_id', ['tenant' => tenant('id')]) }}",
                     method: 'post',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -355,7 +355,7 @@
                 $('#company_land_id_input').val(value);
 
                 $.ajax({
-                    url: "{{ route('ajax_get_product_sel_by_company_land_id') }}",
+                    url: "{{ route('ajax_get_product_sel_by_company_land_id', ['tenant' => tenant('id')]) }}",
                     method: 'post',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -414,7 +414,7 @@
             let option = '<option value="">Please Select Grade</option>';
 
             $.ajax({
-                url: "{{ route('ajax_get_setting_size_by_product_id') }}",
+                url: "{{ route('ajax_get_setting_size_by_product_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -444,7 +444,7 @@
             let product = $(this).val();
 
             $.ajax({
-                url: "{{ route('ajax_get_setting_size_by_product_id') }}",
+                url: "{{ route('ajax_get_setting_size_by_product_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

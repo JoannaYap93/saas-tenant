@@ -11,7 +11,7 @@
                     <h4 class="mb-0 font-size-18 mr-2">Sync Company Expense Listing</h4>
                     <!-- @if (auth()->user()->user_type_id == 2)
                         @can('company_land_category_manage')
-                            <a href="{{route('company_expense_add')}}"
+                            <a href="{{route('company_expense_add', ['tenant' => tenant('id')])}}"
                                 class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1">
                                 <i class="fas fa-plus"></i> ADD NEW</a>
                         @endcan
@@ -36,7 +36,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form method="POST" action="{{ route('company_expense_listing') }}">
+                                <form method="POST" action="{{ route('company_expense_listing', ['tenant' => tenant('id')]) }}">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-3">
@@ -190,7 +190,7 @@
                                                         <td><span data-toggle='modal' data-target='#fulfill'
                                                                 data-id='{{ $row->company_expense_id }}'
                                                                 class='fulfill'>
-                                                                <a href="{{ route('company_expense_edit', $row->company_expense_id ) }}"
+                                                                <a href="{{ route('company_expense_edit', ['tenant' => tenant('id'), 'id' => $row->company_expense_id] ) }}"
                                                                     class="btn btn-sm btn-outline-primary waves-effect waves-light mr-2 mb-1">Edit</a>
                                                             </span>
                                                             <button class="btn btn-sm btn-outline-danger delete" data-toggle="modal"
@@ -224,7 +224,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('company_expense_delete')}}">
+                <form method="POST" action="{{ route('company_expense_delete', ['tenant' => tenant('id')])}}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this Company Expense ?</h4>
@@ -264,7 +264,7 @@
             $('#company_land_id').html('<option value="">Loading...</option>');
             $('#user_id').html('<option value="">Loading...</option>');
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -301,7 +301,7 @@
             let sland = "{{ @$search['company_land_id'] ?? null }}";
             let suser = "{{ @$search['user_id'] ?? null }}";
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

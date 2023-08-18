@@ -10,7 +10,7 @@
             <div class="page-title-box d-flex align-items-center justify-content-between">
                 <h4 class="mb-0 font-size-18"><span class="mr-2 ">Admin Role Listing</span>
                     @can('admin_role_manage')
-                        <a href="{{ route('admin_role_add') }}"
+                        <a href="{{ route('admin_role_add', ['tenant' => tenant('id')]) }}"
                             class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                                 class="fas fa-plus"></i> Add New</a>
                     @endcan
@@ -33,7 +33,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-8">
-                            <form method="POST" action="{{ route('admin_role_listing') }}">
+                            <form method="POST" action="{{ route('admin_role_listing', ['tenant' => tenant('id')]) }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-3">
@@ -106,7 +106,7 @@
                                             @can('admin_role_manage')
                                                 <td>
                                                     @if ($role->company_id == auth()->user()->company_id || auth()->user()->user_type_id == 1)
-                                                    <a href="{{ route('admin_role_edit', $role->id) }}"
+                                                    <a href="{{ route('admin_role_edit', ['tenant' => tenant('id'), 'id' => $role->id]) }}"
                                                         class="btn btn-sm btn-outline-primary waves-effect waves-light">
                                                         Edit & Assign Permission
                                                     </a>

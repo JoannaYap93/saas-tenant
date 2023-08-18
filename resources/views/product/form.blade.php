@@ -146,7 +146,7 @@
                                         </div>
                                         <div class="d-flex justify-content-end">
                                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                            <a href="{{ route('product_listing') }}" class="btn btn-secondary">Cancel</a>
+                                            <a href="{{ route('product_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </div>
                                 </div>
@@ -195,7 +195,7 @@
             function check_product_sku(product_sku) {
                 $.ajax({
                     type: 'POST',
-                    url: "{{ route('ajax_check_product_sku') }}",
+                    url: "{{ route('ajax_check_product_sku', ['tenant' => tenant('id')]) }}",
                     data: {
                         product_sku: product_sku,
                         product_id: product_id,

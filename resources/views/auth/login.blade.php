@@ -14,7 +14,7 @@
             <div class="container">
                 <div class="row justify-content-center pt-5">
                     <div class="col-md-8 col-lg-6 col-xl-5">
-                        <img src="{{ asset('images/华盛logo-white.svg') }}" alt="" class="img-fluid m-auto d-block"
+                        <img src="{{ global_asset('images/华盛logo-white.svg') }}" alt="" class="img-fluid m-auto d-block"
                             width="100">
                     </div>
                 </div>

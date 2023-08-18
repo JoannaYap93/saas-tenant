@@ -88,7 +88,7 @@
                                             name="submit" value="search">
                                             <i class="fas fa-search mr-1"></i> Search
                                         </button>
-                                        <a href="{{route('message_template_report_by_year','reset=1')}}" class="btn btn-danger waves-effect waves-light mr-2"><i class="fas fa-times mr-1"></i> Reset</a>
+                                        <a href="{{route('message_template_report_by_year',['tenant' => tenant('id')])}}" class="btn btn-danger waves-effect waves-light mr-2"><i class="fas fa-times mr-1"></i> Reset</a>
                                         {{-- <button type="submit" class="btn btn-success waves-effect waves-light mr-2"
                                             name="submit" value="export">
                                             <i class="fas fa-download mr-1"></i> Export
@@ -143,7 +143,7 @@
                                                 $total_cols[$key] += @$records[$template->message_template_id][$key] ?? 0;
                                             }
 
-                                            $link = route('message_template_report_by_month',['year'=>$search['year'],'month'=>$key]);
+                                            $link = route('message_template_report_by_month',['tenant' => tenant('id'),'year'=>$search['year'],'month'=>$key]);
                                         @endphp
                                         <td style="text-align: center;  {{ $col_count % 2 != 0 ? 'background-color: #ffffff;' : 'background-color: #e4e4e4;' }} border:1px solid #eee">{!!@$records[$template->message_template_id][$key] ? '<a  class="popup" href="'.$link.'">'.number_format($records[$template->message_template_id][$key]).'</a>' : '-'!!}</td>
                                         @php
@@ -161,7 +161,7 @@
                                 @foreach ($month_sel as $key => $month)
                                     @php
                                         $total_sum_rows += @$total_cols[$key] ?? 0;
-                                        $link = route('message_template_report_by_month',['year'=>$search['year'],'month'=>$key]);
+                                        $link = route('message_template_report_by_month',['tenant' => tenant('id'),'year'=>$search['year'],'month'=>$key]);
                                     @endphp
                                     <td style="text-align: center; font-weight: bold; background-color:#fffbaf; color:#000000">{!!@$total_cols[$key] ? '<a class="popup" href="'.$link.'">'.number_format($total_cols[$key]).'</a>' : '-'!!}</td>
                                 @endforeach
@@ -228,7 +228,7 @@
             @endif
 
             $.ajax({
-            url: "{{ route('ajax_get_land_by_company_id') }}",
+            url: "{{ route('ajax_get_land_by_company_id', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
@@ -257,7 +257,7 @@
 
         function disableProduct(selected_val){
             $.ajax({
-            url: "{{ route('ajax_get_products_multi_company') }}",
+            url: "{{ route('ajax_get_products_multi_company', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",

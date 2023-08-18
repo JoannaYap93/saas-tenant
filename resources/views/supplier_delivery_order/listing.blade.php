@@ -20,7 +20,7 @@
                 <div class="d-flex align-items-center">
                   <h4 class="mb-0 font-size-18 mr-2">Supplier Delivery Order Listing</h4>
                     @can('supplier_delivery_order_manage')
-                        <a href="{{ route('supplier_do_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> MULTI STOCK IN</a>
+                        <a href="{{ route('supplier_do_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> MULTI STOCK IN</a>
                     @endcan
                 </div>
                 <div class="page-title-right">
@@ -170,15 +170,15 @@
                                                     <a href="{{ @$supplier_do->getFirstMediaUrl('supplier_delivery_order_media') }}" class="btn btn-sm btn-outline-primary" target="_blank">View D.O</a>
                                                 @endif
                                                 @if (@$supplier_do->supplier_delivery_order_item)
-                                                    <a href="{{ route('get_raw_material_company_usage', $supplier_do->supplier_delivery_order_id) }}"
+                                                    <a href="{{ route('get_raw_material_company_usage', ['tenant' => tenant('id'), 'id' => $supplier_do->supplier_delivery_order_id]) }}"
                                                         class="btn btn-sm btn-outline-success">View Stock History</a>
                                                 @endif
                                                 @can('supplier_delivery_order_manage')
                                                     @if(@$supplier_do->supplier_delivery_order_status == "completed")
-                                                        <a href="{{ route('supplier_do_edit', $supplier_do->supplier_delivery_order_id) }}" class="btn btn-sm btn-outline-warning">Edit</a>
+                                                        <a href="{{ route('supplier_do_edit', ['tenant' => tenant('id'), 'id' => $supplier_do->supplier_delivery_order_id]) }}" class="btn btn-sm btn-outline-warning">Edit</a>
                                                     @endif
                                                     @if(@$supplier_do->supplier_delivery_order_status != "returned" && $supplier_do->supplier_delivery_order_status != "deleted")
-                                                        <a href= "{{ route('supplier_do_return', $supplier_do->supplier_delivery_order_id) }}" class='btn btn-sm btn-outline-secondary'>Return</a>
+                                                        <a href= "{{ route('supplier_do_return', ['tenant' => tenant('id'), 'id' => $supplier_do->supplier_delivery_order_id]) }}" class='btn btn-sm btn-outline-secondary'>Return</a>
                                                     @endif
                                                 @endcan
                                                 @can('supplier_delivery_order_delete')
@@ -228,7 +228,7 @@
     <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('supplier_do_delete') }}">
+                <form method="POST" action="{{ route('supplier_do_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this Supplier Delivery Order?</h4>
@@ -287,7 +287,7 @@
             let raw_material_sel = '<option value="">Please Select Raw Material</option>';
 
             $.ajax({
-                url: "{{ route('ajax_get_raw_material_by_raw_material_category_id') }}",
+                url: "{{ route('ajax_get_raw_material_by_raw_material_category_id', ['tenant' => tenant('id')]) }}",
                 method: "GET",
                 data: {
                     _token: "{{ csrf_token() }}",

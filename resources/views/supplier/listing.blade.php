@@ -16,7 +16,7 @@
                 <div class="d-flex align-items-center">
                   <h4 class="mb-0 font-size-18 mr-2">Supplier Listing</h4>
                     @can('supplier_manage')
-                        <a href="{{ route('supplier_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
+                        <a href="{{ route('supplier_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
                     @endcan
                 </div>
                 <div class="page-title-right">
@@ -191,7 +191,7 @@
                                                 {!! $status !!}
                                             </td>
                                             <td>
-                                                <a href="{{route('supplier_edit', $supplier->supplier_id)}}" class='btn btn-sm btn-outline-warning waves-effect waves-light'>Edit</a>
+                                                <a href="{{route('supplier_edit', ['tenant' => tenant('id'), 'id' => $supplier->supplier_id])}}" class='btn btn-sm btn-outline-warning waves-effect waves-light'>Edit</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -240,7 +240,7 @@
             let raw_material_sel = '<option value="">Please Select Raw Material</option>';
 
             $.ajax({
-                url: "{{ route('ajax_get_raw_material_by_raw_material_category_id') }}",
+                url: "{{ route('ajax_get_raw_material_by_raw_material_category_id', ['tenant' => tenant('id')]) }}",
                 method: "GET",
                 data: {
                     _token: "{{ csrf_token() }}",

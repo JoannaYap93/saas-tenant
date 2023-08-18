@@ -129,7 +129,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <button type="submit" id="form_post_button" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                            <a href="{{ route('setting_formula_listing') }}" class="btn btn-secondary">Cancel</a>
+                            <a href="{{ route('setting_formula_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </div>
                   </div>
@@ -152,7 +152,7 @@
             let placeholder = $(this).parent().parent().children().find('input[id="setting_formula_item_value"]');
 
             $.ajax({
-                url: "{{ route('ajax_get_rm_name_for_placeholder') }}",
+                url: "{{ route('ajax_get_rm_name_for_placeholder', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

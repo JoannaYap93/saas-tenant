@@ -17,7 +17,7 @@
     <h4 class="mb-0 font-size-18">
         <span class="mr-2">Sync Listing</span>
         @can('sync_zip_file')
-            <a href="{{ route('sync_zip_file') }}"
+            <a href="{{ route('sync_zip_file', ['tenant' => tenant('id')]) }}"
                 class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1">
                 <i class="fas fa-plus"></i> Add New</a>
         @endcan
@@ -206,7 +206,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr style="transform: rotate(0);">
-                                                        <td><a href="{{ route('get_sync_do', $row->sync_id) }}" class="stretched-link">Number of DO</a></td>
+                                                        <td><a href="{{ route('get_sync_do', ['tenant' => tenant('id'), 'id' => $row->sync_id]) }}" class="stretched-link">Number of DO</a></td>
                                                         <td style="color: #556ee6">
                                                             {{ $sync_details[$row->sync_id]['do_count'] }}
                                                         </td>
@@ -215,7 +215,7 @@
                                                         </td>
                                                     </tr>
                                                     <tr style="transform: rotate(0);">
-                                                        <td><a href="{{ route('get_sync_daily', $row->sync_id) }}" class="stretched-link">Number of Collect</a></td>
+                                                        <td><a href="{{ route('get_sync_daily', ['tenant' => tenant('id'), 'id' => $row->sync_id]) }}" class="stretched-link">Number of Collect</a></td>
                                                         <td style="color: #556ee6">
                                                             {{ $sync_details[$row->sync_id]['collect_count'] }}
                                                         </td>
@@ -224,7 +224,7 @@
                                                         </td>
                                                     </tr>
                                                     <tr style="transform: rotate(0);">
-                                                        <td><a href="{{ route('get_sync_formula_usage', $row->sync_id) }}" class="stretched-link">Number of Formula Usage</a></td>
+                                                        <td><a href="{{ route('get_sync_formula_usage', ['tenant' => tenant('id'), 'id' => $row->sync_id]) }}" class="stretched-link">Number of Formula Usage</a></td>
                                                         <td style="color: #556ee6">
                                                             {{ $sync_details[$row->sync_id]['formula_usage_count'] }}
                                                         </td>
@@ -233,7 +233,7 @@
                                                         </td>
                                                     </tr>
                                                     <tr style="transform: rotate(0);">
-                                                        <td><a href="{{ route('get_sync_company_expense', $row->sync_id) }}" class="stretched-link">Number of Company Expense</a></td>
+                                                        <td><a href="{{ route('get_sync_company_expense', ['tenant' => tenant('id'), 'id' => $row->sync_id]) }}" class="stretched-link">Number of Company Expense</a></td>
                                                         <td style="color: #556ee6">
                                                             {{ $sync_details[$row->sync_id]['company_expense_count'] }}
                                                         </td>
@@ -348,7 +348,7 @@
 <div class="modal fade" id="revert_sync" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('revert_sync') }}">
+            <form method="POST" action="{{ route('revert_sync', ['tenant' => tenant('id')]) }}">
                 @csrf
                 <div class="modal-body">
                     <h4>Revert this Sync ?</h4>
@@ -371,7 +371,7 @@
 <div class="modal fade" id="resync" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('resync') }}">
+            <form method="POST" action="{{ route('resync', ['tenant' => tenant('id')]) }}">
                 @csrf
                 <div class="modal-body">
                     <h4>Resync?</h4>

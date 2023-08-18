@@ -10,7 +10,7 @@
                 <div class="d-flex align-items-center">
                     <h4 class="mb-0 font-size-18 mr-2">Category Listing</h4>
                     @can('product_category_manage')
-                        <a href="{{ route('product_category_add') }}"
+                        <a href="{{ route('product_category_add', ['tenant' => tenant('id')]) }}"
                             class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                                 class="fas fa-plus"></i> ADD NEW</a>
                     @endcan
@@ -33,7 +33,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-8">
-                            <form method="POST" action="{{ route('product_category_listing') }}">
+                            <form method="POST" action="{{ route('product_category_listing', ['tenant' => tenant('id')]) }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-4">
@@ -125,7 +125,7 @@
                                                     <span data-toggle='modal' data-target='#fulfill'
                                                         data-id='{{ $product_category->product_category_id }}'
                                                         class='fulfill'>
-                                                        <a href="{{ route('product_category_edit', $product_category->product_category_id) }}"
+                                                        <a href="{{ route('product_category_edit', ['tenant' => tenant('id'), 'id' => $product_category->product_category_id]) }}"
                                                             class="btn btn-sm btn-outline-primary waves-effect waves-light mr-2">Edit</a>
                                                     </span>
                                                     <span data-toggle='modal' data-target='#delete'
@@ -158,7 +158,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('product_category_delete') }}">
+                <form method="POST" action="{{ route('product_category_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this product category?</h4>

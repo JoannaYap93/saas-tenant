@@ -16,7 +16,7 @@
 				<span class="mr-2">Raw Material Company Listing</span>
                 @can('raw_material_company_manage')
                     {{-- @if(auth()->user()->user_type_id == 2) --}}
-					<a href="{{route('raw_material_company_add')}}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1" ><i class="fas fa-plus"></i> Add New</a>
+					<a href="{{route('raw_material_company_add', ['tenant' => tenant('id')])}}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1" ><i class="fas fa-plus"></i> Add New</a>
 					{{-- @endif --}}
                 @endcan
 			</h4>
@@ -123,7 +123,7 @@
 									</td>
 									<td>
                                         @if (@$rmc->raw_material->raw_material_name != '')
-                                            <a href="{{ route('rm_usage_listing_by_id', @$rmc->raw_material_id) }}">{{json_decode(@$rmc->raw_material->raw_material_name)->en }}</a><br>
+                                            <a href="{{ route('rm_usage_listing_by_id', ['tenant' => tenant('id'), 'id' => @$rmc->raw_material_id]) }}">{{json_decode(@$rmc->raw_material->raw_material_name)->en }}</a><br>
                                         @endif
 										{{-- <b></b><br> --}}
                                         <b>{{@$rmc->company->company_name}}</b><br>
@@ -155,7 +155,7 @@
                                     </td>
                                     @can('raw_material_company_manage')
                                     <td>
-                                        <a href="{{ route('raw_material_company_edit', @$rmc->company_id) }}"
+                                        <a href="{{ route('raw_material_company_edit', ['tenant' => tenant('id'), 'id' => @$rmc->company_id]) }}"
                                             class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                     </td>
                                     @endcan
@@ -180,7 +180,7 @@
                                                             {{-- <td>
                                                                 {{@$sub_raw_material_company->company_land->company_land_name}}
                                                                 <a @can('raw_material_company_manage')
-                                                                    href="{{ route('raw_material_company_edit', $sub_raw_material_company->raw_material_company_id) }}"
+                                                                    href="{{ route('raw_material_company_edit', ['tenant' => tenant('id'), 'id' => $sub_raw_material_company->raw_material_company_id]) }}"
                                                                 @endcan >
                                                                     <span>{{@$sub_raw_material_company->company_land->company_land_name}}</span></a>
                                                             </td> --}}
@@ -208,7 +208,7 @@
                                                                 {!! $span_status !!}
                                                             </td> --}}
                                                             {{-- <td>
-                                                                <a href="{{ route('raw_material_company_edit', @$sub_raw_material_company->raw_material_company_id) }}"
+                                                                <a href="{{ route('raw_material_company_edit', ['tenant' => tenant('id'), 'id' => @$sub_raw_material_company->raw_material_company_id]) }}"
                                                                         class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                                             </td> --}}
                                                         {{-- </tr>
@@ -298,7 +298,7 @@
 						$('#company_land_id').html('<option value="">Loading...</option>');
 						$('#user_id').html('<option value="">Loading...</option>');
 						$.ajax({
-								url: "{{ route('ajax_land_user') }}",
+								url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
 								method: "POST",
 								data: {
 										_token: "{{ csrf_token() }}",
@@ -334,7 +334,7 @@
 						let sland = "{{ @$search['company_land_id'] ?? null }}";
 						let suser = "{{ @$search['user_id'] ?? null }}";
 						$.ajax({
-								url: "{{ route('ajax_land_user') }}",
+								url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
 								method: "POST",
 								data: {
 										_token: "{{ csrf_token() }}",

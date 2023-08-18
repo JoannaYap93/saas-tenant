@@ -121,7 +121,7 @@
                             <div class="col-sm-6">
                                 <button type="submit"
                                     class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                                <a href="{{ route('dashboard') }}" class="btn btn-secondary">Cancel</a>
+                                <a href="{{ route('dashboard', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -164,7 +164,7 @@
             $('#size_id').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_setting_size_by_product_id') }}",
+                url: "{{ route('ajax_get_setting_size_by_product_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

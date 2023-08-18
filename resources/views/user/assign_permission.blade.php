@@ -94,7 +94,7 @@
                 <div class="form-group row mb-4">
                     <div class="col-lg-10">
                         <button type="submit" class="btn btn-primary" name="submit" value="update">Update Permission</button>
-                        <a href="{{ route('user_listing') }}" class="btn btn-secondary" >Cancel</a>
+                        <a href="{{ route('user_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary" >Cancel</a>
                     </div>
                 </div>
                 </form>

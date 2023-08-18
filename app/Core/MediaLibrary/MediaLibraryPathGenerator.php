@@ -40,7 +40,7 @@ class MediaLibraryPathGenerator implements PathGenerator
         $module = strtolower(end($arr_url));
         $module_id = $media->model_id;
 
-        return config('filesystems.path_prefix') . 'media_library/' . $module . '/' . $module_id . '/' . $media->getKey();
+        return config('filesystems.path_prefix') . tenant('id') . '/' . 'media_library/' . $module . '/' . $module_id . '/' . $media->getKey();
         // return config('filesystems.path_prefix') . '/media_library/' . $media->getKey();
     }
 }

@@ -57,7 +57,7 @@
                     <div class="row">
                         <div class="col">
                             <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                            <a href="{{ route('product_tag_listing') }}" class="btn btn-secondary">Cancel</a>
+                            <a href="{{ route('product_tag_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </div>
                 </div>

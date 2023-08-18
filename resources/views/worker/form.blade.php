@@ -155,7 +155,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                            <a href="{{ route('worker_listing') }}" class="btn btn-secondary">Cancel</a>
+                            <a href="{{ route('worker_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -231,7 +231,7 @@
                 var error_worker_id = '';
                 $.ajax({
                     type: 'POST',
-                    url: "{{route('ajax_check_worker_ic')}}",
+                    url: "{{route('ajax_check_worker_ic', ['tenant' => tenant('id')])}}",
                     data: {
                         worker_ic: $(this).val(),
                         worker_id: worker_id,
@@ -277,7 +277,7 @@
             $('#user_id').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_farm_manager_sel_by_company') }}",
+                url: "{{ route('ajax_get_farm_manager_sel_by_company', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -306,7 +306,7 @@
             $('#setting_reward_id').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_reward_sel_by_company') }}",
+                url: "{{ route('ajax_get_reward_sel_by_company', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

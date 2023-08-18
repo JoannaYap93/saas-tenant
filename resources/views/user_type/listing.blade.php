@@ -84,7 +84,7 @@
                                         @can('admin_type_manage')
                                             @if($row->is_trigger_referral)
                                                 <td>
-                                                    <a href="{{ route('manage_referral',['id'=>$row->user_type_id]) }}">Manage
+                                                    <a href="{{ route('manage_referral', ['tenant' => tenant('id'),'id'=>$row->user_type_id]) }}">Manage
                                                         Referral</a>
                                                 </td>
                                             @endif

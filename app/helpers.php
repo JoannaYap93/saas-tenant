@@ -3,7 +3,9 @@
 use App\Model\Invoice;
 use App\Model\Setting;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use App\Model\Landlord\CentralTenantCompany;
+use App\Model\Landlord\CentralFeatureSetting;
 
 if (!function_exists('sidebar')) {
     function sidebar()
@@ -55,12 +57,23 @@ if (!function_exists('checkSubscriptionFeature')) {
     {
         $check = tenancy()->central(function ($tenant) use ($feature_slug) {
             $tenant = CentralTenantCompany::with(['subscription', 'subscription.feature'])
-            ->whereHas('subscription.feature', function ($query) use ($feature_slug) {
-                $query->where('feature_slug', "{$feature_slug}");
-            })
             ->where('tenant_code',$tenant->id)
             ->first();
 
+            // Overwrite feature * admin can add feature per tenant
+            $overwriteFeature = Arr::get($tenant, 'overwrite_feature', '[]');
+            $jsonOverwriteFeature = json_decode($overwriteFeature, true);
+
+            if (in_array($feature_slug, $jsonOverwriteFeature)) {
+                $settingFeature = CentralFeatureSetting::where('feature_slug', $feature_slug)->first();
+                if (Arr::get($settingFeature, 'feature_status') != 'active') {
+                    return false;
+                }
+                return true;
+            }
+
+
+            // Check subscription feature 
             $featureSlug = Arr::get($tenant, 'subscription.feature', []);
             if (count($featureSlug) == 0) {
                 return false;
@@ -72,6 +85,7 @@ if (!function_exists('checkSubscriptionFeature')) {
             }
             return true;
         });
+        
         return $check;
     }
 }

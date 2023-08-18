@@ -101,16 +101,16 @@
         <div class="col-12">
             <div class="row">
             @can('dashboard_sales_analysis')
-            <a style="color: black" href="{{ route('dashboard_sales_analysis') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav "><span
+            <a style="color: black" href="{{ route('dashboard_sales_analysis', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav "><span
                 class="transaction-font">Sales Analysis</span></a>
             @endcan
-                <a style="color: black" href="{{ route('dashboard') }}"
+                <a style="color: black" href="{{ route('dashboard', ['tenant' => tenant('id')]) }}"
                     class="button_status transaction-card-col btn-nav-list float-left dashboard-nav"><span
                         class="transaction-font">Price Information</span></a>
-                <a style="color: black" href="{{ route('dashboard_price_analysis') }}"
+                <a style="color: black" href="{{ route('dashboard_price_analysis', ['tenant' => tenant('id')]) }}"
                     class="button_status transaction-card-col btn-nav-list float-left dashboard-nav"><span
                         class="transaction-font">Price Analysis</span></a>
-                <a style="color: black" href="{{ route('profit_loss_reporting') }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav active"><span
+                <a style="color: black" href="{{ route('profit_loss_reporting', ['tenant' => tenant('id')]) }}" class="button_status transaction-card-col btn-nav-list float-left dashboard-nav active"><span
                     class="transaction-font">Profit & Loss</span></a>
             </div>
         </div>
@@ -392,7 +392,7 @@
         let sland = "{{ @$search['company_land_id'] ?? null }}";
         console.log(sland);
         $.ajax({
-            url: "{{ route('ajax_land_user') }}",
+            url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",

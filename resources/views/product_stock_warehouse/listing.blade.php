@@ -15,7 +15,7 @@
 			<h4 class="mb-0 font-size-18">
 				<span class="mr-2">Stock Warehouse Listing</span>
 				@can('admin_manage')
-					<!-- <a href="{{ route('product_stock_warehouse_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1" ><i class="fas fa-plus"></i> Add New</a> -->
+					<!-- <a href="{{ route('product_stock_warehouse_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1" ><i class="fas fa-plus"></i> Add New</a> -->
 				@endcan
 			</h4>
 			<div class="page-title-right">

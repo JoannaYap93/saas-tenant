@@ -169,7 +169,7 @@
 
         function disableProduct(selected_val){
           $.ajax({
-              url: "{{ route('ajax_get_products_multi_company') }}",
+              url: "{{ route('ajax_get_products_multi_company', ['tenant' => tenant('id')]) }}",
               method: "POST",
               data: {
                   _token: "{{ csrf_token() }}",
@@ -255,7 +255,7 @@
             $('#company_land_id').html('<option value="">Loading...</option>');
             $('#user_id').html('<option value="">Loading...</option>');
             $.ajax({
-                url: "{{ route('ajax_company_land_warehouse') }}",
+                url: "{{ route('ajax_company_land_warehouse', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -291,7 +291,7 @@
             let sland = "{{ @$search['company_land_id'] ?? null }}";
             let suser = "{{ @$search['warehouse_id'] ?? null }}";
             $.ajax({
-                url: "{{ route('ajax_company_land_warehouse') }}",
+                url: "{{ route('ajax_company_land_warehouse', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

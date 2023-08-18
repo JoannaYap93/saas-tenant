@@ -147,13 +147,13 @@
                                                     $total_cols[$template->message_template_id] += @$records[$template->message_template_id][$day] ?? 0;
                                                 }
 
-                                                $link = route('message_template_report_by_day',['year'=>$search['year'],'month'=>$search['month'],'day'=> $day, 'id'=> $template->message_template_id]);
+                                                $link = route('message_template_report_by_day', ['tenant' => tenant('id'),'year'=>$search['year'],'month'=>$search['month'],'day'=> $day, 'id'=> $template->message_template_id]);
 
                                             @endphp
                                                 <td>{!!@$records[$template->message_template_id][$day] ? '<a class="popup" href="'.$link.'">'.number_format($records[$template->message_template_id][$day]).'</a>' : '-'!!}</td>
                                         @endforeach
                                         @php
-                                             $link = route('message_template_report_by_day',['year'=>$search['year'],'month'=>$search['month'],'day'=> $day, 'id'=> 0]);
+                                             $link = route('message_template_report_by_day', ['tenant' => tenant('id'),'year'=>$search['year'],'month'=>$search['month'],'day'=> $day, 'id'=> 0]);
                                         @endphp
                                          <td>{!!@$total_rows > 0 ? '<a class="popup" href="'.$link.'">'.number_format($total_rows).'</a>' : '-'!!}</td>
                                     </tr>
@@ -168,7 +168,7 @@
                                     @endphp
                                     @foreach ($message_templates as $template)
                                         @php
-                                            $link = route('message_template_report_by_day',['year'=>$search['year'],'month'=>$search['month'],'day'=> 0, 'id'=> $template->message_template_id]);
+                                            $link = route('message_template_report_by_day',['tenant' => tenant('id'),'year'=>$search['year'],'month'=>$search['month'],'day'=> 0, 'id'=> $template->message_template_id]);
                                         @endphp
                                         <td style="text-align: center; background-color:#fffbaf; color:#000000 border:1px solid #eee">{!!@$total_cols[$template->message_template_id] > 0 ? '<a class="popup" href="'.$link.'">'.number_format($total_cols[$template->message_template_id]).'</a>' : '-'!!}</td>
                                         @php
@@ -176,7 +176,7 @@
                                         @endphp
                                     @endforeach
                                     @php
-                                        $link = route('message_template_report_by_day',['year'=>$search['year'],'month'=>$search['month'],'day'=> 0, 'id'=> 0]);
+                                        $link = route('message_template_report_by_day',['tenant' => tenant('id'),'year'=>$search['year'],'month'=>$search['month'],'day'=> 0, 'id'=> 0]);
                                     @endphp
                                      <td style="text-align: center; background-color:#fffbaf; color:#000000 border:1px solid #eee">{!!@$total_sum_rows > 0 ? '<a class="popup" href="'.$link.'">'.number_format($total_sum_rows).'</a>' : '-'!!}</td>
                                 </tr>

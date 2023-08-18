@@ -230,7 +230,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <button type="submit" id="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                                <a href="{{ route('supplier_do_listing') }}" class="btn btn-secondary" >Cancel</a>
+                                <a href="{{ route('supplier_do_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary" >Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -387,7 +387,7 @@
         function get_raw_material_by_raw_material_category(raw_material_category_id, raw_material_name){
             let company_id = isNaN($('#company_id').val()) ? '{{ auth()->user()->company_id }}' : $('#company_id').val();
             $.ajax({
-                url: "{{ route('ajax_get_raw_material_by_raw_material_category_id') }}",
+                url: "{{ route('ajax_get_raw_material_by_raw_material_category_id', ['tenant' => tenant('id')]) }}",
                 method: "get",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -432,7 +432,7 @@
             let supplier_sel = '<option value="">Please Select Supplier</option>';
 
             $.ajax({
-                url: "{{ route('ajax_get_supplier_by_company_id') }}",
+                url: "{{ route('ajax_get_supplier_by_company_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -460,7 +460,7 @@
             $('#no_supplier_do_item_records').hide();
 
             $.ajax({
-                url:"{{ route('ajax_get_raw_material_details') }}",
+                url:"{{ route('ajax_get_raw_material_details', ['tenant' => tenant('id')]) }}",
                 method: 'GET',
                 data: {
                     _token: '{{ csrf_token() }}',

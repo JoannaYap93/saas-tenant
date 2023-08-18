@@ -165,10 +165,10 @@
                                 </td>
 
                                 <td>
-                                    <a href="{{ route('get_items_from_do', @$row->sync_delivery_order_id ?? 0) }}"
+                                    <a href="{{ route('get_items_from_do', ['tenant' => tenant('id'), 'id' => @$row->sync_delivery_order_id ?? 0]) }}"
                                                         class="btn btn-outline-success btn-sm">View Items</a>
                                     @if (auth()->user()->user_type_id == 2)
-                                        <a href="{{ route('view_sync_do_pdf', @$row->delivery_order_id ?? 0) }}" target="_blank"
+                                        <a href="{{ route('view_sync_do_pdf', ['tenant' => tenant('id'), 'id' => @$row->delivery_order_id ?? 0]) }}" target="_blank"
                                             class="btn btn-outline-info btn-sm">View PDF</a>
                                     @endif
                                 </td>

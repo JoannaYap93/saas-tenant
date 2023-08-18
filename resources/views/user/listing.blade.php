@@ -27,7 +27,7 @@
 			<div class="card-body">
 				<div class="row mb-2">
 					<div class="col-sm-8">
-						<form method="POST" action="{{ route('user_listing') }}">
+						<form method="POST" action="{{ route('user_listing', ['tenant' => tenant('id')]) }}">
 							@csrf
 							<div class="row">
 								<div class="col-md-4">
@@ -78,7 +78,7 @@
 					@can('user_manage')
 					<div class="col-sm-4">
 						<div class="text-sm-right">
-							<a href="{{ route('user_add') }}">
+							<a href="{{ route('user_add', ['tenant' => tenant('id')]) }}">
 								<button type="button" class="btn btn-success  waves-effect waves-light mb-2 mr-2">
 									<i class="mdi mdi-plus mr-1"></i> Add New User
 								</button>
@@ -108,9 +108,9 @@
 								case 'active':
 									$status = "<span class='badge badge-primary font-size-11'>{$user->user_status}</span>";
 									if ($user->user_type_id == 1) {
-										$assign_permission = "<a href='" . route('assign_permission', $user->user_id) . "' class='btn btn-sm btn-outline-primary waves-effect waves-light'>Assign Permission</a>";
+										$assign_permission = "<a href='" . route('assign_permission', ['tenant' => tenant('id'), 'id' => $user->user_id]) . "' class='btn btn-sm btn-outline-primary waves-effect waves-light'>Assign Permission</a>";
 									}
-									$action = "<a href='" . route('user_edit', $user->user_id) . "' class='btn btn-sm btn-outline-primary waves-effect waves-light'>Edit</a>
+									$action = "<a href='" . route('user_edit', ['tenant' => tenant('id'), 'id' => $user->user_id]) . "' class='btn btn-sm btn-outline-primary waves-effect waves-light'>Edit</a>
 											{$assign_permission}
 											<span data-toggle='modal' data-target='#suspend' data-id='$user->user_id' class='suspend'><a href='javascript:void(0);' class='btn btn-sm btn-outline-danger waves-effect waves-light'>Suspend</a></span>";
 									break;
@@ -177,7 +177,7 @@
 <div class="modal fade" id="suspend" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
-			<form method="POST" action="{{ route('user_status') }}">
+			<form method="POST" action="{{ route('user_status', ['tenant' => tenant('id')]) }}">
 				@csrf
 				<!-- <div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Suspend User Record</h5>
@@ -202,7 +202,7 @@
 <div class="modal fade" id="activate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
-			<form method="POST" action="{{ route('user_status') }}">
+			<form method="POST" action="{{ route('user_status', ['tenant' => tenant('id')]) }}">
 				@csrf
 				<div class="modal-body">
 					<h4>Activate this user ?</h4>

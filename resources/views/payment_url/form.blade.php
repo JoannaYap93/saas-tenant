@@ -94,7 +94,7 @@
                             <div class="col-sm-6">
                                 <button type="submit"
                                     class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                                <a href="{{ route('payment_url_listing') }}" class="btn btn-secondary">Cancel</a>
+                                <a href="{{ route('payment_url_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -208,7 +208,7 @@
 
         function get_invoice_by_customer_id(search) {
             $.ajax({
-                url: "{{ route('ajax_get_invoice_by_payment_url') }}",
+                url: "{{ route('ajax_get_invoice_by_payment_url', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -222,7 +222,7 @@
                             '<td><input type="checkbox" id="invoice_ids[]" name="invoice_ids[]" value="' +
                             item.invoice_id;
                         details += '" /></td>';
-                        route = '{{route("invoice_listing_id")}}';
+                        route = '{{route("invoice_listing_id", ["tenant" => tenant("id")])}}';
                         route2 = route + '/' + item.invoice_id;
                         details +='<td><a href="'+route2+'" target="_blank">' + item.invoice_no + '</a></td>';
                         details += '<td>';

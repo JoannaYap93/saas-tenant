@@ -192,11 +192,11 @@
                                     @can('raw_material_company_usage_manage')
                                         <td align="center">
                                             {{-- <!-- @if(auth()->user()->user_type_id ==2).l;
-                                            <a href="{{ route('raw_material_company_edit', $rmcu->raw_material_company_id)}}"
+                                            <a href="{{ route('raw_material_company_edit', ['tenant' => tenant('id'), 'id' => $rmcu->raw_material_company_id])}}"
                                                 class="btn btn-sm btn-outline-warning waves-effect waves-light mr-1 mb-1">Edit</a>
                                             @endif --> --}}
                                             @if(@$rmcu->formula_usage_id != 0)
-                                            <a href="{{ route('formula_usage_listing_by_id', @$rmcu->formula_usage_id )}}"
+                                            <a href="{{ route('formula_usage_listing_by_id', ['tenant' => tenant('id'), 'id' => @$rmcu->formula_usage_id] )}}"
                                                 class="btn btn-sm btn-outline-info waves-effect waves-light mr-1 mb-1">Formula Usage</a>
                                             @endif
                                         </td>
@@ -221,7 +221,7 @@
 		aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
-			<form method="POST" action="{{ route('raw_material_company_usage_stock_in') }}">
+			<form method="POST" action="{{ route('raw_material_company_usage_stock_in', ['tenant' => tenant('id')]) }}">
 				@csrf
 				<div class="modal-body">
                     <h4 class="card-title mb-4">Raw Material Usage Details</h4>
@@ -542,7 +542,7 @@
 						$('#company_land_id').html('<option value="">Loading...</option>');
 						$('#user_id').html('<option value="">Loading...</option>');
 						$.ajax({
-								url: "{{ route('ajax_land_user') }}",
+								url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
 								method: "POST",
 								data: {
 										_token: "{{ csrf_token() }}",
@@ -578,7 +578,7 @@
 						let sland = "{{ @$search['company_land_id'] ?? null }}";
 						let suser = "{{ @$search['user_id'] ?? null }}";
 						$.ajax({
-								url: "{{ route('ajax_land_user') }}",
+								url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
 								method: "POST",
 								data: {
 										_token: "{{ csrf_token() }}",
@@ -628,7 +628,7 @@
         $('#claim_worker_id').html('<option value="">Loading...</option>');
 
         $.ajax({
-            url:"{{ route('ajax_get_farm_manager_by_company_id') }}",
+            url:"{{ route('ajax_get_farm_manager_by_company_id', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
@@ -654,7 +654,7 @@
         let supplier_sel = '<option value="">Please Select Supplier</option>';
 
         $.ajax({
-            url: "{{ route('ajax_get_supplier_by_company_id') }}",
+            url: "{{ route('ajax_get_supplier_by_company_id', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
@@ -677,7 +677,7 @@
         let company_id = isNaN($('#company_id').val()) ? '{{ auth()->user()->company_id }}' : $('#company_id').val();
 
         $.ajax({
-            url: "{{ route('ajax_get_raw_material_by_raw_material_category_id') }}",
+            url: "{{ route('ajax_get_raw_material_by_raw_material_category_id', ['tenant' => tenant('id')]) }}",
             method: "get",
             data: {
                 _token: "{{ csrf_token() }}",
@@ -707,7 +707,7 @@
         // $('#company_land_id').html('<option value="">Loading...</option>');
         // $('#user_id').html('<option value="">Loading...</option>');
         $.ajax({
-            url: "{{ route('ajax_get_existing_raw_material_company') }}",
+            url: "{{ route('ajax_get_existing_raw_material_company', ['tenant' => tenant('id')]) }}",
             method: "GET",
             data: {
                 _token: "{{ csrf_token() }}",
@@ -756,7 +756,7 @@
 
     function check_existing_supplier_delivery_order_items(supplier_id, company_id, supplier_delivery_order_no, raw_material_id){
         $.ajax({
-            url: "{{ route('ajax_check_existing_supplier_delivery_order_items') }}",
+            url: "{{ route('ajax_check_existing_supplier_delivery_order_items', ['tenant' => tenant('id')]) }}",
             method: "GET",
             data: {
                 _token: "{{ csrf_token() }}",

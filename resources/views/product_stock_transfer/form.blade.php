@@ -108,7 +108,7 @@
                                         </div>
                                         <div class="d-flex justify-content-end">
                                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                            <a href="{{ route('product_stock_transfer_listing') }}"
+                                            <a href="{{ route('product_stock_transfer_listing', ['tenant' => tenant('id')]) }}"
                                                 class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@
           var value = $(this).val();
         //   console.log(value);
           $.ajax({
-              url: "{{ route('ajax_get_current_warehouse_qty') }}",
+              url: "{{ route('ajax_get_current_warehouse_qty', ['tenant' => tenant('id')]) }}",
               method: 'post',
               data: {
                   _token: '{{ csrf_token() }}',
@@ -202,7 +202,7 @@
             var value = $(this).val();
             // console.log(value);
             $.ajax({
-                url: "{{ route('ajax_check_stock_warehouse') }}",
+                url: "{{ route('ajax_check_stock_warehouse', ['tenant' => tenant('id')]) }}",
                 method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}',

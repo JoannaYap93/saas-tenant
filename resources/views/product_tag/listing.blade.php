@@ -17,7 +17,7 @@
 		<div class="d-flex align-items-center">
                     <h4 class="mb-0 font-size-18 mr-2">Product Tag Listing</h4>
                     @can('product_tag_manage')
-                    <a href="{{ route('product_tag_add') }}"
+                    <a href="{{ route('product_tag_add', ['tenant' => tenant('id')]) }}"
                         class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                             class="fas fa-plus"></i> ADD NEW</a>
                     @endcan
@@ -81,7 +81,7 @@
                                     <td>{!! $span_status ?? '' !!}</td>
                                     @can('product_tag_manage')
                                         <td>
-                                            <a href="{{ route('product_tag_edit', $row->product_tag_id) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
+                                            <a href="{{ route('product_tag_edit', ['tenant' => tenant('id'), 'id' => $row->product_tag_id]) }}" class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                             <button class="btn btn-sm btn-outline-danger delete" data-toggle="modal" data-target="#delete" data-id="{{ $row->product_tag_id }}">Delete </button>
                                         </td>
                                     @endcan
@@ -105,7 +105,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('product_tag_delete') }}">
+                <form method="POST" action="{{ route('product_tag_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this product tag ?</h4>

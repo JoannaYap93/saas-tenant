@@ -155,7 +155,7 @@
             @endif
 
             $.ajax({
-              url: "{{ route('ajax_get_land_by_company_id') }}",
+              url: "{{ route('ajax_get_land_by_company_id', ['tenant' => tenant('id')]) }}",
               method: "POST",
               data: {
                   _token: "{{ csrf_token() }}",
@@ -184,7 +184,7 @@
 
         function disableProduct(selected_val){
           $.ajax({
-              url: "{{ route('ajax_get_products_multi_company') }}",
+              url: "{{ route('ajax_get_products_multi_company', ['tenant' => tenant('id')]) }}",
               method: "POST",
               data: {
                   _token: "{{ csrf_token() }}",
@@ -265,7 +265,7 @@
             $('#user_id').html('<option value="">Loading...</option>');
 
             var request = $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 async: true,
                 data: {
@@ -297,7 +297,7 @@
             $('#user_id').html('<option value="">Loading...</option>');
 
             var request = $.ajax({
-                url: "{{ route('ajax_get_users_by_land') }}",
+                url: "{{ route('ajax_get_users_by_land', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

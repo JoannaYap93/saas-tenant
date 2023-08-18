@@ -100,7 +100,7 @@
                                                                 @if($rows->delivery_order)
                                                                     <td>
                                                                         <a class="btn btn-outline-success btn-sm" target="_blank"
-                                                                            href="{{ route('get_invoice_from_do', [$rows->delivery_order->delivery_order_id]) }}">
+                                                                            href="{{ route('get_invoice_from_do', ['tenant' => tenant('id'), 'id' => $rows->delivery_order->delivery_order_id]) }}">
                                                                             {{$rows->delivery_order->delivery_order_no}} ({{$rows->result}})
                                                                         </a>
                                                                     </td>

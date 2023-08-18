@@ -501,7 +501,7 @@
                         <div class="row mt-4">
                             <div class="col-6">
                                 <button type="submit" id="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                                <a href="{{ route('payroll_listing') }}" class="btn btn-secondary" >Cancel</a>
+                                <a href="{{ route('payroll_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary" >Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -607,7 +607,7 @@
 
             if(sel_payroll_item_id != 0 && sel_payroll_item_id > 0){
                 $.ajax({
-                    url: "{{ route('ajax_get_payroll_item') }}",
+                    url: "{{ route('ajax_get_payroll_item', ['tenant' => tenant('id')]) }}",
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',

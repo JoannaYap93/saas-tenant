@@ -74,7 +74,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <form method="POST" action="{{ route('company_land_tree_report')}}">
+                            <form method="POST" action="{{ route('company_land_tree_report', ['tenant' => tenant('id')])}}">
                                 @csrf
                                 <div class="row">
                                     @if (auth()->user()->user_type_id == 1 || @auth()->user()->user_type_id == 2)
@@ -201,7 +201,7 @@
             $('#user_id').html('<option value="">Loading...</option>');
             $('#customer_id').html('<option value="">Loading...</option>');
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -226,7 +226,7 @@
             let land = '<option value="">Please Select Land</option>';
             let sland = "{{ @$search['company_land_id'] ?? null }}";
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -265,7 +265,7 @@
 
             $('#product_id').html('<option value="">Loading...</option>');
             $.ajax({
-                url: "{{ route('ajax_get_product_by_product_category_id_land_id') }}",
+                url: "{{ route('ajax_get_product_by_product_category_id_land_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

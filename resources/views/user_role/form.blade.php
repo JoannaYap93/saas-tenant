@@ -115,7 +115,7 @@
                         <div class="form-group row mb-4">
                             <div class="col-lg-10">
                                 <button type="submit" class="btn btn-primary">{{ $title }} Permission</button>
-                                <a href="{{ route('admin_role_listing') }}" class="btn btn-secondary"
+                                <a href="{{ route('admin_role_listing', ['tenant' => tenant('id')]) }}" class="btn btn-secondary"
                                     >Cancel</a>
                             </div>
 

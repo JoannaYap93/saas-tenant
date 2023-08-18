@@ -19,7 +19,7 @@
                     {{-- @can('product_tag_manage') --}}
                     @can('formula_manage')
                         {{-- @if(auth()->user()->user_type_id == 2) --}}
-                        <a href="{{ route('setting_formula_add') }}"
+                        <a href="{{ route('setting_formula_add', ['tenant' => tenant('id')]) }}"
                             class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i
                                 class="fas fa-plus"></i> ADD NEW</a>
                         {{-- @endif --}}
@@ -201,7 +201,7 @@
                                           <br>
                                           @can('formula_manage')
 
-                                              <a href="{{ route('setting_formula_edit', $rows->setting_formula_id) }}"class="btn btn-outline-warning btn-sm mt-2 mr-2">Edit</a>
+                                              <a href="{{ route('setting_formula_edit', ['tenant' => tenant('id'), 'id' => $rows->setting_formula_id]) }}"class="btn btn-outline-warning btn-sm mt-2 mr-2">Edit</a>
                                               <button class="btn btn-sm btn-outline-danger mt-2 delete" data-toggle="modal"
                                                   data-target="#delete" data-id="{{ $rows->setting_formula_id }}">Delete
                                               </button>
@@ -229,7 +229,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('setting_formula_delete') }}">
+                <form method="POST" action="{{ route('setting_formula_delete', ['tenant' => tenant('id')]) }}">
                     @csrf
                     <div class="modal-body">
                         <h4>Delete this Formula ?</h4>

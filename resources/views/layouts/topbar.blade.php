@@ -89,7 +89,7 @@
                     <a class="dropdown-item d-block" href="{{ route('user_change_password', ['tenant' => tenant('id')]) }}"><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Change Password</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> {{ __('Logout') }} </a>
-                    <form id="logout-form" action="{{ route('logout', ['tenant' => tenant('id')]) }}" method="POST" style="display: none;">
+                    <form id="logout-form" action="{{ route('logout.user', ['tenant' => tenant('id')]) }}" method="POST" style="display: none;">
                         @csrf
                     </form>
                 </div>

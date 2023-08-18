@@ -289,7 +289,7 @@
           //
           // function disableProduct(selected_val){
           //   $.ajax({
-          //       url: "{{ route('ajax_get_products_multi_company') }}",
+          //       url: "{{ route('ajax_get_products_multi_company', ['tenant' => tenant('id')]) }}",
           //       method: "POST",
           //       data: {
           //           _token: "{{ csrf_token() }}",

@@ -16,7 +16,7 @@
                 <div class="d-flex align-items-center">
                   <h4 class="mb-0 font-size-18 mr-2">Raw Material Category Listing</h4>
                   @can('raw_material_category_manage')
-                      <a href="{{ route('setting_raw_material_category_add') }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
+                      <a href="{{ route('setting_raw_material_category_add', ['tenant' => tenant('id')]) }}" class="btn btn-sm btn-outline-success waves-effect waves-light mr-2 mb-1"><i class="fas fa-plus"></i> ADD NEW</a>
                   @endcan
                 </div>
                 <div class="page-title-right">
@@ -91,7 +91,7 @@
                                         </td>
                                         @can('raw_material_category_manage')
                                             <td>
-                                            <a href="{{ route('setting_raw_material_category_edit', @$category->raw_material_category_id) }}"
+                                            <a href="{{ route('setting_raw_material_category_edit', ['tenant' => tenant('id'), 'id' => @$category->raw_material_category_id]) }}"
                                                 class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                             </td>
                                         @endcan

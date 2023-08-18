@@ -202,7 +202,7 @@
         $('#company_land_id').html('<option value="">Loading...</option>');
 
         $.ajax({
-            url: "{{ route('ajax_land_user') }}",
+            url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
@@ -226,7 +226,7 @@
         let land = '<option value="">Please Select Land</option>';
         let sland = "{{ @$search['company_land_id'] ?? null }}";
         $.ajax({
-            url: "{{ route('ajax_land_user') }}",
+            url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
@@ -290,7 +290,7 @@
         @endif
 
         $.ajax({
-            url: "{{ route('ajax_get_land_by_company_id') }}",
+            url: "{{ route('ajax_get_land_by_company_id', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
@@ -319,7 +319,7 @@
 
     function disableProduct(selected_val){
         $.ajax({
-            url: "{{ route('ajax_get_products_multi_company') }}",
+            url: "{{ route('ajax_get_products_multi_company', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",

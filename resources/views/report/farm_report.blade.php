@@ -157,7 +157,7 @@
             @endif
 
             $.ajax({
-              url: "{{ route('ajax_get_land_by_company_id') }}",
+              url: "{{ route('ajax_get_land_by_company_id', ['tenant' => tenant('id')]) }}",
               method: "POST",
               data: {
                   _token: "{{ csrf_token() }}",
@@ -186,7 +186,7 @@
 
         function disableProduct(selected_val){
           $.ajax({
-              url: "{{ route('ajax_get_products_multi_company') }}",
+              url: "{{ route('ajax_get_products_multi_company', ['tenant' => tenant('id')]) }}",
               method: "POST",
               data: {
                   _token: "{{ csrf_token() }}",
@@ -265,7 +265,7 @@
             $('#user_id').html('<option value="">Loading...</option>');
             $('#customer_id').html('<option value="">Loading...</option>');
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -312,7 +312,7 @@
             let suser = "{{ @$search['user_id'] ?? null }}";
             let scust = "{{ @$search['customer_id'] ?? null }}";
             $.ajax({
-                url: "{{ route('ajax_land_user') }}",
+                url: "{{ route('ajax_land_user', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -398,7 +398,7 @@
 
 
             var request = $.ajax({
-                url: "{{ route('ajax_get_land_product_size') }}",
+                url: "{{ route('ajax_get_land_product_size', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -427,7 +427,7 @@
 
             $('#product_id').html('<option value="">Loading...</option>');
             $.ajax({
-                url: "{{ route('ajax_get_product_by_product_category_id_land_id') }}",
+                url: "{{ route('ajax_get_product_by_product_category_id_land_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -457,7 +457,7 @@
             $('#product_size_id').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: "{{ route('ajax_get_setting_size_by_product_id') }}",
+                url: "{{ route('ajax_get_setting_size_by_product_id', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

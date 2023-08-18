@@ -85,7 +85,7 @@
                                   <div class="col-sm-6">
                                       <span id="error_user"></span>
                                       <button type="submit" id="submit" class="btn btn-primary waves-effect waves-light mr-1">Submit</button>
-                                      <a href="{{route('raw_material_company_listing')}}" class="btn btn-secondary" >Cancel</a>
+                                      <a href="{{route('raw_material_company_listing', ['tenant' => tenant('id')])}}" class="btn btn-secondary" >Cancel</a>
                                   </div>
                               </div>
                             </div>
@@ -129,7 +129,7 @@
         //   let company_land_id = $('#company_land_id').val();
           console.log(company_id);
           $.ajax({
-                url: "{{ route('ajax_check_existing_raw_material_company') }}",
+                url: "{{ route('ajax_check_existing_raw_material_company', ['tenant' => tenant('id')]) }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

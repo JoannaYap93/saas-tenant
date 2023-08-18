@@ -218,7 +218,7 @@
         let user = '<option value="">Please Select Farm Manager</option>';
         $('#user_id').html('<option value="">Loading...</option>');
         $.ajax({
-            url: "{{ route('ajax_get_farm_manager_sel_by_company') }}",
+            url: "{{ route('ajax_get_farm_manager_sel_by_company', ['tenant' => tenant('id')]) }}",
             method: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
