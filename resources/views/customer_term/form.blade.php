@@ -4,10 +4,10 @@
 
 @section('css')
         <!-- DataTables -->
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
 
         <!-- Summernote css -->
-        <link href="{{ URL::asset('assets/libs/summernote/summernote.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/libs/summernote/summernote.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')

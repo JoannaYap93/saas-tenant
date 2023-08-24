@@ -124,7 +124,7 @@
                                         <a href="{{ route('worker_import', ['tenant' => tenant('id')]) }}" class="btn btn-success waves-effect waves-light mr-2">
                                             <i class="fas fa-file-import mr-1"></i>Import
                                         </a>
-                                        <a href="{{ URL::asset('assets/sample/sample-import-worker.xls') }}" target="_blank" class="btn btn-info waves-effect waves-light mr-2">
+                                        <a href="{{ global_asset('assets/sample/sample-import-worker.xls') }}" target="_blank" class="btn btn-info waves-effect waves-light mr-2">
                                             <i class="fas fa-download mr-1"></i>Download Sample Import
                                         </a>
                                     @endcan

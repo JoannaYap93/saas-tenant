@@ -4,10 +4,10 @@
 
 @section('css') 
         <!-- DataTables -->        
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
 
         <!-- Summernote css -->
-        <link href="{{ URL::asset('assets/libs/summernote/summernote.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/libs/summernote/summernote.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -115,11 +115,11 @@
 @section('script')
 
         <!-- Plugins js -->
-        <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/libs/summernote/summernote.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/libs/jquery-repeater/jquery-repeater.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/summernote/summernote.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/jquery-repeater/jquery-repeater.min.js')}}"></script>
 
         <!-- Init js-->
-        <script src="{{ URL::asset('assets/js/pages/task-create.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/task-create.init.js')}}"></script> 
 
 @endsection

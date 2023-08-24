@@ -105,8 +105,8 @@
 @endsection
 @section('script')
         <!-- echarts -->
-        <script src="{{ URL::asset('assets/libs/echarts/echarts.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/echarts/echarts.min.js')}}"></script>
 
         <!-- echarts init -->
-        <script src="{{ URL::asset('assets/js/pages/echarts.init.js')}}"></script>
+        <script src="{{ global_asset('assets/js/pages/echarts.init.js')}}"></script>
 @endsection

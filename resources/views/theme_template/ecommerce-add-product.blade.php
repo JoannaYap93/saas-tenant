@@ -159,11 +159,11 @@
 @section('script')
 
         <!-- select 2 plugin -->
-        <script src="{{ URL::asset('assets/libs/select2/select2.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/select2/select2.min.js')}}"></script>
 
         <!-- flot plugins -->
-        <script src="{{ URL::asset('assets/libs/dropzone/dropzone.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/dropzone/dropzone.min.js')}}"></script>
 
-        <script src="{{ URL::asset('assets/js/pages/ecommerce-select2.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/ecommerce-select2.init.js')}}"></script> 
 
 @endsection

@@ -24,7 +24,7 @@ Register
                                         </div>
                                     </div>
                                     <div class="col-5 align-self-end">
-                                        <img src="{{asset('')}}assets/images/profile-img.png" alt="" class="img-fluid">
+                                        <img src="{{ global_asset('')}}assets/images/profile-img.png" alt="" class="img-fluid">
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +33,7 @@ Register
                                     <a href="{{url('index')}}">
                                         <div class="avatar-md profile-user-wid mb-4">
                                             <span class="avatar-title rounded-circle bg-light">
-                                                <img src="{{asset('')}}assets/images/logo.svg" alt="" class="rounded-circle" height="34">
+                                                <img src="{{ global_asset('')}}assets/images/logo.svg" alt="" class="rounded-circle" height="34">
                                             </span>
                                         </div>
                                     </a>

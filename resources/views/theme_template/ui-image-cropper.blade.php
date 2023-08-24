@@ -3,7 +3,7 @@
 @section('title') Grid @endsection
 
 @section('css')
-<link rel="stylesheet" href="{{ URL::asset('assets/libs/cropperjs/cropperjs.min.css')}}">
+<link rel="stylesheet" href="{{ global_asset('assets/libs/cropperjs/cropperjs.min.css')}}">
 @endsection
 
 @section('content')
@@ -535,8 +535,8 @@
 @endsection
 
 @section('script')
-        <script src="{{ URL::asset('assets/libs/cropperjs/cropperjs.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/cropperjs/cropperjs.min.js')}}"></script>
 
         <!-- cropperjs init -->
-        <script src="{{ URL::asset('assets/js/pages/cropperjs.init.js')}}"></script>
+        <script src="{{ global_asset('assets/js/pages/cropperjs.init.js')}}"></script>
 @endsection

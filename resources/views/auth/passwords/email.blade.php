@@ -14,7 +14,7 @@ Reset pw
         <div class="container">
             <div class="row justify-content-center pt-5">
                 <div class="col-md-8 col-lg-6 col-xl-5 ">
-                    <img src="{{asset('')}}assets/images/main_logo.png" alt="" class="img-fluid">
+                    <img src="{{global_asset('')}}assets/images/main_logo.png" alt="" class="img-fluid">
                 </div>
             </div>
             <div class="row justify-content-center pt-5">
@@ -52,7 +52,6 @@ Reset pw
                         </div>
 
                     </div>
-
                     <div class="mt-5 text-center">
                         <p>Remember It ? <a href="{{url('login')}}" class="font-weight-medium text-primary"> Sign In here</a> </p>
                     </div>

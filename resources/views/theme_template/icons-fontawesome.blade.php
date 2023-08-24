@@ -56,6 +56,6 @@
 @section('script')
 
         <!-- form mask -->
-        <script src="{{ URL::asset('assets/js/pages/fontawesome.init.js')}}"></script>
+        <script src="{{ global_asset('assets/js/pages/fontawesome.init.js')}}"></script>
 
 @endsection

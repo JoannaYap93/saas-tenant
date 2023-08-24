@@ -108,8 +108,8 @@
 @section('script')
         
         <!-- flot plugins -->
-        <script src="{{ URL::asset('assets/libs/jquery-sparkline/jquery-sparkline.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/jquery-sparkline/jquery-sparkline.min.js')}}"></script>
         
-        <script src="{{ URL::asset('assets/js/pages/sparklines.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/sparklines.init.js')}}"></script> 
 
 @endsection

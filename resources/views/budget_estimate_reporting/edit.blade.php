@@ -107,7 +107,7 @@
 
 @section('script')
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-    <script src="{{ URL::asset('assets/js/freeze-table/freeze-table.js') }}"></script>
+    <script src="{{ global_asset('assets/js/freeze-table/freeze-table.js') }}"></script>
     <script>
         $("#budgetEstimateTable").parent().freezeTable({
             'freezeColumn': true,

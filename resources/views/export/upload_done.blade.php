@@ -4,10 +4,10 @@
 
 @section('css')
     <link rel="stylesheet"
-        href="{{ URL::asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.css') }}">
+        href="{{ global_asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.css') }}">
 
     <!-- Plugins css -->
-    <link href="{{ URL::asset('assets/libs/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/libs/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
 
 @endsection
 
@@ -30,7 +30,7 @@
                             <div class="row justify-content-center mt-5 mb-2">
                                 <div class="col-sm-6 col-8">
                                     <div>
-                                        <img src="{{ asset('assets/images/verification-img.png') }}" alt="" class="img-fluid">
+                                        <img src="{{ global_asset('assets/images/verification-img.png') }}" alt="" class="img-fluid">
                                     </div>
                                 </div>
                             </div>
@@ -47,12 +47,12 @@
 @section('script')
 
     <!-- wizard js -->
-    <script src="{{ URL::asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.js') }}"></script>
 
     <!-- dropzone js -->
-    <script src="{{ URL::asset('assets/libs/dropzone/dropzone.min.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/dropzone/dropzone.min.js') }}"></script>
 
     <!-- init js -->
-    <script src="{{ URL::asset('assets/js/pages/crypto-kyc-app.init.js') }}"></script>
+    <script src="{{ global_asset('assets/js/pages/crypto-kyc-app.init.js') }}"></script>
 
 @endsection

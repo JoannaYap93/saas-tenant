@@ -3,7 +3,7 @@
 @section('title') Lightbox @endsection
 
 @section('css')     
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/toastr/toastr.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/toastr/toastr.min.css')}}">
 @endsection
 
 @section('content')
@@ -233,9 +233,9 @@
 @section('script')
 
         <!-- Magnific Popup -->
-        <script src="{{ URL::asset('assets/libs/toastr/toastr.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/toastr/toastr.min.js')}}"></script>
 
         <!-- Lightbox init js -->
-        <script src="{{ URL::asset('assets/js/pages/toastr.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/toastr.init.js')}}"></script> 
 
 @endsection

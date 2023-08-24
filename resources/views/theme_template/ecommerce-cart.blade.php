@@ -298,8 +298,8 @@
 @section('script')
 
         <!-- Bootrstrap touchspin -->
-        <script src="{{ URL::asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')}}"></script>
 
-        <script src="{{ URL::asset('assets/js/pages/ecommerce-cart.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/ecommerce-cart.init.js')}}"></script> 
 
 @endsection

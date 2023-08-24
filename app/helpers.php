@@ -40,7 +40,7 @@ if (!function_exists('get_icon')) {
         if ($logo) {
             return $logo;
         } else {
-            return asset('images/huaxin_logo_transparent.png');
+            return global_asset('images/huaxin_logo_transparent.png');
         }
     }
 }

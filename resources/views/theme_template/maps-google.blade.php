@@ -83,9 +83,9 @@
         <script src="https://maps.google.com/maps/api/js?key=AIzaSyCtSAR45TFgZjOs4nBFFZnII-6mMHLfSYI"></script>
 
         <!-- Gmaps file -->
-        <script src="{{ URL::asset('assets/libs/gmaps/gmaps.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/gmaps/gmaps.min.js')}}"></script>
 
         <!-- Init js-->
-        <script src="{{ URL::asset('assets/js/pages/gmaps.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/gmaps.init.js')}}"></script> 
 
 @endsection

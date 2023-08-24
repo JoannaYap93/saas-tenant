@@ -3,9 +3,9 @@
 @section('title') Create New Project @endsection
 
 @section('css') 
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
         <!-- dropzone css -->
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/dropzone/dropzone.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/dropzone/dropzone.min.css')}}">
 @endsection
 
 @section('content')
@@ -99,9 +99,9 @@
 @section('script')
 
         <!-- bootstrap datepicker -->
-        <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
 
         <!-- dropzone plugin -->
-        <script src="{{ URL::asset('assets/libs/dropzone/dropzone.min.js')}}"></script> 
+        <script src="{{ global_asset('assets/libs/dropzone/dropzone.min.js')}}"></script> 
 
 @endsection

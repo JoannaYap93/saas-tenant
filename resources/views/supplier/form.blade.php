@@ -3,10 +3,10 @@
 @section('title') {{ $title }} Supplier @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/select2/select2.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/select2/select2.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}">
 @endsection
 
 @section('content')
@@ -323,7 +323,7 @@
 @endsection
 
 @section('script')
-    <script src="{{ URL::asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/select2/select2.min.js') }}"></script>
     <script>
         $('#company_check_all').on('click', function(event) {
             if(this.checked) {

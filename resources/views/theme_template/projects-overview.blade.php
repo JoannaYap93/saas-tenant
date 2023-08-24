@@ -324,8 +324,8 @@
 @section('script')
 
         <!-- apexcharts -->
-        <script src="{{ URL::asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
 
-        <script src="{{ URL::asset('assets/js/pages/project-overview.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/project-overview.init.js')}}"></script> 
 
 @endsection

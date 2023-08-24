@@ -3,7 +3,7 @@
 @section('title') Lightbox @endsection
 
 @section('css')     
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/magnific-popup/magnific-popup.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/magnific-popup/magnific-popup.min.css')}}">
 @endsection
 
 @section('content')
@@ -200,9 +200,9 @@
 @section('script')
 
         <!-- Magnific Popup -->
-        <script src="{{ URL::asset('assets/libs/magnific-popup/magnific-popup.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/magnific-popup/magnific-popup.min.js')}}"></script>
 
         <!-- Lightbox init js -->
-        <script src="{{ URL::asset('assets/js/pages/lightbox.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/lightbox.init.js')}}"></script> 
 
 @endsection

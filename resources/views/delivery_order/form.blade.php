@@ -5,8 +5,8 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/select2/select2.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/jquery-datetimepicker/jquery.datetimepicker.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/select2/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/jquery-datetimepicker/jquery.datetimepicker.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
     <style>
         .img-wrap {
@@ -713,9 +713,9 @@
 @endsection
 
 @section('script')
-    <script src="{{ URL::asset('assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/libs/jquery-datetimepicker/jquery.datetimepicker.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{ global_asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/jquery-datetimepicker/jquery.datetimepicker.min.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 

@@ -68,7 +68,7 @@
 {{-- End Order Log --}}
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/js/freeze-table/freeze-table.js') }}"></script>
+    <script src="{{ global_asset('assets/js/freeze-table/freeze-table.js') }}"></script>
     <script>
         $(document).ready(function(e) {
             $("#payroll_details_table").parent().freezeTable({

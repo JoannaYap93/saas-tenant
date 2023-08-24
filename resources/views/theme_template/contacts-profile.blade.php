@@ -308,8 +308,8 @@
 @section('script')
 
         <!-- flot plugins -->
-        <script src="{{ URL::asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
 
-        <script src="{{ URL::asset('assets/js/pages/profile.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/profile.init.js')}}"></script> 
 
 @endsection

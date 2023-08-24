@@ -385,9 +385,9 @@
 @section('script')
 
         <!-- Plugins js -->
-        <script src="{{ URL::asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
 
         <!-- Init js-->
-        <script src="{{ URL::asset('assets/js/pages/tasklist.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/tasklist.init.js')}}"></script> 
 
 @endsection

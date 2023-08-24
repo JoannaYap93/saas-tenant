@@ -6,7 +6,7 @@
 
 @section('css')
     <link rel="stylesheet" type="text/css"
-        href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+        href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
 @endsection
 
 @section('content')

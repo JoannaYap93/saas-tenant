@@ -86,6 +86,7 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{{ route('user_profile', ['tenant' => tenant('id')]) }}"><i class="bx bx-user font-size-16 align-middle mr-1"></i> Profile</a>
+                    <a class="dropdown-item" href="{{ route('tenant.profile', ['tenant' => tenant('id')]) }}"><i class="bx bx-credit-card font-size-16 align-middle mr-1"></i>Tenant Profile</a>
                     <a class="dropdown-item d-block" href="{{ route('user_change_password', ['tenant' => tenant('id')]) }}"><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Change Password</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> {{ __('Logout') }} </a>

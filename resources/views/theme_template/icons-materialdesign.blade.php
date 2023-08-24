@@ -135,6 +135,6 @@
 @section('script')
 
         <!-- form mask -->
-        <script src="{{ URL::asset('assets/js/pages/materialdesign.init.js')}}"></script>
+        <script src="{{ global_asset('assets/js/pages/materialdesign.init.js')}}"></script>
 
 @endsection

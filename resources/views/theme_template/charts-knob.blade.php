@@ -103,8 +103,8 @@
 @section('script')
         
         <!-- flot plugins -->
-        <script src="{{ URL::asset('assets/libs/jquery-knob/jquery-knob.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/jquery-knob/jquery-knob.min.js')}}"></script>
         
-        <script src="{{ URL::asset('assets/js/pages/jquery-knob.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/jquery-knob.init.js')}}"></script> 
 
 @endsection

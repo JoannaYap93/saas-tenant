@@ -125,7 +125,7 @@
                                                     <span data-toggle='modal' data-target='#fulfill'
                                                         data-id='{{ $product_category->product_category_id }}'
                                                         class='fulfill'>
-                                                        <a href="{{ route('product_category_edit', ['tenant' => tenant('id'), 'id' => $product_category->product_category_id]) }}"
+                                                        <a href="{{ route('product_category_edit', ['tenant' => tenant('id'), 'product_category_id' => $product_category->product_category_id]) }}"
                                                             class="btn btn-sm btn-outline-primary waves-effect waves-light mr-2">Edit</a>
                                                     </span>
                                                     <span data-toggle='modal' data-target='#delete'

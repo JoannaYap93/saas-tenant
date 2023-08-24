@@ -5,13 +5,13 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/select2/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/select2/select2.min.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+        href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="{{ URL::asset('assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}">
+        href="{{ global_asset('assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="{{ URL::asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}">
+        href="{{ global_asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}">
     <style>
         td:last-child {
             text-align: center
@@ -128,7 +128,7 @@
 
 @section('script')
     <!-- Plugins js -->
-    <script src="{{ URL::asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/select2/select2.min.js') }}"></script>
 
     <script>
         let c = '{{ @$post->company_land_category ? count(@$post->company_land_category) : 0 }}';

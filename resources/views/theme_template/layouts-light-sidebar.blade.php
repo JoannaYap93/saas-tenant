@@ -665,7 +665,7 @@ Light Sidebar
 
                 @section('script')
                         <!-- Plugin Js-->
-                        <script src="{{ URL::asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+                        <script src="{{ global_asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
 
-                        <script src="{{ URL::asset('assets/js/pages/dashboard.init.js')}}"></script>
+                        <script src="{{ global_asset('assets/js/pages/dashboard.init.js')}}"></script>
                 @endsection

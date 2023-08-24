@@ -4,7 +4,7 @@
 
 @section('css')
         <!-- DataTables -->
-        <link href="{{ URL::asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -364,11 +364,11 @@
 @section('script')
 
         <!-- apexcharts -->
-        <script src="{{ URL::asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
 
         <!-- Required datatable js -->
-        <script src="{{ URL::asset('assets/libs/datatables/datatables.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/datatables/datatables.min.js')}}"></script>
 
         <!-- crypto-wallet init -->
-        <script src="{{ URL::asset('assets/js/pages/crypto-wallet.init.js')}}"></script>
+        <script src="{{ global_asset('assets/js/pages/crypto-wallet.init.js')}}"></script>
 @endsection

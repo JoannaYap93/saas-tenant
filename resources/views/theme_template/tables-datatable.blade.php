@@ -4,7 +4,7 @@
 
 @section('css') 
         <!-- DataTables -->        
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/datatables/datatables.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/datatables/datatables.min.css')}}">
 @endsection
 
 @section('content')
@@ -1010,11 +1010,11 @@
 @section('script')
 
         <!-- Plugins js -->
-        <script src="{{ URL::asset('assets/libs/datatables/datatables.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/libs/jszip/jszip.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/libs/pdfmake/pdfmake.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/datatables/datatables.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/jszip/jszip.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/pdfmake/pdfmake.min.js')}}"></script>
 
         <!-- Init js-->
-        <script src="{{ URL::asset('assets/js/pages/datatables.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/datatables.init.js')}}"></script> 
 
 @endsection

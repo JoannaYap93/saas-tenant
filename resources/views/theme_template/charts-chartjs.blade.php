@@ -192,7 +192,7 @@
 
 @section('script')
         <!-- Chart JS -->
-        <script src="{{ URL::asset('assets/libs/chart-js/chart-js.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/js/pages/chartjs.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/libs/chart-js/chart-js.min.js')}}"></script>
+        <script src="{{ global_asset('assets/js/pages/chartjs.init.js')}}"></script> 
 
 @endsection

@@ -40,9 +40,9 @@ Coming Soon
 @section('script')
 
         <!-- Plugins js -->
-        <script src="{{ URL::asset('assets/libs/jquery-countdown/jquery-countdown.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/jquery-countdown/jquery-countdown.min.js')}}"></script>
 
         <!-- Countdown js-->
-        <script src="{{ URL::asset('assets/js/pages/coming-soon.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/coming-soon.init.js')}}"></script> 
 
 @endsection

@@ -5,9 +5,9 @@
 
 @section('css')
     <link rel="stylesheet" type="text/css"
-        href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+        href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
 
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/select2/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/select2/select2.min.css') }}">
 
     <style>
         .bg-grey {
@@ -282,10 +282,10 @@
     </div>
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/freeze-table/freeze-table.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ global_asset('assets/js/freeze-table/freeze-table.js') }}"></script>
 
-    <script src="{{ URL::asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/select2/select2.min.js') }}"></script>
 
     <script>
         let zid = '{{ @$search['company_land_zone_id'] }}' ?? null;

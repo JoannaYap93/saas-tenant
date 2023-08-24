@@ -6,7 +6,7 @@
 
 @section('css')
     <link rel="stylesheet" type="text/css"
-        href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+        href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
     <style>
         .log {
             cursor: pointer;
@@ -478,7 +478,7 @@
     {{-- End Order Log --}}
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.5.0/js/md5.min.js"></script>
     <script>
         $('.cancel').on('click',function(){

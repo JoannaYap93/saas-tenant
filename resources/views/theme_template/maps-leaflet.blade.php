@@ -4,7 +4,7 @@
 
 @section('css') 
 <!-- leaflet Css -->
-<link href="{{ URL::asset('assets/libs/leaflet/leaflet.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ global_asset('assets/libs/leaflet/leaflet.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -95,13 +95,13 @@
 @section('script')
 
             <!-- leaflet map.init -->
-            <script src="{{ URL::asset('assets/js/pages/leaflet-us-states.js')}}"></script>
+            <script src="{{ global_asset('assets/js/pages/leaflet-us-states.js')}}"></script>
 
             <!-- leaflet plugin -->
-            <script src="{{ URL::asset('assets/libs/leaflet/leaflet.min.js')}}"></script>
+            <script src="{{ global_asset('assets/libs/leaflet/leaflet.min.js')}}"></script>
 
 @endsection
 
 @section('script-bottom')
-            <script src="{{ URL::asset('assets/js/pages/leaflet-map.init.js')}}"></script>
+            <script src="{{ global_asset('assets/js/pages/leaflet-map.init.js')}}"></script>
 @endsection

@@ -144,8 +144,8 @@
 @endsection
 
 @section('script')
-    <script src="{{ URL::asset('assets/libs/jquery-repeater/jquery-repeater.min.js')}}"></script>
-    <script src="{{ URL::asset('assets/js/pages/form-repeater.int.js')}}"></script>
+    <script src="{{ global_asset('assets/libs/jquery-repeater/jquery-repeater.min.js')}}"></script>
+    <script src="{{ global_asset('assets/js/pages/form-repeater.int.js')}}"></script>
     <script>
         $('body').on('change','select[id="raw_material_id"]',function(){
             let rm_id = $(this).val();

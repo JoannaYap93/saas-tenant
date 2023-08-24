@@ -3,7 +3,7 @@
 @section('title') Range Slider @endsection
 
 @section('css')     
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/ion-rangeslider/ion-rangeslider.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/ion-rangeslider/ion-rangeslider.min.css')}}">
 @endsection
 
 @section('content')
@@ -140,9 +140,9 @@
 @section('script')
 
         <!-- Ion Range Slider -->
-        <script src="{{ URL::asset('assets/libs/ion-rangeslider/ion-rangeslider.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/ion-rangeslider/ion-rangeslider.min.js')}}"></script>
 
         <!-- Range slider init js -->
-        <script src="{{ URL::asset('assets/js/pages/range-sliders.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/range-sliders.init.js')}}"></script> 
 
 @endsection

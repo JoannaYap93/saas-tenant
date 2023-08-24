@@ -4,13 +4,13 @@
 
 @section('css')
         <!-- select2 css -->
-        <link href="{{ URL::asset('assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
 
         <!-- bootstrap-datepicker css -->
-        <link href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet">
+        <link href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet">
 
         <!-- DataTables -->
-        <link href="{{ URL::asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -421,14 +421,14 @@
 
 @section('script')
         <!-- select2 -->
-        <script src="{{ URL::asset('assets/libs/select2/select2.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/select2/select2.min.js')}}"></script>
         <!-- bootstrap-datepicker js -->
-        <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
 
         <!-- Required datatable js -->
-        <script src="{{ URL::asset('assets/libs/datatables/datatables.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/datatables/datatables.min.js')}}"></script>
 
         <!-- init js -->
-        <script src="{{ URL::asset('assets/js/pages/crypto-orders.init.js')}}"></script>
+        <script src="{{ global_asset('assets/js/pages/crypto-orders.init.js')}}"></script>
 
 @endsection

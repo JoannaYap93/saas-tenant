@@ -439,9 +439,9 @@
 @section('script')
 
         <!-- form mask -->
-        <script src="{{ URL::asset('assets/libs/jquery-steps/jquery-steps.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/jquery-steps/jquery-steps.min.js')}}"></script>
 
         <!-- form mask init -->
-        <script src="{{ URL::asset('assets/js/pages/form-wizard.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/form-wizard.init.js')}}"></script> 
 
 @endsection

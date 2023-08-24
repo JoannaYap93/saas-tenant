@@ -102,7 +102,7 @@
                             <div class="col-lg-6 col-sm-12">
                                 <span id="download_invoice" class="download_invoice position-absolute text-center"
                                     style="left: 50%">
-                                    <img src="{{ asset('images/invoice.svg') }}" alt="" width="50px">
+                                    <img src="{{ global_asset('images/invoice.svg') }}" alt="" width="50px">
                                     <p class="text-center">Click here for download</p>
                                 </span>
                             </div>

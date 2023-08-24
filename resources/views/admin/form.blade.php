@@ -3,10 +3,10 @@
 @section('title') {{ $title }} Admin @endsection
 
 @section('css')
-<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/select2/select2.min.css')}}">
-<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
-<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}">
-<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/select2/select2.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}">
 
 
 @section('content')
@@ -334,22 +334,22 @@
 @endsection
 
 @section('script')
-<script src="{{ URL::asset('assets/libs/parsleyjs/parsleyjs.min.js')}}"></script>
+<script src="{{ global_asset('assets/libs/parsleyjs/parsleyjs.min.js')}}"></script>
 <!-- Plugins js -->
-<script src="{{ URL::asset('assets/js/pages/form-validation.init.js')}}"></script>
+<script src="{{ global_asset('assets/js/pages/form-validation.init.js')}}"></script>
 
-<script src="{{ URL::asset('assets/libs/select2/select2.min.js')}}"></script>
-<script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
-<script src="{{ URL::asset('assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js')}}"></script>
-<script src="{{ URL::asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')}}"></script>
-<script src="{{ URL::asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
-{{-- <script src="{{ URL::asset('assets/js/pages/form-advanced.init.js')}}"></script> --}}
+<script src="{{ global_asset('assets/libs/select2/select2.min.js')}}"></script>
+<script src="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{ global_asset('assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js')}}"></script>
+<script src="{{ global_asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')}}"></script>
+<script src="{{ global_asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
+{{-- <script src="{{ global_asset('assets/js/pages/form-advanced.init.js')}}"></script> --}}
 
 <!-- form mask -->
-<script src="{{ URL::asset('assets/libs/inputmask/inputmask.min.js')}}"></script>
+<script src="{{ global_asset('assets/libs/inputmask/inputmask.min.js')}}"></script>
 
 <!-- form mask init -->
-<script src="{{ URL::asset('assets/js/pages/form-mask.init.js')}}"></script>
+<script src="{{ global_asset('assets/js/pages/form-mask.init.js')}}"></script>
 
 <script>
 $(document).ready(function(e) {

@@ -6,7 +6,7 @@
 
 @section('css')
     <link rel="stylesheet" type="text/css"
-        href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+        href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
     <style>
         .log {
             cursor: pointer;
@@ -245,7 +245,7 @@
                                             <a href="{{ route('invoice_import', ['tenant' => tenant('id')]) }}" class="btn btn-success waves-effect waves-light mr-2">
                                                 <i class="fas fa-file-import mr-1"></i>Import
                                             </a>
-                                            <a href="{{ URL::asset('assets/sample/sample-import-invoice.xlsx') }}" target="_blank" class="btn btn-info waves-effect waves-light mr-2">
+                                            <a href="{{ global_asset('assets/sample/sample-import-invoice.xlsx') }}" target="_blank" class="btn btn-info waves-effect waves-light mr-2">
                                                 <i class="fas fa-download mr-1"></i>Download Sample Import
                                             </a>
                                             <a href="{{ route('invoice_export_product_list', ['tenant' => tenant('id')]) }}" class="btn btn-info waves-effect waves-light mr-2">
@@ -744,7 +744,7 @@
     {{-- End Order Log --}}
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.5.0/js/md5.min.js"></script>
     <script>
         $(document).ready(function() {

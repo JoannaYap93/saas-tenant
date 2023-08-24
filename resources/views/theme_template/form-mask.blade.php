@@ -4,7 +4,7 @@
 
 @section('css') 
         <!-- Summernote css -->
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/summernote/summernote.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/summernote/summernote.min.css')}}">
 @endsection
 
 @section('content')
@@ -96,9 +96,9 @@
 @section('script')
 
         <!-- form mask -->
-        <script src="{{ URL::asset('assets/libs/inputmask/inputmask.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/inputmask/inputmask.min.js')}}"></script>
 
         <!-- form mask init -->
-        <script src="{{ URL::asset('assets/js/pages/form-mask.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/form-mask.init.js')}}"></script> 
 
 @endsection

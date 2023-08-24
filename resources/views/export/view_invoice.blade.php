@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Invoice #{{ $invoice->invoice_no }}</title>
-    <link rel="shortcut icon" href="{{ URL::asset('images/huaxin_logo_transparent.png') }}">
+    <link rel="shortcut icon" href="{{ global_asset('images/huaxin_logo_transparent.png') }}">
     <style>
         @font-face {
             font-family: 'Firefly Sung' !important;

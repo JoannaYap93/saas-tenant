@@ -3,7 +3,7 @@
 @section('title') Customer Listing @endsection
 
 @section('css')
-	<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/select2/select2.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/select2/select2.min.css')}}">
 @endsection
 
 @section('content')
@@ -361,7 +361,7 @@
 @endsection
 
 @section('script')
-<script src="{{ URL::asset('assets/libs/select2/select2.min.js')}}"></script>
+<script src="{{ global_asset('assets/libs/select2/select2.min.js')}}"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 <script>

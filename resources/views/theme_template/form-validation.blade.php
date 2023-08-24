@@ -338,9 +338,9 @@
 
 @section('script')
 
-        <script src="{{ URL::asset('assets/libs/parsleyjs/parsleyjs.min.js')}}"></script> 
+        <script src="{{ global_asset('assets/libs/parsleyjs/parsleyjs.min.js')}}"></script> 
 
         <!-- Plugins js -->
-        <script src="{{ URL::asset('assets/js/pages/form-validation.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/form-validation.init.js')}}"></script> 
 
 @endsection

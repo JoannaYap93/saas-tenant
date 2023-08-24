@@ -3,7 +3,7 @@
 @section('title') Form Xeditable @endsection
 
 @section('css') 
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-editable/bootstrap-editable.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/bootstrap-editable/bootstrap-editable.min.css')}}">
 @endsection
 
 @section('content')
@@ -98,10 +98,10 @@
 @section('script')
 
         <!-- Plugins js -->
-        <script src="{{ URL::asset('assets/libs/moment/moment.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/libs/bootstrap-editable/bootstrap-editable.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/moment/moment.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/bootstrap-editable/bootstrap-editable.min.js')}}"></script>
 
         <!-- Init js-->
-        <script src="{{ URL::asset('assets/js/pages/form-xeditable.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/form-xeditable.init.js')}}"></script> 
 
 @endsection

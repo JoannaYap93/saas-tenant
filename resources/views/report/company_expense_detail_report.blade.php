@@ -58,7 +58,7 @@
     </div>
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/js/freeze-table/freeze-table.js') }}"></script>
+    <script src="{{ global_asset('assets/js/freeze-table/freeze-table.js') }}"></script>
     <script>
         $(document).ready(function(e) {
             $("#company-expense-table").parent().freezeTable({

@@ -2,15 +2,15 @@
 
 @section('title') User Application Listing @endsection
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/select2/select2.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/select2/select2.min.css')}}">
     <link rel="stylesheet" type="text/css"
-          href="{{ URL::asset('assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}">
+          href="{{ global_asset('assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css')}}">
     <link rel="stylesheet" type="text/css"
-          href="{{ URL::asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}">
+          href="{{ global_asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}">
     <link rel="stylesheet" type="text/css"
-          href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
-    {{-- <link href="{{ URL::asset('assets/fancybox-2.1.7/source/jquery.fancybox.css')}}" rel="stylesheet" /> --}}
-    <link href="{{URL::asset('assets/lightbox2/src/css/lightbox.css')}}" rel="stylesheet"/>
+          href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
+    {{-- <link href="{{ global_asset('assets/fancybox-2.1.7/source/jquery.fancybox.css')}}" rel="stylesheet" /> --}}
+    <link href="{{global_asset('assets/lightbox2/src/css/lightbox.css')}}" rel="stylesheet"/>
 
 @endsection
 

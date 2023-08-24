@@ -62,9 +62,9 @@
 @section('script')
 
         <!-- Session timeout js  -->
-        <script src="{{ URL::asset('assets/libs/curiosityx/curiosityx.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/curiosityx/curiosityx.min.js')}}"></script>
 
         <!-- Session timeout js  -->
-        <script src="{{ URL::asset('assets/js/pages/session-timeout.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/session-timeout.init.js')}}"></script> 
 
 @endsection

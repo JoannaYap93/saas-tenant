@@ -9,10 +9,10 @@
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesbrand" name="author" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico')}}">
+        <link rel="shortcut icon" href="{{ global_asset('assets/images/favicon.ico')}}">
 
         <!-- owl.carousel css -->
-        <link rel="stylesheet" href="{{ URL::asset('assets/libs/owl.carousel/owl.carousel.min.css')}}">
+        <link rel="stylesheet" href="{{ global_asset('assets/libs/owl.carousel/owl.carousel.min.css')}}">
 
         @include('layouts.head')
 
@@ -1106,24 +1106,24 @@
         <!-- Footer end -->
 
         <!-- JAVASCRIPT -->
-        <script src="{{ URL::asset('assets/libs/jquery/jquery.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/libs/bootstrap/bootstrap.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/libs/metismenu/metismenu.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/libs/simplebar/simplebar.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/libs/node-waves/node-waves.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/jquery/jquery.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/bootstrap/bootstrap.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/metismenu/metismenu.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/simplebar/simplebar.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/node-waves/node-waves.min.js')}}"></script>
 
-        <script src="{{ URL::asset('assets/libs/jquery.easing/jquery.easing.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/jquery.easing/jquery.easing.min.js')}}"></script>
 
         <!-- Plugins js-->
-        <script src="{{ URL::asset('assets/libs/jquery-countdown/jquery-countdown.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/jquery-countdown/jquery-countdown.min.js')}}"></script>
 
         <!-- owl.carousel js -->
-        <script src="{{ URL::asset('assets/libs/owl.carousel/owl.carousel.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/owl.carousel/owl.carousel.min.js')}}"></script>
 
         <!-- ICO landing init -->
-        <script src="{{ URL::asset('assets/js/pages/ico-landing.init.js')}}"></script>
+        <script src="{{ global_asset('assets/js/pages/ico-landing.init.js')}}"></script>
 
-        <script src="{{ URL::asset('assets/js/app.min.js')}}"></script>
+        <script src="{{ global_asset('assets/js/app.min.js')}}"></script>
 
     </body>
 </html>

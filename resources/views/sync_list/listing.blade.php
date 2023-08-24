@@ -393,7 +393,7 @@
 
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script>
         $('.revert_sync').on('click', function() {
 			var id = $(this).attr('data-id');

@@ -309,8 +309,8 @@
 
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script src="{{ URL::asset('assets/js/pages/form-editor.init.js') }}"></script>
-    <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{ global_asset('assets/js/pages/form-editor.init.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
     <script>
         $('.import_submit').hide();
         $('#import_desc_2').hide();

@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Model\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Model\CentralUser;
 use Illuminate\Http\Request;
-use Spatie\Activitylog\Models\Activity;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use App\Providers\RouteServiceProvider;
+use Spatie\Activitylog\Models\Activity;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -121,5 +123,37 @@ class LoginController extends Controller
             $this->credentials($request),
             $remember_me
         );
+    }
+    
+    public function resetPassword(Request $request) 
+    {
+        return view('auth.passwords.email');
+    }
+
+    public function landlordByPassLogin(Request $request, $encryption_landlord_id)
+    {
+
+        $landlord_id = Crypt::decryptString($encryption_landlord_id);
+        $valid = tenancy()->central(function ($tenant) use ($landlord_id) {
+            $user = CentralUser::find($landlord_id);
+
+            if ($user) {
+                if ($user->user_status == 'active') {
+                    return true;
+                }
+
+                return false;
+            } else {
+                return false;
+            }
+        });
+
+        if ($valid) {
+            $user = User::find(1);
+            Auth::login($user);
+            return redirect()->route('main.index', ['tenant' => tenant('id')]);
+        }
+
+        return view('pages-404');
     }
 }

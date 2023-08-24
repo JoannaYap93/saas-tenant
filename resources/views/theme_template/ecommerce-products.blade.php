@@ -3,7 +3,7 @@
 @section('title') Product @endsection
 
 @section('css') 
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/ion-rangeslider/ion-rangeslider.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/ion-rangeslider/ion-rangeslider.min.css')}}">
 @endsection
 
 @section('content')
@@ -322,8 +322,8 @@
 @section('script')
 
         <!-- flot plugins -->
-        <script src="{{ URL::asset('assets/libs/ion-rangeslider/ion-rangeslider.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/ion-rangeslider/ion-rangeslider.min.js')}}"></script>
 
-        <script src="{{ URL::asset('assets/js/pages/product-filter-range.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/product-filter-range.init.js')}}"></script> 
 
 @endsection

@@ -142,7 +142,7 @@ class ProductController extends Controller
 
                     Session::flash('success_msg', 'Product Added Successfully!');
 
-                    return redirect()->route('product_listing', ['tenant' => tenant('id')], ['tenant' => tenant('id')])->with('message', 'Product ' . $product->product_name . ' created');
+                    return redirect()->route('product_listing', ['tenant' => tenant('id')])->with('message', 'Product ' . $product->product_name . ' created');
                 }
                 $product = (object) $request->all();
             }

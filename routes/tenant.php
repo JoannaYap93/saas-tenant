@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Middleware\SubscriptionPlan;
+use App\Http\Controllers\TenantController;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\CollectController;
 use App\Http\Controllers\CompanyController;
@@ -116,9 +117,11 @@ Route::group([
         return redirect()->route('main.index', ['tenant' => tenant('id')]);
     });
     
+    Route::get('sales-person-login/{encryption_landlord_id}', [LoginController::class, 'landlordByPassLogin'])->name('landlord.bypass.login'); 
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout.user');
     Route::post('/login-user', [LoginController::class, 'login'])->name('login.user');
+    Route::get('reset/password', [LoginController::class, 'resetPassword'])->name('password.reset');
 
     // Route::get('{any}', [HomeController::class, 'index']);
 
@@ -1009,5 +1012,6 @@ Route::group([
         Route::match(['get', 'post'], 'reporting/budget_estimate_report/delete', [BudgetEstimateController::class, 'delete'])->name('budget_estimate_report_delete');
     });
     
-
+    Route::get('tenant-profile', [TenantController::class, 'profile'])->name('tenant.profile');
+    Route::post('save-tenant-profile', [TenantController::class, 'saveProfile'])->name('save.tenant.profile');
 });

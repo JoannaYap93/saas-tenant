@@ -4,7 +4,7 @@
 
 @section('css') 
         <!-- DataTables -->        
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/rwd-table/rwd-table.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/rwd-table/rwd-table.min.css')}}">
 @endsection
 
 @section('content')
@@ -457,9 +457,9 @@
 @section('script')
 
         <!-- Plugins js -->
-        <script src="{{ URL::asset('assets/libs/rwd-table/rwd-table.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/rwd-table/rwd-table.min.js')}}"></script>
 
         <!-- Init js-->
-        <script src="{{ URL::asset('assets/js/pages/table-responsive.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/table-responsive.init.js')}}"></script> 
 
 @endsection

@@ -785,8 +785,8 @@
 
 @section('script')
         <!-- apexcharts -->
-        <script src="{{ URL::asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
 
         <!-- crypto dash init js -->
-        <script src="{{ URL::asset('assets/js/pages/saas-dashboard.init.js')}}"></script>
+        <script src="{{ global_asset('assets/js/pages/saas-dashboard.init.js')}}"></script>
 @endsection

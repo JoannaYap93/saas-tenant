@@ -3,10 +3,10 @@
 @section('title') KYC Application @endsection
 
 @section('css')
-        <link rel="stylesheet" href="{{ URL::asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.css')}}">
+        <link rel="stylesheet" href="{{ global_asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.css')}}">
 
         <!-- Plugins css -->
-        <link href="{{ URL::asset('assets/libs/dropzone/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/libs/dropzone/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
 
 @endsection
 
@@ -199,12 +199,12 @@
 @section('script')
 
         <!-- wizard js -->
-        <script src="{{ URL::asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.js')}}"></script>
 
         <!-- dropzone js -->
-        <script src="{{ URL::asset('assets/libs/dropzone/dropzone.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/dropzone/dropzone.min.js')}}"></script>
 
         <!-- init js -->
-        <script src="{{ URL::asset('assets/js/pages/crypto-kyc-app.init.js')}}"></script>
+        <script src="{{ global_asset('assets/js/pages/crypto-kyc-app.init.js')}}"></script>
 
 @endsection

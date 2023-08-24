@@ -3,10 +3,10 @@
 @section('title') {{$title}} Company Expense @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/summernote/summernote.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/summernote/summernote.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/select2/select2.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/select2/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
     <style>
         /* Style image holder */
         .img-wrap {
@@ -409,12 +409,12 @@
 
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script src="{{ URL::asset('assets/js/pages/form-editor.init.js') }}"></script>
-    <script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
-    {{-- <script src="{{ URL::asset('assets/libs/summernote/summernote.min.js') }}"></script> --}}
+    <script src="{{ global_asset('assets/js/pages/form-editor.init.js') }}"></script>
+    <script src="{{ global_asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+    {{-- <script src="{{ global_asset('assets/libs/summernote/summernote.min.js') }}"></script> --}}
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-    {{-- <script src="{{ URL::asset('assets/js/jquery-ui.js') }}"></script> --}}
-    <script src="{{ URL::asset('assets/libs/select2/select2.min.js') }}"></script>
+    {{-- <script src="{{ global_asset('assets/js/jquery-ui.js') }}"></script> --}}
+    <script src="{{ global_asset('assets/libs/select2/select2.min.js') }}"></script>
 
     <script>
         var row_table = 1;

@@ -4,7 +4,7 @@
 
 @section('css')
         <!-- Bootstrap Rating css -->
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/bootstrap-rating/bootstrap-rating.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/bootstrap-rating/bootstrap-rating.min.css')}}">
 @endsection
 
 @section('content')
@@ -148,9 +148,9 @@
 @section('script')
 
         <!-- Bootstrap rating js -->
-        <script src="{{ URL::asset('assets/libs/bootstrap-rating/bootstrap-rating.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/bootstrap-rating/bootstrap-rating.min.js')}}"></script>
 
         <!-- Range slider init js -->
-        <script src="{{ URL::asset('assets/js/pages/rating-init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/rating-init.js')}}"></script> 
 
 @endsection

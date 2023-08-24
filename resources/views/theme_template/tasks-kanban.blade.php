@@ -3,7 +3,7 @@
 @section('title') Kanban Board @endsection
 
 @section('css')     
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/dragula/dragula.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/dragula/dragula.min.css')}}">
 @endsection
 
 @section('content')
@@ -443,9 +443,9 @@
 @section('script')
 
         <!-- Plugins js -->
-        <script src="{{ URL::asset('assets/libs/dragula/dragula.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/dragula/dragula.min.js')}}"></script>
 
         <!-- Init js-->
-        <script src="{{ URL::asset('assets/js/pages/task-kanban.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/task-kanban.init.js')}}"></script> 
 
 @endsection

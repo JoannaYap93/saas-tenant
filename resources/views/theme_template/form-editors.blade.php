@@ -4,7 +4,7 @@
 
 @section('css') 
         <!-- Summernote css -->
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/libs/summernote/summernote.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ global_asset('assets/libs/summernote/summernote.min.css')}}">
 @endsection
 
 @section('content')
@@ -64,11 +64,11 @@
 @section('script')
 
         <!--tinymce js-->
-        <script src="{{ URL::asset('assets/libs/tinymce/tinymce.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/tinymce/tinymce.min.js')}}"></script>
 
         <!-- Summernote js -->
-        <script src="{{ URL::asset('assets/libs/summernote/summernote.min.js')}}"></script>
+        <script src="{{ global_asset('assets/libs/summernote/summernote.min.js')}}"></script>
 
-        <script src="{{ URL::asset('assets/js/pages/form-editor.init.js')}}"></script> 
+        <script src="{{ global_asset('assets/js/pages/form-editor.init.js')}}"></script> 
 
 @endsection
