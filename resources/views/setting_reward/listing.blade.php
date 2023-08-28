@@ -98,10 +98,10 @@
                                     @php
                                         $status = '';
                                         switch ($rows->setting_reward_status) {
-                                            case 'Open':
+                                            case 'active':
                                                 $status = "<span class='badge badge-primary'>{$rows->setting_reward_status}</span>";
                                                 break;
-                                            case 'Close':
+                                            case 'pending':
                                                 $status = "<span class='badge badge-danger'>{$rows->setting_reward_status}</span>";
                                                 break;
                                         }

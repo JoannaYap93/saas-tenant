@@ -106,6 +106,8 @@ Route::get('/', function () {
 });
 
 Route::match(['get', 'post'], 'database/compare', [DatabaseController::class, 'compare'])->name('compare_db');
+Route::match(['get', 'post'], 'database/import-demo-data', [DatabaseController::class, 'import_demo_data'])->name('import_demo_data_db');
+Route::match(['get', 'post'], 'database/clear-data', [DatabaseController::class, 'clear_data'])->name('clear_data_db');
 Route::match(['get', 'post'], 'company_expense/single_land_to_multi_land/{pw}', [DatabaseController::class, 'change_company_expense_land'])->name('change_company_expense_land');
 
 // Route::get('/', [UserController::class, 'dashboard'])->name('dashboard');

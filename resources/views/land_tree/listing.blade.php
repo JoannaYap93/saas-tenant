@@ -80,7 +80,7 @@
                                         <input type="text" class="form-control" name="tree_circumference_lower"
                                             placeholder="Inch" value="{{ @$search['tree_circumference_lower'] }}">
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="validationCustom03">Tree Circumference (upper)</label>
@@ -265,7 +265,7 @@
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('manage_tree', ['tenant' => tenant('id'), 'id' => $company_land_zone_id]) }}">
+            <form method="POST" action="{{ route('manage_tree', ['tenant' => tenant('id'), 'zone_id' => $company_land_zone_id]) }}">
                 @csrf
                 <div class="modal-body">
                     <h4 class="card-title mb-4">Manage Tree</h4>

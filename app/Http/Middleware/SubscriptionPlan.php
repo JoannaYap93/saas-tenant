@@ -45,7 +45,7 @@ class SubscriptionPlan
         });
 
         if (!$subscriptionCheck) {
-            return redirect()->route('main.index', ['tenant' => $tenant->id]);
+            return redirect()->route('main.index', ['tenant' => tenant("id")]);
         } else {
             return $next($request);
         }

@@ -136,7 +136,7 @@ class ProductCategoryController extends Controller
 
         $parent_id = ProductCategory::get_category_sel();
         return view('product_category/form', [
-            'submit' => route('product_category_edit', ['tenant' => tenant('id'), 'id' => $product_category_id]),
+            'submit' => route('product_category_edit', ['tenant' => tenant('id'), 'product_category_id' => $product_category_id]),
             'title' => 'Edit',
             'post' => $post,
             'status' => $status,

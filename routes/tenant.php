@@ -82,6 +82,9 @@ use App\Http\Controllers\SettingExpenseOverwriteController;
 use App\Http\Controllers\CompanyLandBudgetOverwriteController;
 use App\Http\Controllers\SettingRawMaterialCategoryController;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+
+use App\Model\CompanyExpense;
+use App\Model\CompanyExpenseLand;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -104,11 +107,11 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 Route::group([
     'prefix' => '/{tenant}',
     'middleware' => [
-        'web', 
+        'web',
         InitializeTenancyByPath::class,
     ],
 ], function () {
-    
+
     Route::get('login_by_pass_awas', function () {
         $user = User::find(1);
         // echo json_encode($user);
@@ -116,8 +119,8 @@ Route::group([
         Auth::login($user);
         return redirect()->route('main.index', ['tenant' => tenant('id')]);
     });
-    
-    Route::get('sales-person-login/{encryption_landlord_id}', [LoginController::class, 'landlordByPassLogin'])->name('landlord.bypass.login'); 
+
+    Route::get('sales-person-login/{encryption_landlord_id}', [LoginController::class, 'landlordByPassLogin'])->name('landlord.bypass.login');
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout.user');
     Route::post('/login-user', [LoginController::class, 'login'])->name('login.user');
@@ -132,10 +135,12 @@ Route::group([
         return redirect()->route('dashboard', ['tenant' => tenant('id')]);
       }
     })->name('main.index');
-    
+
     Route::match(['get', 'post'], 'database/compare', [DatabaseController::class, 'compare'])->name('compare_db');
+    Route::match(['get', 'post'], 'database/import-demo-data', [DatabaseController::class, 'import_demo_data'])->name('import_demo_data_db');
+    Route::match(['get', 'post'], 'database/clear-data', [DatabaseController::class, 'clear_data'])->name('clear_data_db');
     Route::match(['get', 'post'], 'company_expense/single_land_to_multi_land/{pw}', [DatabaseController::class, 'change_company_expense_land'])->name('change_company_expense_land');
-    
+
     // Route::get('/', [UserController::class, 'dashboard'])->name('dashboard');
     Route::match(['get', 'post'], 'dashboard/price-information/{search?}', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::match(['get', 'post'], 'dashboard/price-analysis', [DashboardController::class, 'dashboard_price_analysis'])->name('dashboard_price_analysis');
@@ -151,10 +156,10 @@ Route::group([
     Route::match(['get', 'post'], 'ajax_get_product_sel_by_company_land_id', [DashboardController::class, 'ajax_get_product_sel_by_company_land_id'])->name('ajax_get_product_sel_by_company_land_id');
     Route::match(['get', 'post'], '/price_information_add/{search_date?}/{company_farm_name?}/{product?}', [DashboardController::class, 'price_information_add'])->name('price_information_add');
     Route::match(['get', 'post'], '/min_max_detail/{search_date}/{product}/{company_farm_name}', [DashboardController::class, 'min_max_detail'])->name('min_max_detail');
-    
-    
+
+
     // Route::get('/index', [UserController::class, 'dashboard'])->name('dashboard');
-    
+
     /**** User ****/
     Route::match(['get', 'post'], '/ajax_get_farm_manager_sel', [UserController::class, 'ajax_get_farm_manager_sel'])->name('ajax_get_farm_manager_sel');
     Route::match(['get', 'post'], 'ajax_get_user_by_company_id', [UserController::class, 'ajax_get_user_by_company_id'])->name('ajax_get_user_by_company_id');
@@ -162,14 +167,14 @@ Route::group([
     Route::match(['get', 'post'], 'user/profile', [UserController::class, 'profile'])->name('user_profile');
     // Change password
     Route::match(['get', 'post'], 'user/change_password', [UserController::class, 'change_password'])->name('user_change_password');
-    
+
     Route::group(['middleware' => ['permission:user_listing']], function () {
         //User
         Route::match(['get', 'post'], 'user/listing', [UserController::class, 'listing'])->name('user_listing');
         // Change Password by Sup Admin
-    
+
     });
-    
+
     ///Company
     Route::group(['middleware' => ['permission:company_listing']], function () {
         Route::match(['get', 'post'], 'company/listing', [CompanyController::class, 'listing'])->name('company_listing');
@@ -192,7 +197,7 @@ Route::group([
         Route::match(['get', 'post'], 'company_pnl_item/add', [CompanyPnlItemController::class, 'add'])->name('company_pnl_item_add');
         Route::match(['get', 'post'], 'company_pnl_item/edit/{id}', [CompanyPnlItemController::class, 'edit'])->name('company_pnl_item_edit');
     });
-    
+
     Route::match(['get', 'post'], 'company/claim_pic/{id}', [CompanyController::class, 'edit_pic'])->name('claim_pic');
     Route::match(['get', 'post'], 'ajax_find_product_company_land_with_id', [ProductCompanyLandController::class, 'ajax_find_product_company_land_with_id'])->name('ajax_find_product_company_land_with_id');
     Route::match(['get', 'post'], 'ajax_land_user', [CompanyController::class, 'ajax_company_land_user'])->name('ajax_land_user');
@@ -207,14 +212,14 @@ Route::group([
     Route::match(['get', 'post'], '/ajax_get_tree_action', [CompanyLandTreeActionController::class, 'ajax_get_tree_action'])->name('ajax_get_tree_action');
     Route::match(['get', 'post'], '/ajax_get_tree_action_by_id', [CompanyLandTreeLogController::class, 'ajax_get_tree_action_by_id'])->name('ajax_get_tree_action_by_id');
     Route::match(['get', 'post'], '/manage_tree/{zone_id?}', [CompanyLandTreeController::class, 'manage_tree'])->name('manage_tree');
-    
+
     Route::group(['middleware' => ['permission:company_expense_listing']], function () {
         Route::match(['get', 'post'], '/company_expense', [CompanyExpenseController::class, 'listing'])->name('company_expense_listing');
     });
-    
+
     Route::match(['get', 'post'], '/ajax_get_image_by_ce_item_id', [CompanyExpenseController::class, 'ajax_get_image_by_ce_item_id'])->name('ajax_get_image_by_ce_item_id');
     Route::match(['get', 'post'], '/ajax_delete_image_by_media_item_id', [CompanyExpenseController::class, 'ajax_delete_image_by_media_item_id'])->name('ajax_delete_image_by_media_item_id');
-    
+
     Route::group(['middleware' => ['permission:company_expense_manage']], function () {
         Route::match(['get', 'post'], '/company_expense/add', [CompanyExpenseController::class, 'add'])->name('company_expense_add');
         Route::match(['get', 'post'], '/company_expense/add_labour', [CompanyExpenseController::class, 'add_labour'])->name('company_expense_add_labour');
@@ -223,11 +228,11 @@ Route::group([
         Route::match(['get', 'post'], '/company_expense/edit_labour/{id}', [CompanyExpenseController::class, 'edit_labour'])->name('company_expense_edit_labour');
     });
     Route::match(['get', 'post'], '/budget_overwrite/{company_id}/{company_land_id}', [CompanyLandBudgetOverwriteController::class, 'overwrite'])->name('budget_overwrite');
-    
+
     Route::group(['middleware' => ['permission:sync_company_expense_cost']], function () {
         Route::match(['get', 'post'], '/company_expense/sync_cost', [CompanyExpenseController::class, 'sync_cost'])->name('sync_cost');
     });
-    
+
     Route::group(['middleware' => ['permission:tree_log_listing']], function () {
         Route::match(['get', 'post'], 'tree_log/listing/{land_id?}/{id?}', [CompanyLandTreeLogController::class, 'listing'])->name('land_tree_log_listing');
     });
@@ -235,7 +240,7 @@ Route::group([
         Route::match(['get', 'post'], 'tree_log/edit/{id?}', [CompanyLandTreeLogController::class, 'edit'])->name('land_tree_log_edit');
     });
     Route::match(['get', 'post'], 'ajax_tree_log_by_zone', [CompanyLandTreeLogController::class, 'ajax_company_land_tree_log_by_zone'])->name('ajax_tree_log_by_zone');
-    
+
     //company land zone
     Route::group(['middleware' => ['permission:company_land_zone_listing']], function () {
         Route::match(['get', 'post'], 'zone/listing/{company_id?}/{company_land_id?}', [CompanyLandZoneController::class, 'listing'])->name('land_zone_listing');
@@ -244,12 +249,12 @@ Route::group([
     Route::group(['middleware' => ['permission:company_land_zone_manage']], function () {
         Route::match(['get', 'post'], 'zone/edit/{id?}', [CompanyLandZoneController::class, 'edit'])->name('zone_edit');
     });
-    
+
     // Route::group(['middleware' => ['permission:company_land_manage']], function () {
     //     Route::match(['get', 'post'], 'land-area/edit/{company_land_id}', [LandAreaController::class, 'edit'])->name('land_area_edit');
     //     Route::match(['get', 'post'], 'land-area/add', [LandAreaController::class, 'add'])->name('land_area_add');
     // });
-    
+
     ///Land Category
     Route::group(['middleware' => ['permission:company_land_category_listing']], function () {
         Route::match(['get', 'post'], 'farm/listing', [CompanyFarmController::class, 'listing'])->name('company_farm_listing');
@@ -260,13 +265,13 @@ Route::group([
         Route::post('farm/delete', [CompanyFarmController::class, 'delete'])->name('company_farm_delete');
     });
     Route::match(['get', 'post'], 'ajax_company_farm', [CompanyFarmController::class, 'ajax_get_farm'])->name('ajax_get_farm');
-    
+
     Route::group(['middleware' => ['permission:company_land_tree_listing']], function () {
         Route::match(['get', 'post'], 'land_tree/listing/{company_land_zone_id?}', [CompanyLandTreeController::class, 'listing'])->name('land_tree_listing');
         Route::match(['get', 'post'], 'land_tree/search_listing', [CompanyLandTreeController::class, 'search_listing'])->name('search_listing');
         Route::match(['get', 'post'], 'company_landtree_action/listing', [CompanyLandTreeActionController::class, 'listing'])->name('company_landtree_listing');
     });
-    
+
     Route::group(['middleware' => ['permission:company_land_tree_manage']], function () {
         Route::match(['get', 'post'], 'land_tree/edit/{company_land_tree_id?}', [CompanyLandTreeController::class, 'edit'])->name('land_tree_edit');
         Route::match(['get', 'post'], 'land_tree/add/{company_land_zone_id?}', [CompanyLandTreeController::class, 'add'])->name('land_tree_add');
@@ -285,16 +290,16 @@ Route::group([
     // Route::match(['get', 'post'], 'user/assign_permission/{id}', [UserController::class, 'assign_permission'])->name('assign_permission');
     // // });
     // Route::match(['get', 'post'], 'user/ajax_get_user_details', [UserController::class, 'ajax_get_user_details'])->name('ajax_get_user_details');
-    
+
     Route::match(['get', 'post'], 'ajax_search_user_by_name', [UserController::class, 'ajax_search_user_by_name'])->name('ajax_search_user_by_name');
-    
+
     // //UserType
     Route::match(['get', 'post'], 'user/user-type/listing', [UserTypeController::class, 'listing'])->name('user_type_listing');
-    
+
     // User Farm Manager
     Route::match(['get', 'post'], '/ajax_get_farm_manager_sel', [UserController::class, 'ajax_get_farm_manager_sel'])->name('ajax_get_farm_manager_sel');
     Route::match(['get', 'post'], '/ajax_get_farm_manager_sel_by_company', [UserController::class, 'ajax_get_farm_manager_sel_by_company'])->name('ajax_get_farm_manager_sel_by_company');
-    
+
     // // Route::group(['middleware' => ['permission:user_role_listing']], function () {
     // //UserRole
     Route::match(['get', 'post'], 'user_role/listing', [UserRoleController::class, 'listing'])->name('user_role_listing');
@@ -304,11 +309,11 @@ Route::group([
     Route::match(['get', 'post'], 'role/edit/{id}', [UserRoleController::class, 'edit'])->name('user_role_edit');
     Route::match(['get', 'post'], 'role/add', [UserRoleController::class, 'add'])->name('user_role_add');
     // });
-    
+
     // Route::group(['middleware' => ['permission:master_setting']], function () {
     // });
-    
-    
+
+
     /**** Setting Section ****/
     //Master Setting
     Route::group(['middleware' => ['permission:master_setting']], function () {
@@ -344,7 +349,7 @@ Route::group([
         Route::match(['get', 'post'], 'setting_raw_material_category/listing_category', [SettingRawMaterialCategoryController::class, 'listing_category'])->name('setting_raw_material_category_listing');
         Route::match(['get', 'post'], 'setting_raw_material_category/add_category', [SettingRawMaterialCategoryController::class, 'add_category'])->name('setting_raw_material_category_add');
         Route::match(['get', 'post'], 'setting_raw_material_category/edit_category/{id}', [SettingRawMaterialCategoryController::class, 'edit_category'])->name('setting_raw_material_category_edit');
-    
+
     //Setting Tree Age
     Route::group(['middleware' => ['permission:setting_tree_age']], function () {
         Route::match(['get', 'post'], 'setting_tree_age/add', [SettingTreeAgeController::class, 'add'])->name('setting_tree_age_add');
@@ -354,7 +359,7 @@ Route::group([
         Route::match(['get', 'post'], 'setting_tree_age/listing', [SettingTreeAgeController::class, 'listing'])->name('setting_tree_age_listing');
         Route::match(['get', 'post'], 'setting_tree_age/pointer', [SettingTreeAgeController::class, 'pointer'])->name('setting_tree_age_pointer');
     });
-    
+
     /**** Admin Section ****/
     Route::group(['middleware' => ['permission:admin_listing']], function () {
         // Admin Listing
@@ -375,7 +380,7 @@ Route::group([
         Route::match(['get', 'post'], 'admin/change_password_by_super_admin/{id}', [UserController::class, 'change_password_by_super_admin'])->name('user_change_password_by_super_admin');
         Route::match(['get', 'post'], 'ajax_get_worker_list_sel_by_company', [WorkerController::class, 'ajax_get_worker_list_sel_by_company'])->name('ajax_get_worker_list_sel_by_company');
         Route::match(['get', 'post'], 'ajax_get_worker_list_sel_by_company_without_user_id', [WorkerController::class, 'ajax_get_worker_list_sel_by_company_without_user_id'])->name('ajax_get_worker_list_sel_by_company_without_user_id');
-    
+
     });
     Route::group(['middleware' => ['permission:admin_role_listing']], function () {
         // Admin Role Listing
@@ -386,14 +391,14 @@ Route::group([
         Route::match(['get', 'post'], 'admin_role/add', [AdminRoleController::class, 'add'])->name('admin_role_add');
         Route::match(['get', 'post'], 'admin_role/edit/{id}', [AdminRoleController::class, 'edit'])->name('admin_role_edit');
     });
-    
+
     /**** Customer Section ****/
     Route::group(['middleware' => ['permission:customer_listing']], function () {
         //customer Listing
         Route::match(['get', 'post'], 'customer/listing', [CustomerController::class, 'listing'])->name('customer_listing');
         Route::match(['get', 'post'], 'customer/credit_history/{id}', [CustomerController::class, 'customer_credit_detail'])->name('customer_credit_detail');
     });
-    
+
     Route::group(['middleware' => ['permission:customer_manage']], function () {
         //customer manage
         Route::match(['get', 'post'], 'customer/add', [CustomerController::class, 'add'])->name('customer_add');
@@ -407,19 +412,19 @@ Route::group([
         Route::match(['get', 'post'], 'customer/inactivate', [CustomerController::class, 'inactivate'])->name('customer_inactivate');
         Route::match(['get', 'post'], 'customer/activate', [CustomerController::class, 'activate'])->name('customer_activate');
     });
-    
+
     Route::group(['middleware' => ['permission:customer_term_listing']], function () {
         //customer term listing
         Route::match(['get', 'post'], 'customer-term/listing', [CustomerTermController::class, 'listing'])->name('customer_term_listing');
     });
-    
+
     Route::group(['middleware' => ['permission:customer_term_manage']], function () {
         //customer term manage
         Route::match(['get', 'post'], 'customer-term/add', [CustomerTermController::class, 'add'])->name('customer_term_add');
         Route::match(['get', 'post'], 'customer-term/edit/{id}', [CustomerTermController::class, 'edit'])->name('customer_term_edit');
         Route::post('customer-term/delete', [CustomerTermController::class, 'delete'])->name('customer_term_delete');
     });
-    
+
     //  Customer Category
     Route::group(['middleware' => ['permission:customer_category_listing']], function () {
         Route::match(['get', 'post'], 'customer-category/listing', [CustomerCategoryController::class, 'listing'])->name('customer_category_listing');
@@ -429,10 +434,10 @@ Route::group([
         Route::match(['get', 'post'], 'customer-category/edit/{id}', [CustomerCategoryController::class, 'edit'])->name('customer_category_edit');
         Route::match(['get', 'post'], 'customer-category/delete', [CustomerCategoryController::class, 'delete'])->name('customer_category_delete');
     });
-    
+
     Route::match(['get', 'post'], '/ajax_get_image_by_do_item_id', [DeliveryOrderController::class, 'ajax_get_image_by_do_item_id'])->name('ajax_get_image_by_do_item_id');
     Route::match(['get', 'post'], '/ajax_delete_image_by_media_do_item_id', [DeliveryOrderController::class, 'ajax_delete_image_by_media_do_item_id'])->name('ajax_delete_image_by_media_do_item_id');
-    
+
     // ** Sync Manangement
     Route::group(['middleware' => ['permission:sync_listing']], function () {
         //  Sync List
@@ -442,14 +447,14 @@ Route::group([
         Route::match(['get', 'post'], 'sync-list/company_expense', [SyncListController::class, 'SyncCompanyExpense'])->name('sync_company_expense_listing');
         Route::match(['get', 'post'], 'sync-list/daily', [SyncListController::class, 'SyncDaily'])->name('daily_listing');
         Route::get('/get_items_from_do/{id}', [SyncListController::class, 'view_do_items'])->name('get_items_from_do');
-    
+
         Route::match(['get', 'post'], 'sync-list/listing', [SyncListController::class, 'listing'])->name('sync_listing');
         Route::get('/get_sync_do/{id}', [SyncListController::class, 'view_sync_do'])->name('get_sync_do');
         Route::get('/get_sync_cust/{id}', [SyncListController::class, 'view_sync_customer'])->name('get_sync_customer');
         Route::get('/get_sync_daily/{id}', [SyncListController::class, 'view_sync_daily'])->name('get_sync_daily');
         Route::get('/get_sync_formula_usage/{id}', [SyncListController::class, 'view_sync_formula_usage'])->name('get_sync_formula_usage');
         Route::get('/get_sync_company_expense/{id}', [SyncListController::class, 'view_sync_company_expense'])->name('get_sync_company_expense');
-    
+
         Route::match(['get', 'post'], 'sync-list/delivery-order-items', [SyncListController::class, 'SyncDeliveryOrderItems'])->name('syncDeliveryOrderItems_listing');
         Route::match(['get', 'post'], 'view-sync-do-pdf/{id}', [DeliveryOrderController::class, 'view_pdf'])->name('view_sync_do_pdf');
     });
@@ -458,9 +463,9 @@ Route::group([
         Route::match(['get', 'post'], 'sync-list/revert-sync', [SyncListController::class, 'revert_sync'])->name('revert_sync');
         Route::match(['get', 'post'], 'sync-list/resync', [SyncListController::class, 'resync'])->name('resync');
     });
-    
-    
-    
+
+
+
     // ** Product
     //  Product
     Route::group(['middleware' => ['permission:product_listing']], function () {
@@ -474,7 +479,7 @@ Route::group([
         Route::post('/ajax_get_product_details', [ProductController::class, 'ajax_get_product_detail'])->name('ajax_get_product_detail');
         Route::post('/ajax_check_product_sku', [ProductController::class, 'ajax_check_product_sku'])->name('ajax_check_product_sku');
     });
-    
+
     //Product Category
     Route::group(['middleware' => ['permission:product_category_listing']], function () {
         Route::match(['get', 'post'], 'product-category/listing', [ProductCategoryController::class, 'listing'])->name('product_category_listing');
@@ -484,7 +489,7 @@ Route::group([
         Route::match(['get', 'post'], 'product-category/edit/{product_category_id}', [ProductCategoryController::class, 'edit'])->name('product_category_edit');
         Route::match(['get', 'post'], 'product-category/delete', [ProductCategoryController::class, 'delete'])->name('product_category_delete');
     });
-    
+
     // Product Stock Transfer
     // Product Stock Warehouse
     Route::group(['middleware' => ['permission:product_stock_listing']], function () {
@@ -505,8 +510,8 @@ Route::group([
     Route::match(['get', 'post'], 'product-stock-transfer/ajax_get_product_sel_by_company_land_id', [ProductStockTransferController::class, 'ajax_get_product_sel_by_company_land_id'])->name('ajax_get_product_sel_by_company_land_id');
     Route::match(['get', 'post'], 'product-stock-transfer/ajax_get_product_by_product_category_id', [ProductStockTransferController::class, 'ajax_get_product_by_product_category_id'])->name('ajax_get_product_by_product_category_id');
     Route::match(['get', 'post'], 'product-stock-transfer/ajax_get_product_by_product_category_id_land_id', [ProductStockTransferController::class, 'ajax_get_product_by_product_category_id_land_id'])->name('ajax_get_product_by_product_category_id_land_id');
-    
-    
+
+
     //  Product Tag
     Route::group(['middleware' => ['permission:product_tag_listing']], function () {
         Route::match(['get', 'post'], 'product-tag/listing', [ProductTagController::class, 'listing'])->name('product_tag_listing');
@@ -516,13 +521,13 @@ Route::group([
         Route::match(['get', 'post'], 'product-tag/edit/{id}', [ProductTagController::class, 'edit'])->name('product_tag_edit');
         Route::match(['get', 'post'], 'product-tag/delete', [ProductTagController::class, 'delete'])->name('product_tag_delete');
     });
-    
+
     //Supplier
     Route::group(['middleware' => ['permission:supplier_listing']], function () {
         Route::match(['get', 'post'], 'supplier/listing', [SupplierController::class, 'listing'])->name('supplier_listing');
     });
-    
-    
+
+
     Route::group(['middleware' => ['permission:supplier_manage']], function () {
         Route::match(['get', 'post'], 'supplier/add', [SupplierController::class, 'add'])->name('supplier_add');
         Route::match(['get', 'post'], 'supplier/edit/{id}', [SupplierController::class, 'edit'])->name('supplier_edit');
@@ -530,12 +535,12 @@ Route::group([
     Route::match(['get', 'post'], '/ajax_get_raw_material_by_raw_material_category_id', [SupplierController::class, 'ajax_get_raw_material_by_raw_material_category_id'])->name('ajax_get_raw_material_by_raw_material_category_id');
     Route::match(['get', 'post'], '/ajax_get_supplier_by_company_id', [SupplierController::class, 'ajax_get_supplier_by_company_id'])->name('ajax_get_supplier_by_company_id');
     Route::match(['get', 'post'], '/ajax_get_raw_material_details', [SupplierController::class, 'ajax_get_raw_material_details'])->name('ajax_get_raw_material_details');
-    
+
     //Supplier Delivery Order
     Route::group(['middleware' => ['permission:supplier_delivery_order_listing']], function () {
         Route::match(['get', 'post'], 'supplier_delivery_order/listing', [SupplierDeliveryOrderController::class, 'listing'])->name('supplier_do_listing');
     });
-    
+
     Route::group(['middleware' => ['permission:supplier_delivery_order_manage']], function () {
         Route::match(['get', 'post'], 'supplier_delivery_order/add', [SupplierDeliveryOrderController::class, 'add'])->name('supplier_do_add');
         Route::match(['get', 'post'], 'supplier_delivery_order/edit/{id}', [SupplierDeliveryOrderController::class, 'edit'])->name('supplier_do_edit');
@@ -545,14 +550,14 @@ Route::group([
         Route::match(['get', 'post'], 'supplier_delivery_order/delete', [SupplierDeliveryOrderController::class, 'delete'])->name('supplier_do_delete');
     });
         Route::match(['get', 'post'], '/ajax_search_supplier_by_name', [SupplierController::class, 'ajax_search_supplier_by_name'])->name('ajax_search_supplier_by_name');
-    
+
         Route::match(['get', 'post'], 'ajax_get_supplier_by_upkeep', [SupplierController::class, 'ajax_get_supplier_by_upkeep'])->name('ajax_get_supplier_by_upkeep');
-    
+
     // Raw Material Company
     Route::group(['middleware' => ['permission:raw_material_company_listing']], function () {
         Route::match(['get', 'post'], 'raw_material_company/listing', [RawMaterialCompanyController::class, 'listing'])->name('raw_material_company_listing');
     });
-    
+
     Route::group(['middleware' => ['permission:raw_material_company_manage']], function () {
         Route::match(['get', 'post'], 'raw_material_company/add', [RawMaterialCompanyController::class, 'add'])->name('raw_material_company_add');
         Route::match(['get', 'post'], 'raw_material_company/edit/{id}', [RawMaterialCompanyController::class, 'edit'])->name('raw_material_company_edit');
@@ -587,7 +592,7 @@ Route::group([
         Route::match(['get', 'post'], '/ajax_get_zone_by_land', [FormulaUsageController::class, 'ajax_get_zone_by_land'])->name('ajax_get_zone_by_land');
         Route::match(['get', 'post'], '/ajax_find_sync_formula_usage_item_details', [SyncListController::class, 'ajax_find_sync_formula_usage_item_details'])->name('ajax_find_sync_formula_usage_item_details');
     //  Delivery Order
-    Route::group(['middleware' => ['subscription:delivery_order_module']], function () {
+    // Route::group(['middleware' => ['subscription:delivery_order_module']], function () {
         Route::group(['middleware' => ['permission:delivery_order_listing']], function () {
             Route::match(['get', 'post'], 'delivery_order/listing', [DeliveryOrderController::class, 'listing'])->name('do_listing');
             Route::match(['get', 'post'], '/view_do/{id}/{encryption}', [DeliveryOrderController::class, 'view_pdf'])->name('do_pdf');
@@ -617,24 +622,24 @@ Route::group([
             Route::post('/ajax_get_product_size_edit_do', [DeliveryOrderController::class, 'ajax_get_product_size_edit_do'])->name('ajax_get_product_size_edit_do');
             Route::match(['get', 'post'], 'export', [DeliveryOrderController::class, 'export'])->name('export');
         });
-    });
-    
+    // });
+
     //Collect
-    Route::group(['middleware' => ['subscription:collect_module']], function () {
+    // Route::group(['middleware' => ['subscription:collect_module']], function () {
         Route::group(['middleware' => ['permission:collect_listing']], function () {
             Route::match(['get', 'post'], 'collect/listing', [CollectController::class, 'listing'])->name('collect_listing');
             Route::get('get-sync-listing/{id}', [SyncListController::class, 'view_sync_listing'])->name('get_sync_listing');
         });
-        
+
         Route::group(['middleware' => ['permission:collect_manage']], function () {
             Route::match(['get', 'post'], 'collect/delete', [CollectController::class, 'delete'])->name('collect_delete');
         });
-        
+
         Route::group(['middleware' => ['permission:delivery_order_company_land_edit']], function () {
             Route::match(['get', 'post'], 'collect/edit', [CollectController::class, 'edit'])->name('collect_edit');
         });
-    });
-    
+    // });
+
     // ** Invoice
     Route::group(['middleware' => ['permission:invoice_listing']], function () {
         Route::match(['get', 'post'], 'invoice/listing', [InvoiceController::class, 'listing'])->name('invoice_listing');
@@ -655,19 +660,19 @@ Route::group([
     Route::group(['middleware' => ['permission:paid_invoice_edit']], function () {
         Route::match(['get', 'post'], 'paid_invoice/edit/{id}', [InvoiceController::class, 'paid_edit'])->name('paid_invoice_edit');
     });
-    
-    
+
+
     Route::group(['middleware' => ['permission:payment_approval']], function () {
         Route::match(['get', 'post'], 'invoice/approve-reject', [InvoiceController::class, 'approve_reject'])->name('invoice_approve_reject');
         Route::match(['get', 'post'], 'ajax_find_invoice_with_id', [InvoiceController::class, 'ajax_find_invoice_with_id'])->name('ajax_find_invoice_with_id');
     });
-    
+
     //Payroll
     Route::group(['middleware' => ['permission:payroll_listing']], function () {
         Route::match(['get', 'post'], 'payroll/listing', [PayrollController::class, 'listing'])->name('payroll_listing');
         Route::match(['get', 'post'], 'payroll/view/{id}', [PayrollController::class, 'view_details'])->name('payroll_view');
     });
-    
+
     Route::group(['middleware' => ['permission:payroll_manage']], function () {
         Route::match(['get', 'post'], 'payroll/generate', [PayrollController::class, 'generate'])->name('payroll_generate');
         Route::match(['get', 'post'], 'payroll/add/{id}', [PayrollController::class, 'add'])->name('payroll_add');
@@ -677,25 +682,25 @@ Route::group([
     });
         Route::match(['get', 'post'], '/ajax_check_payroll_exists', [PayrollController::class, 'ajax_check_payroll_exists'])->name('ajax_check_payroll_exists');
         Route::match(['get', 'post'], '/ajax_get_payroll_item', [PayrollController::class, 'ajax_get_payroll_item'])->name('ajax_get_payroll_item');
-    
+
     //Payroll Item
     Route::group(['middleware' => ['permission:payroll_item_listing']], function () {
         Route::match(['get', 'post'], 'payroll_item/listing', [PayrollItemController::class, 'listing'])->name('payroll_item_listing');
     });
-    
+
     Route::group(['middleware' => ['permission:payroll_item_manage']], function () {
         Route::match(['get', 'post'], 'payroll_item/add', [PayrollItemController::class, 'add'])->name('payroll_item_add');
         Route::match(['get', 'post'], 'payroll_item/edit/{id}', [PayrollItemController::class, 'edit'])->name('payroll_item_edit');
         Route::match(['get', 'post'], 'payroll_item/delete', [PayrollItemController::class, 'delete'])->name('payroll_item_delete');
     });
-    
-    
-    
+
+
+
     // Payment Url
     Route::group(['middleware' => ['permission:payment_url_listing']], function () {
         Route::match(['get', 'post'], 'payment-url/listing', [PaymentUrlController::class, 'listing'])->name('payment_url_listing');
     });
-    
+
     Route::group(['middleware' => ['permission:payment_url_manage']], function () {
         Route::match(['get', 'post'], 'payment-url/add/{customer_id?}/{invoice_id?}', [PaymentUrlController::class, 'add'])->name('payment_url_add');
         Route::match(['get', 'post'], 'payment-url/approve-reject', [PaymentUrlController::class, 'approve_reject'])->name('payment_url_approve_reject');
@@ -703,57 +708,57 @@ Route::group([
     });
     Route::match(['get', 'post'], 'ajax_find_payment_url_with_id', [PaymentUrlController::class, 'ajax_find_payment_url_with_id'])->name('ajax_find_payment_url_with_id');
     Route::post('/ajax_get_mobile_no_by_payment_url_id', [PaymentUrlController::class, 'ajax_get_mobile_no_by_payment_url_id'])->name('ajax_get_mobile_no_by_payment_url_id');
-    
-    
+
+
     Route::group(['middleware' => ['permission:setting_expense']], function () {
         Route::match(['get', 'post'], 'setting_expense/listing', [SettingExpenseController::class, 'listing'])->name('expense_listing');
         Route::match(['get', 'post'], 'setting_expense/add', [SettingExpenseController::class, 'add'])->name('expense_add');
         Route::match(['get', 'post'], 'setting_expense/edit/{id}', [SettingExpenseController::class, 'edit'])->name('expense_edit');
         Route::match(['get', 'post'], 'setting_expense/activation/{id}/{status}', [SettingExpenseController::class, 'expense_activation'])->name('expense_activation');
         Route::match(['get', 'post'], 'ads/ajax_expense_overwrite_detail_modal', [SettingExpenseController::class, 'ajax_get_expense_overwrite_detail_modal'])->name('expense_overwrite_detail_modal');
-    
+
         //Setting Expense Overwrite
         Route::match(['get', 'post'], 'setting_expense_overwrite/overwrite/{company_id?}/{setting_expense_id?}', [SettingExpenseOverwriteController::class, 'overwrite'])->name('expense_overwrite');
         Route::post('setting_expense_overwrite/delete', [SettingExpenseOverwriteController::class, 'delete'])->name('expense_overwrite_delete');
-    
+
         // Setting Expense Category
         Route::match(['get', 'post'], 'setting_expense_category/listing', [SettingExpenseCategoryController::class, 'listing'])->name('expense_category_listing');
         Route::match(['get', 'post'], 'setting_expense_category/add', [SettingExpenseCategoryController::class, 'add'])->name('expense_category_add');
         Route::match(['get', 'post'], 'setting_expense_category/edit/{id}', [SettingExpenseCategoryController::class, 'edit'])->name('expense_category_edit');
-    
+
         // Setting Race
         Route::match(['get', 'post'], 'setting_race/listing', [SettingRaceController::class, 'listing'])->name('setting_race');
         Route::match(['get', 'post'], 'setting_race/add', [SettingRaceController::class, 'add'])->name('add');
         Route::match(['get', 'post'], 'setting_race/edit/{id}', [SettingRaceController::class, 'edit'])->name('edit');
         Route::match(['get', 'post'], 'setting_race/delete', [SettingRaceController::class, 'delete'])->name('delete');
     });
-    
+
     // Setting Currency
     Route::match(['get', 'post'], 'setting_currency/listing', [SettingCurrencyController::class, 'listing'])->name('setting_currency');
     Route::match(['get', 'post'], 'setting_currency/add', [SettingCurrencyController::class, 'add'])->name('setting_currency_add');
     Route::match(['get', 'post'], 'setting_currency/edit/{id}', [SettingCurrencyController::class, 'edit'])->name('setting_currency_edit');
     Route::match(['get', 'post'], 'setting_currency/delete', [SettingCurrencyController::class, 'delete'])->name('setting_currency_delete');
-    
+
     // Setting Reward
     Route::match(['get', 'post'], 'setting_reward/listing', [SettingRewardController::class, 'listing'])->name('setting_reward');
     Route::match(['get', 'post'], 'setting_reward/add', [SettingRewardController::class, 'add'])->name('setting_reward_add');
     Route::match(['get', 'post'], 'setting_reward/edit/{id}', [SettingRewardController::class, 'edit'])->name('setting_reward_edit');
     Route::match(['get', 'post'], 'setting_reward/delete', [SettingRewardController::class, 'delete'])->name('setting_reward_delete');
     Route::match(['get', 'post'], '/ajax_get_reward_sel_by_company', [WorkerController::class, 'ajax_get_reward_sel_by_company'])->name('ajax_get_reward_sel_by_company');
-    
+
     // Setting Reward Category
     Route::match(['get', 'post'], 'setting_reward_category/listing', [SettingRewardCategoryController::class, 'listing'])->name('setting_reward_category');
     Route::match(['get', 'post'], 'setting_reward_category/add', [SettingRewardCategoryController::class, 'add'])->name('setting_reward_category_add');
     Route::match(['get', 'post'], 'setting_reward_category/edit/{id}', [SettingRewardCategoryController::class, 'edit'])->name('setting_reward_category_edit');
     Route::match(['get', 'post'], 'setting_reward_category/delete', [SettingRewardCategoryController::class, 'delete'])->name('setting_reward_category_delete');
-    
+
     Route::match(['get', 'post'], 'ajax_get_expense_by_upkeep', [SettingExpenseController::class, 'ajax_get_expense_by_upkeep'])->name('ajax_get_expense_by_upkeep');
     Route::match(['get', 'post'], 'ajax_get_price_expense', [SettingExpenseController::class, 'ajax_get_price_expense'])->name('ajax_get_price_expense');
     Route::match(['get', 'post'], 'ajax_get_expense_by_staff_costing', [SettingExpenseController::class, 'ajax_get_expense_by_staff_costing'])->name('ajax_get_expense_by_staff_costing');
-    
+
     //! Testing
     Route::get('/runningNo/{type}', [DeliveryOrderController::class, 'running'])->name('test_no');
-    
+
     Route::group(['middleware' => ['permission:report_listing']], function () {
         Route::match(['get', 'post'], 'reporting/collect_do_variance', [ReportingController::class, 'collect_do_variance_report_yearly'])->name('collect_do_variance');
         Route::match(['get', 'post'], 'reporting/collect_do_variance_daily', [ReportingController::class, 'collect_do_variance_report_daily'])->name('collect_do_variance_daily');
@@ -785,47 +790,47 @@ Route::group([
         Route::match(['get', 'post'], 'reporting/claim_pending_report', [ClaimPendingReportController::class, 'claim_pending_report'])->name('claim_pending_report');
         Route::match(['get', 'post'], 'reporting/claim_pending_detail_report/{year}/{month}/{company_id}/{farm_manager}', [ClaimPendingReportController::class, 'claim_pending_detail_report_admin'])->name('claim_pending_detail_report_admin');
         Route::match(['get', 'post'], 'reporting/claim_pending_detail_report/{year}/{month}/{company_id}', [ClaimPendingReportController::class, 'claim_pending_detail_report_superadmin'])->name('claim_pending_detail_report_superadmin');
-    
+
         //Formula Usage Report
         Route::match(['get', 'post'], 'reporting/formula_usage_report_sa', [ReportingController::class, 'formula_usage_report_sa'])->name('formula_usage_report_sa');
         Route::match(['get', 'post'], 'reporting/formula_usage_report_sa_detail/{year}/{month}/{setting_formula_category_id}', [ReportingController::class, 'formula_usage_report_sa_detail'])->name('formula_usage_report_sa_detail');
         Route::match(['get', 'post'], 'reporting/formula_usage_report_admin', [ReportingController::class, 'formula_usage_report_admin'])->name('formula_usage_report_admin');
         Route::match(['get', 'post'], 'reporting/formula_usage_report_admin_detail/{year}/{month}/{setting_formula_category_id}', [ReportingController::class, 'formula_usage_report_admin_detail'])->name('formula_usage_report_admin_detail');
-    
+
         //Company Expense Report
         Route::match(['get', 'post'], 'reporting/company_expense', [ReportingController::class, 'company_expense_report'])->name('company_expense');
         Route::match(['get', 'post'], 'reporting/company_expense_detail_report/{month?}/{setting_expense_category_id?}', [ReportingController::class, 'detail_company_expense_report'])->name('company_expense_detail');
         Route::match(['get', 'post'], 'reporting/company_expense_report_land_product/{company_land_id?}/{setting_expense_category_id?}/{year?}/{month_num?}', [ReportingController::class, 'company_expense_report_land_product'])->name('company_expense_report_land_product');
         Route::match(['get', 'post'], 'reporting/company_expense_report_land_product_total/{company_land_id?}/{setting_expense_category_id?}/{year?}', [ReportingController::class, 'company_expense_report_land_product_total'])->name('company_expense_report_land_product_total');
-    
+
         // //Company Expense Report-Admin
         // Route::match(['get', 'post'], 'reporting/company_expense_reporting', [ReportingController::class, 'company_expense_reporting'])->name('company_expense_reporting');
         // Route::match(['get', 'post'], 'reporting/company_expense_reporting_details/{month?}/{setting_expense_category_id?}', [ReportingController::class, 'company_expense_reporting_details'])->name('company_expense_reporting_details');
-    
+
         //Company Land Tree Report
         Route::match(['get', 'post'], 'reporting/company_land_tree_report', [ReportingController::class, 'company_land_tree_report'])->name('company_land_tree_report');
         Route::match(['get', 'post'], 'reporting/company_land_tree_report_detail/{company_land_id?}', [CompanyLandTreeController::class, 'company_land_tree_report_detail'])->name('company_land_tree_report_detail');
         Route::match(['get', 'post'], 'reporting/company_land_tree_report_sick_tree_detail/{company_land_id?}/{product_id?}', [CompanyLandTreeController::class, 'company_land_tree_report_sick_tree_detail'])->name('company_land_tree_report_sick_tree_detail');
         Route::match(['get', 'post'], 'reporting/company_land_tree_pointer_age_report_detail/{company_id?}', [CompanyLandTreeController::class, 'company_land_tree_pointer_age_report_detail'])->name('company_land_tree_pointer_age_report_detail');
-    
+
         //Farm Manager Worker Expense Report
         Route::match(['get', 'post'], 'reporting/farm_manager_worker_expense', [ReportingController::class, 'farm_manager_worker_expense_report'])->name('farm_manager_worker_expense');
         Route::match(['get', 'post'], 'reporting/farm_manager_worker_expense_detail/{year?}/{month?}/{company_id?}/{user_id?}', [ReportingController::class, 'farm_manager_worker_expense_report_detail'])->name('farm_manager_worker_expense_detail');
-    
+
         //Budget Report
         Route::match(['get', 'post'], 'reporting/budget_report', [ReportingController::class, 'budget_report'])->name('budget_report');
         Route::match(['get', 'post'], 'reporting/budget_report_detail/{company_id?}/{year?}', [ReportingController::class, 'budget_report_detail'])->name('budget_report_detail');
-    
+
         //Tree Target Report
         Route::match(['get', 'post'], 'reporting/tree_target_report', [ReportingController::class, 'tree_target_report'])->name('tree_target_report');
-    
-    
+
+
         //Forecast Report
         Route::match(['get', 'post'], 'reporting/forecast_report', [ReportingController::class, 'forecast_report'])->name('forecast_report');
-    
+
         //Warehouse Report
         Route::match(['get', 'post'], 'reporting/warehouse_reporting', [WarehouseReportingController::class, 'warehouse_reporting'])->name('warehouse_reporting');
-    
+
         //Profit & Loss Reporting
         Route::match(['get', 'post'], '/reporting/profit_loss_reporting/listing', [ProfitLossReportingController::class, 'profit_loss_reporting'])->name('profit_loss_reporting');
         Route::match(['get', 'post'], '/reporting/profit_loss_reporting_detail/{company_id?}/{setting_expense_id?}/{year?}', [ProfitLossReportingController::class, 'profit_loss_reporting_detail'])->name('profit_loss_reporting_detail');
@@ -834,24 +839,24 @@ Route::group([
         Route::match(['get', 'post'], '/reporting/profit_loss_y2y_reporting_detail_by_land/{company_id?}/{company_land_id?}/{setting_expense_id?}/{year?}', [ProfitLossReportingController::class, 'profit_loss_y2y_reporting_detail_by_land'])->name('profit_loss_y2y_reporting_detail_by_land');
         Route::match(['get', 'post'], '/reporting/profit_loss_m2m_reporting_detail/{company_id?}/{setting_expense_id?}/{year?}/{month?}', [ProfitLossReportingController::class, 'profit_loss_m2m_reporting_detail'])->name('profit_loss_m2m_reporting_detail');
         Route::match(['get', 'post'], '/reporting/profit_loss_m2m_reporting_detail_by_land/{company_id?}/{company_land_id?}/{setting_expense_id?}/{year?}/{month?}', [ProfitLossReportingController::class, 'profit_loss_m2m_reporting_detail_by_land'])->name('profit_loss_m2m_reporting_detail_by_land');
-    
+
         //Budget Estimated Reporting
         Route::match(['get', 'post'], 'reporting/budget_estimate_report/listing_reporting', [BudgetEstimateController::class, 'listing_reporting'])->name('budget_estimate_report_listing_reporting');
         Route::match(['get', 'post'], 'view_monthly_budget_estimate_report/{id}', [BudgetEstimateController::class, 'view_monthly_budget_estimate_report'])->name('view_monthly_budget_estimate_report');
-    
+
         //Tree Pointer Reporting
         Route::match(['get', 'post'], 'reporting/tree_pointer_reporting', [TreePointerReportingController::class, 'tree_pointer_reporting'])->name('tree_pointer_reporting');
         Route::match(['get', 'post'], 'reporting/tree_pointer_reporting_details/{company_land_id?}/{setting_tree_age_upper?}/{setting_tree_age_lower?}', [TreePointerReportingController::class, 'tree_pointer_reporting_details'])->name('tree_pointer_reporting_details');
         Route::match(['get', 'post'], 'reporting/tree_pointer_reporting_details_total/{company_id?}/{setting_tree_age_upper?}/{setting_tree_age_lower?}', [TreePointerReportingController::class, 'tree_pointer_reporting_details_total'])->name('tree_pointer_reporting_details_total');
-    
+
          //Worker Attendance Report
          Route::match(['get', 'post'], 'reporting/worker_attendance_report', [WorkerAttendanceReportController::class, 'worker_attendance_report'])->name('worker_attendance_report');
-    
+
         //Supplier Expenses Report
         Route::match(['get', 'post'], 'reporting/supplier_expenses_report', [SupplierExpensesReportController::class, 'supplier_expenses_report'])->name('supplier_expenses_report');
         Route::match(['get', 'post'], 'reporting/supplier_expenses_report_detail/{year?}/{month?}/{supplier_id?}/{company_id?}', [SupplierExpensesReportController::class, 'supplier_expenses_report_detail'])->name('supplier_expenses_report_detail');
     });
-    
+
     Route::match(['get', 'post'], 'reporting/ajax_get_land_product_size', [ReportingController::class, 'ajax_get_land_product_size'])->name('ajax_get_land_product_size');
     Route::match(['get', 'post'], 'reporting/ajax_get_users_by_land', [ReportingController::class, 'ajax_get_users_by_land'])->name('ajax_get_users_by_land');
     Route::match(['get', 'post'], 'ajax_get_products_multi_company', [ReportingController::class, 'ajax_get_products_multi_company'])->name('ajax_get_products_multi_company');
@@ -859,12 +864,12 @@ Route::group([
     Route::match(['get', 'post'], 'ajax_get_product_sel_by_company_land_id', [ReportingController::class, 'ajax_get_product_sel_by_company_land_id'])->name('ajax_get_product_sel_by_company_land_id');
     Route::match(['get', 'post'], 'ajax_get_setting_size_by_product_id', [ReportingController::class, 'ajax_get_setting_size_by_product_id'])->name('ajax_get_setting_size_by_product_id');
     Route::match(['get', 'post'], 'ajax_get_land_by_company_id', [ReportingController::class, 'ajax_get_land_by_company_id'])->name('ajax_get_land_by_company_id');
-    
-    
-    
+
+
+
     Route::match(['get', 'post'], 'ajax_customer_pic', [CustomerPicController::class, 'ajax_check_pic'])->name('ajax_check_pic');
     Route::match(['get', 'post'], 'ajax_check_pic_id', [CustomerPicController::class, 'ajax_check_pic_id'])->name('ajax_check_pic_id');
-    
+
     //Setting Formula
     Route::group(['middleware' => ['permission:formula_listing']], function () {
         Route::match(['get', 'post'], 'setting_formula/listing/', [SettingFormulaController::class, 'listing'])->name('setting_formula_listing');
@@ -875,14 +880,14 @@ Route::group([
         Route::match(['get', 'post'], 'setting_formula/delete', [SettingFormulaController::class, 'delete'])->name('setting_formula_delete');
     });
     Route::match(['get', 'post'], 'ajax_get_rm_name_for_placeholder', [SettingFormulaController::class, 'ajax_get_rm_name_for_placeholder'])->name('ajax_get_rm_name_for_placeholder');
-    
+
     //Setting Formula Category
     Route::match(['get', 'post'], 'setting_formula_category/listing', [SettingFormulaCategoryController::class, 'listing'])->name('setting_formula_category_listing');
     Route::match(['get', 'post'], 'setting_formula_category/edit/{id}', [SettingFormulaCategoryController::class, 'edit'])->name('setting_formula_category_edit');
     Route::match(['get', 'post'], 'setting_formula_category/add', [SettingFormulaCategoryController::class, 'add'])->name('setting_formula_category_add');
     Route::match(['get', 'post'], 'setting_formula_category/delete', [SettingFormulaCategoryController::class, 'delete'])->name('setting_formula_category_delete');
-    
-    
+
+
     //Setting Whatsapp Template
     Route::group(['middleware' => ['permission:setting_message_template']], function () {
     Route::match(['get', 'post'], 'message-template/listing', [MessageTemplateController::class, 'listing'])->name('message_template_listing');
@@ -894,8 +899,8 @@ Route::group([
     //Route::match(['get', 'post'], 'message-template/send_invoice/{id}/{slug}/{message_template_id}/{user_mobile?}', [MessageTemplateController::class, 'send_invoice'])->name('send_invoice');
     //Route::match(['get', 'post'], 'message-template/send_whatsapp_choosable/{id}/{slug}/{message_template_id}', [MessageTemplateController::class, 'send_whatsapp_choosable'])->name('send_whatsapp_choosable');
     // });
-    
-    
+
+
     //Setting Whatsapp Template Involve
     // Route::group(['middleware' => ['permission:setting_message_template']], function () {
     Route::match(['get', 'post'], 'message-template-involve/listing', [MessageTemplateInvolveController::class, 'listing'])->name('message_template_involve_listing');
@@ -903,8 +908,8 @@ Route::group([
     Route::match(['get', 'post'], 'message-template-involve/edit/{id}', [MessageTemplateInvolveController::class, 'edit'])->name('message_template_involve_edit');
     Route::match(['get', 'post'], 'message-template-involve/delete', [MessageTemplateInvolveController::class, 'delete'])->name('message_template_involve_delete');
     });
-    
-    
+
+
     //  Worker
     Route::group(['middleware' => ['permission:worker_listing']], function () {
         Route::match(['get', 'post'], 'worker/listing', [WorkerController::class, 'listing'])->name('worker_listing');
@@ -922,7 +927,7 @@ Route::group([
         Route::match(['get', 'post'], 'worker/adjustment/{id}', [WorkerController::class, 'adjustment'])->name('worker_wallet_adjustment');
         Route::match(['get', 'post'], 'worker/wallet_history/{id}', [WorkerController::class, 'worker_wallet_detail'])->name('worker_wallet_details');
     });
-    
+
     //  Worker Type
     Route::group(['middleware' => ['permission:worker_type_listing']], function () {
         Route::match(['get', 'post'], 'worker_type/listing', [WorkerTypeController::class, 'listing'])->name('worker_type_listing');
@@ -932,22 +937,22 @@ Route::group([
         Route::match(['get', 'post'], 'worker_type/edit/{id}', [WorkerTypeController::class, 'edit'])->name('worker_type_edit');
         Route::match(['get', 'post'], 'worker_type/delete', [WorkerTypeController::class, 'delete'])->name('worker_type_delete');
     });
-    
+
     Route::match(['get', 'post'], 'ajax_get_farm_manager_by_company_id', [WorkerController::class, 'ajax_get_farm_manager_by_company_id'])->name('ajax_get_farm_manager_by_company_id');
-    
+
     // Route::group(['middleware' => ['permission:claim_manage']], function () {
         // Route::match(['get', 'post'], 'claim/add', [ClaimController::class, 'add'])->name('claim_add');
         // Route::match(['get', 'post'], 'claim/edit/{id}', [ClaimController::class, 'edit'])->name('claim_edit');
         // Route::match(['get', 'post'], 'claim-item/add/{id}', [ClaimController::class, 'add_claim_item'])->name('claim_item_add');
         // Route::match(['get', 'post'], 'worker_type/delete', [WorkerTypeController::class, 'delete'])->name('worker_type_delete');
     // });
-    
+
     // Setting Race
         // Route::match(['get', 'post'], 'setting_race/listing', [SettingRaceController::class, 'listing'])->name('setting_race');
         // Route::match(['get', 'post'], 'setting_race/add', [SettingRaceController::class, 'add'])->name('add');
         // Route::match(['get', 'post'], 'setting_race/edit/{id}', [SettingRaceController::class, 'edit'])->name('edit');
         // Route::match(['get', 'post'], 'setting_race/delete', [SettingRaceController::class, 'delete'])->name('delete');
-    
+
     // Claim
     Route::group(['middleware' => ['permission:claim_listing']], function () {
         Route::match(['get', 'post'], 'claim/listing', [ClaimController::class, 'listing'])->name('claim_listing');
@@ -957,12 +962,12 @@ Route::group([
         Route::match(['get', 'post'], 'claim/delete', [ClaimController::class, 'delete_claim'])->name('claim_delete');
         Route::match(['get', 'post'], 'claim/my-claim', [ClaimController::class, 'my_claim'])->name('claim_my_claim');
     });
-    
+
     Route::match(['get', 'post'], 'ajax_check_company_pic', [ClaimController::class, 'ajax_check_company_pic'])->name('ajax_check_company_pic');
-    
+
     Route::match(['get', 'post'], 'claim/view/{id}/{encryption}', [ClaimController::class, 'view_claim_pdf'])->name('claim_view');
     Route::match(['get', 'post'], 'claim/export/{id}', [ClaimController::class, 'export_claim'])->name('claim_export');
-    
+
     Route::match(['get', 'post'], 'claim/item/listing/{id}', [ClaimItemController::class, 'listing'])->name('claim_item_listing');
     Route::match(['get', 'post'], 'claim/item/add/{id}', [ClaimItemController::class, 'add'])->name('claim_item_add');
     Route::match(['get', 'post'], 'claim/item/reject', [ClaimItemController::class, 'reject'])->name('claim_item_reject');
@@ -972,46 +977,46 @@ Route::group([
     Route::match(['get', 'post'], 'ajax_get_price_raw_material_item', [ClaimItemController::class, 'ajax_get_price_raw_material_item'])->name('ajax_get_price_raw_material_item');
     Route::match(['get', 'post'], 'ajax_get_image_by_company_expense_item_id', [ClaimItemController::class, 'ajax_get_image_by_company_expense_item_id'])->name('ajax_get_image_by_company_expense_item_id');
     Route::match(['get', 'post'], 'ajax_get_image_by_claim_item_id', [ClaimItemController::class, 'ajax_get_image_by_claim_item_id'])->name('ajax_get_image_by_claim_item_id');
-    
-    
+
+
     //claim action
     Route::match(['get', 'post'], 'claim/submit_claim/{id}', [ClaimController::class, 'submit_claim'])->name('claim_submit_claim');
     Route::match(['get', 'post'], 'claim/approve_checking/{id}', [ClaimController::class, 'approve_checking'])->name('claim_approve_checking');
     Route::match(['get', 'post'], 'claim/approve_verify/{id}', [ClaimController::class, 'approve_verify'])->name('claim_approve_verify');
-    
+
     Route::match(['get', 'post'], 'claim/approve_approval/{id}', [ClaimController::class, 'approve_approval'])->name('claim_approve_approval');
     Route::match(['get', 'post'], 'claim/account_check/{id}', [ClaimController::class, 'account_check'])->name('claim_account_check');
     Route::match(['get', 'post'], 'claim/payment/{id}', [ClaimController::class, 'payment'])->name('claim_payment');
-    
+
     Route::match(['get', 'post'], 'claim/cancel_submission', [ClaimController::class, 'cancel_submission'])->name('claim_cancel_submission');
     Route::match(['get', 'post'], 'claim/resubmit_reject', [ClaimController::class, 'resubmit_reject'])->name('claim_resubmit_reject');
     Route::match(['get', 'post'], 'claim/permanent_reject/{id}', [ClaimController::class, 'permanent_reject'])->name('claim_permanent_reject');
-    
+
     Route::match(['get', 'post'], '/reset_security_pin', function () {
         $result = new SettingSecurityPin;
         $result->handle();
     });
-    
+
     Route::match(['get', 'post'], '/cancel_url', function () {
         $result = new PaymentUrlCancellation;
         $result->handle();
     });
-    
-    
+
+
     // Route::match(['get', 'post'], '/testing_pl_report', [ProfitLossReportingController::class, 'profit_loss_testing'])->name('profit_loss_testing');
     Route::match(['get', 'post'], '/reporting/profit_loss_reporting/listing', [ProfitLossReportingController::class, 'profit_loss_reporting'])->name('profit_loss_reporting');
-    
+
     //Budget Estimate
     Route::group(['middleware' => ['permission:budget_estimate_listing']], function () {
         Route::match(['get', 'post'], 'reporting/budget_estimate_report/listing', [BudgetEstimateController::class, 'listing'])->name('budget_estimate_report_listing');
     });
-    
+
     Route::group(['middleware' => ['permission:budget_estimate_manage']], function () {
         Route::match(['get', 'post'], 'reporting/budget_estimate_report/add', [BudgetEstimateController::class, 'add'])->name('budget_estimate_report_add');
         Route::match(['get', 'post'], 'reporting/budget_estimate_report/edit/{id}', [BudgetEstimateController::class, 'edit'])->name('budget_estimate_report_edit');
         Route::match(['get', 'post'], 'reporting/budget_estimate_report/delete', [BudgetEstimateController::class, 'delete'])->name('budget_estimate_report_delete');
     });
-    
+
     Route::get('tenant-profile', [TenantController::class, 'profile'])->name('tenant.profile');
     Route::post('save-tenant-profile', [TenantController::class, 'saveProfile'])->name('save.tenant.profile');
 });

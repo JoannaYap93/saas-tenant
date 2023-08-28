@@ -277,7 +277,16 @@ class Product extends Model implements HasMedia
 
     public static function get_product_company()
     {
-        $land = CompanyLand::query()->where('company_id', auth()->user()->company_id)->get();
+        if(auth()->user()->company_id == 0 && count(auth()->user()->user_company) > 0){
+            $ids = array();
+            foreach(auth()->user()->user_company as $key => $user_company){
+                $ids[$key] = $user_company->company_id;
+            }
+            $land = CompanyLand::query()->whereIn('company_id', $ids)->get();
+
+        }else{
+            $land = CompanyLand::query()->where('company_id', auth()->user()->company_id)->get();
+        }
         foreach ($land as $key => $value) {
             $land[$key] = $value->company_land_id;
         }

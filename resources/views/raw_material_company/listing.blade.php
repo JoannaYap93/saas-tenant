@@ -123,7 +123,7 @@
 									</td>
 									<td>
                                         @if (@$rmc->raw_material->raw_material_name != '')
-                                            <a href="{{ route('rm_usage_listing_by_id', ['tenant' => tenant('id'), 'id' => @$rmc->raw_material_id]) }}">{{json_decode(@$rmc->raw_material->raw_material_name)->en }}</a><br>
+                                            <a href="{{ route('rm_usage_listing_by_id', ['tenant' => tenant('id'), 'raw_material_id' => @$rmc->raw_material_id]) }}">{{json_decode(@$rmc->raw_material->raw_material_name)->en }}</a><br>
                                         @endif
 										{{-- <b></b><br> --}}
                                         <b>{{@$rmc->company->company_name}}</b><br>

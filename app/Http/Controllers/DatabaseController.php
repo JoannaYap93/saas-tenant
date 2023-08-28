@@ -8,6 +8,7 @@ use App\Model\CompanyExpenseLand;
 use App\Model\Worker;
 use App\Model\WorkerType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -87,5 +88,19 @@ class DatabaseController extends Controller
       }else{
         return redirect()->route('dashboard', ['tenant' => tenant('id')]);
       }
+    }
+
+    public function import_demo_data(){
+        Artisan::call('db:seed');
+        Artisan::call('optimize:clear');
+        Session::flash('success_msg', 'Successfully Imported Demo Data');
+        return redirect()->back();
+    }
+
+    public function clear_data(){
+        Artisan::call('tenants:seed --class=ClearDatabase --tenants=' . tenant('id'));
+        Artisan::call('optimize:clear');
+        Session::flash('success_msg', 'Successfully Cleared Data');
+        return redirect()->back();
     }
 }
