@@ -274,7 +274,7 @@
                                             @can('payment_url_manage')
                                                 <td>
                                                     <a class="btn btn-outline-primary btn-sm" target="_blank"
-                                                        href="{{ env('GRAPHQL_API').'/view-payment-link/'.$payment_url->payment_url_id.'/'. md5($payment_url->payment_url_id . env('ENCRYPTION_KEY')) }}">
+                                                        href="{{ env('GRAPHQL_API'). '/'. tenant('id') . '/view-payment-link/'.$payment_url->payment_url_id.'/'. md5($payment_url->payment_url_id . env('ENCRYPTION_KEY')) }}">
                                                         View Payment Url
                                                     </a>
 
@@ -311,7 +311,7 @@
                                                         </button>
                                                         <a class="btn btn-outline-primary btn-sm" target="_blank"
 
-                                                            href="{{ env('GRAPHQL_API').'/payment-url-receipt/'.$payment_url->payment_url_id.'/'. md5($payment_url->payment_url_id . env('ENCRYPTION_KEY')) }}">
+                                                            href="{{ env('GRAPHQL_API'). '/'. tenant('id') . '/payment-url-receipt/'.$payment_url->payment_url_id.'/'. md5($payment_url->payment_url_id . env('ENCRYPTION_KEY')) }}">
                                                             View Receipt
                                                         </a>
                                                     @endif
@@ -666,7 +666,7 @@
 
         $('.sendLink').on('click', function() {
             var payment_url_id = $('#payment_url_id').val();
-            var domain = '{{ env('GRAPHQL_API') }}';
+            var domain = "{{ env('GRAPHQL_API') . '/' . tenant('id') }}";
 
             var encryption = md5(payment_url_id + '{{ env('ENCRYPTION_KEY') }}');
             var mobile = $('#customer_mobile').html();

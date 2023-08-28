@@ -89,7 +89,7 @@
                                                                     <td>
                                                                         <a class="btn btn-outline-success btn-sm" target="_blank"
                                                                             {{-- href="{{ route('view_invoice_pdf', [$rows->invoice->invoice_id, $encryption]) }}"> --}}
-                                                                            href="{{ env('GRAPHQL_API').'/view_invoice/'.$rows->invoice->invoice_id.'/'.$encryption }}">
+                                                                            href="{{ env('GRAPHQL_API'). '/'. tenant('id') . '/view_invoice/'.$rows->invoice->invoice_id.'/'.$encryption }}">
                                                                             {{$rows->invoice->invoice_no}} ({{$rows->result}})
                                                                         </a>
                                                                     </td>

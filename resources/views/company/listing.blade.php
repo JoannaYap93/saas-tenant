@@ -278,7 +278,7 @@
                                                     data-id='{{ $company->company_id }}' class='fulfill'>
                                                     @can('company_manage')
                                                         @if (auth()->user()->user_type_id == 1)
-                                                            <a href="{{ route('company_edit', ['tenant' => tenant('id'), 'id' => $company->company_id]) }}"
+                                                            <a href="{{ route('company_edit', ['tenant' => tenant('id'), 'company_id' => $company->company_id]) }}"
                                                                 class="btn btn-sm btn-outline-primary waves-effect waves-light mr-2 mb-1">Edit</a>
                                                         @else
                                                             <a href="{{ route('company_edit_land', ['tenant' => tenant('id'), 'id' => $company->company_id]) }}"

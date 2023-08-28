@@ -110,7 +110,7 @@
                                         @can('company_land_tree_manage')
                                         <td>
                                             {{-- @if (auth()->user()->company_id == $action->company_id ) --}}
-                                                <a href="{{ route('edit_default', ['tenant' => tenant('id'), 'id' => $action->company_land_tree_action_id) }}"
+                                                <a href="{{ route('edit_default', ['tenant' => tenant('id'), 'id' => $action->company_land_tree_action_id]) }}"
                                                 class="btn btn-outline-warning btn-sm mr-2">Edit</a>
                                             {{-- @endif --}}
                                         </td>

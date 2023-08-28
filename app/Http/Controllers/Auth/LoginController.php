@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Model\User;
-use App\Model\CentralUser;
+use App\Model\Landlord\CentralUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Cookie;
 use App\Providers\RouteServiceProvider;
 use Spatie\Activitylog\Models\Activity;
@@ -130,10 +131,9 @@ class LoginController extends Controller
         return view('auth.passwords.email');
     }
 
-    public function landlordByPassLogin(Request $request, $encryption_landlord_id)
+    public function landlordByPassLogin(Request $request, $landlord_id)
     {
-
-        $landlord_id = Crypt::decryptString($encryption_landlord_id);
+        $landlord_id = $landlord_id;
         $valid = tenancy()->central(function ($tenant) use ($landlord_id) {
             $user = CentralUser::find($landlord_id);
 

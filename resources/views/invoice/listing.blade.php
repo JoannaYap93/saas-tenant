@@ -423,13 +423,13 @@
                                                 @if (auth()->user()->user_type_id == 1)
                                                     <a class="btn btn-outline-primary btn-sm" target="_blank"
                                                         {{-- href="{{ route('view_invoice_pdf', [$invoice->invoice_id, $encryption]) }}"> --}}
-                                                        href="{{ env('GRAPHQL_API') .'/view_invoice/' .$invoice->invoice_id .'/' .md5($invoice->invoice_id . env('ENCRYPTION_KEY')) }}">
+                                                        href="{{ env('GRAPHQL_API') . '/'. tenant('id') . '/view_invoice/' .$invoice->invoice_id .'/' .md5($invoice->invoice_id . env('ENCRYPTION_KEY')) }}">
                                                         View Invoice
                                                     </a>
                                                     @if ($invoice->invoice_status_id == 2)
                                                         <a class="btn btn-outline-primary btn-sm" target="_blank"
                                                             {{-- href="{{ route('view_invoice_pdf', [$invoice->invoice_id, $encryption]) }}"> --}}
-                                                            href="{{ env('GRAPHQL_API') .'/receipt/' .$invoice->invoice_id .'/' .md5($invoice->invoice_id . env('ENCRYPTION_KEY')) }}">
+                                                            href="{{ env('GRAPHQL_API') . '/'. tenant('id') . '/receipt/' .$invoice->invoice_id .'/' .md5($invoice->invoice_id . env('ENCRYPTION_KEY')) }}">
                                                             View Receipt
                                                         </a>
                                                         @can('payment_approval')
@@ -490,13 +490,13 @@
                                                                 style="min-width:50px; border-top: none;">
                                                                 <a class="btn btn-outline-primary btn-sm ml-2 mb-2"
                                                                     target="_blank" {{-- href="{{ route('view_invoice_pdf', [$invoice->invoice_id, $encryption]) }}"> --}}
-                                                                    href="{{ env('GRAPHQL_API') .'/view_invoice/' .$invoice->invoice_id .'/' .md5($invoice->invoice_id . env('ENCRYPTION_KEY')) }}">
+                                                                    href="{{ env('GRAPHQL_API') . '/'. tenant('id') . '/view_invoice/' .$invoice->invoice_id .'/' .md5($invoice->invoice_id . env('ENCRYPTION_KEY')) }}">
                                                                     View Invoice
                                                                 </a><br>
                                                                 @if ($invoice->invoice_status_id == 2)
                                                                     <a class="btn btn-outline-primary btn-sm ml-2 mb-2"
                                                                         target="_blank" {{-- href="{{ route('view_invoice_pdf', [$invoice->invoice_id, $encryption]) }}"> --}}
-                                                                        href="{{ env('GRAPHQL_API') .'/receipt/' .$invoice->invoice_id .'/' .md5($invoice->invoice_id . env('ENCRYPTION_KEY')) }}">
+                                                                        href="{{ env('GRAPHQL_API') . '/'. tenant('id') . '/receipt/' .$invoice->invoice_id .'/' .md5($invoice->invoice_id . env('ENCRYPTION_KEY')) }}">
                                                                         View Receipt
                                                                     </a>
                                                                 @else
@@ -923,7 +923,7 @@
 
         $('.sendLink').on('click', function() {
             var invoice_id = $('#invoice_id').val();
-            var domain = '{{ env('GRAPHQL_API') }}';
+            var domain = "{{ env('GRAPHQL_API') . '/' . tenant('id') }}";
 
             var encryption = md5(invoice_id + '{{ env('ENCRYPTION_KEY') }}');
             var mobile = $('#customer_mobile').html();
