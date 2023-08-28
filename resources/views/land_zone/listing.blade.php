@@ -187,7 +187,7 @@
                                               @endif
                                                 <!-- <a href="#"
                                                     class="btn btn-sm btn-outline-warning waves-effect waves-light mr-2 mb-1">Export Tree</a> -->
-                                                <a href="{{route('land_tree_listing', ['tenant' => tenant('id'), 'id' => $zone->company_land_zone_id])}}"
+                                                <a href="{{route('land_tree_listing', ['tenant' => tenant('id'), 'company_land_zone_id' => $zone->company_land_zone_id])}}"
                                                     class="btn btn-sm btn-outline-success waves-effect waves-light mr-1 mb-1">Manage Tree(s)</a>
                                               @if(auth()->user()->user_type_id == 2)
                                                 @can('company_land_zone_manage')

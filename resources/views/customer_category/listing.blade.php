@@ -136,7 +136,7 @@
                                     </td>
                                 @endcan
 							</tr>
-							<?php $i++; ?>
+							{{-- <?php $i++; ?> --}}
 							@endforeach
 							@else
 							<tr>

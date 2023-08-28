@@ -73,6 +73,15 @@
                 </div>
             </div>
             <div class="dropdown d-inline-block">
+                {{-- <a href="{{ route('import_demo_data_db', ['tenant' => tenant('id')]) }}" data-toggle="tooltip" data-placement="top" title="Import Demo Data" class="fas fa-file-import text-success mr-2" ></a>
+                <a href="{{ route('clear_data_db', ['tenant' => tenant('id')]) }}" data-toggle="tooltip" data-placement="top" title="Clear Data" class="fas fa-undo-alt text-danger mr-2" ></a> --}}
+                {{-- <span class="" href="{{ route('import_demo_data_db', ['tenant' => tenant('id')]) }}" data-toggle="tooltip" data-placement="top" title="Import Demo Data" class="fas fa-file-import text-success mr-2" ></a> --}}
+                <span data-target="#import_demo_data" data-toggle="modal" class="mr-2">
+                    <i data-toggle="tooltip" data-placement="top" title="Import Demo Data" class="fas fa-file-import text-success"></i>
+                </span>
+                <span data-target="#clear_data" data-toggle="modal" class="mr-2">
+                    <i data-toggle="tooltip" data-placement="top" title="Clear Data" class="fas fa-undo-alt text-danger"></i>
+                </span>
                 @php
                     $img = "https://ui-avatars.com/api/?name=" . Auth::user()->user_fullname;
                 @endphp
@@ -98,3 +107,34 @@
         </div>
     </div>
 </header>
+<!-- Import Demo Data Modal -->
+<div class="modal fade" id="import_demo_data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h5>Import Demo Data?</h5>
+            </div>
+            <div class="modal-footer">
+                <a href="{{ route('import_demo_data_db', ['tenant' => tenant('id')]) }}" class="btn btn-success mr-2" >Confirm</a>
+                <a class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Import Demo Data Modal -->
+<div class="modal fade" id="clear_data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h5>Clear Data ?</h5>
+            </div>
+            <div class="modal-footer">
+                <a href="{{ route('clear_data_db', ['tenant' => tenant('id')]) }}" class="btn btn-danger mr-2" >Confirm</a>
+                <a class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -11,7 +11,8 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                @if (checkSubscriptionFeature('delivery_order_module'))
+                {{-- @dd('here'); --}}
+                {{-- @if (checkSubscriptionFeature('delivery_order_module')) --}}
                     {{-- Delivery Order --}}
                     @canany(['delivery_order_listing', 'delivery_order_manage', 'invoice_listing'])
                         <li class="menu-title">Orders</li>
@@ -50,10 +51,10 @@
                     {{-- End Invoice --}}
                     @endcanany
                     {{-- End Delivery Order --}}
-                @endif
+                {{-- @endif --}}
 
                 {{-- Payment Url --}}
-                @if (checkSubscriptionFeature('delivery_order_module'))
+                {{-- @if (checkSubscriptionFeature('delivery_order_module')) --}}
                     @can('payment_url_listing')
                     <li>
                         <a href="{{ route('payment_url_listing', ['tenant' => tenant('id')]) }}" class="waves-effect">
@@ -62,10 +63,10 @@
                         </a>
                     </li>
                     @endcan
-                @endif
+                {{-- @endif --}}
                 {{-- End Payment Url --}}
 
-                @if (checkSubscriptionFeature('delivery_order_module'))
+                {{-- @if (checkSubscriptionFeature('delivery_order_module')) --}}
                 {{-- Expense List --}}
                     @can('delivery_order_listing')
                     <li>
@@ -76,9 +77,9 @@
                     </li>
                     @endcan
                 {{-- End Expense List --}}
-                @endif
+                {{-- @endif --}}
 
-                @if (checkSubscriptionFeature('collect_module'))
+                {{-- @if (checkSubscriptionFeature('collect_module')) --}}
                     {{-- Collect --}}
                     @canany(['collect_listing'])
                         <li class="menu-title">Collects</li>
@@ -92,9 +93,9 @@
                         @endcan
                     @endcanany
                     {{-- End Collect --}}
-                @endif  
+                {{-- @endif --}}
 
-                @if (checkSubscriptionFeature('raw_material_module'))
+                {{-- @if (checkSubscriptionFeature('raw_material_module')) --}}
                     {{-- Raw Material --}}
                     @canany(['raw_material_listing','raw_material_category_listing','raw_material_company_listing','raw_material_company_usage_listing'])
                         <li class="menu-title">Raw Materials</li>
@@ -132,9 +133,9 @@
                         @endcan
                     @endcanany
                     {{-- End Raw Material --}}
-                @endif
+                {{-- @endif --}}
 
-                @if (checkSubscriptionFeature('formula_usage_module'))
+                {{-- @if (checkSubscriptionFeature('formula_usage_module')) --}}
                     {{-- Formula --}}
                     @canany(['formula_usage_manage','formula_usage_listing'])
                         <li class="menu-title">Formula Usage</li>
@@ -172,9 +173,9 @@
                         @endcanany
                     @endcanany
                     {{-- End Formula --}}
-                @endif
+                {{-- @endif --}}
 
-                @if (checkSubscriptionFeature('expense_module'))
+                {{-- @if (checkSubscriptionFeature('expense_module')) --}}
                     {{-- Start Expense --}}
                     @canany(['company_expense_listing','company_expense_manage','payroll_listing', 'payroll_manage', 'payroll_item_listing', 'payroll_item_manage'])
                         <li class="menu-title">Expense</li>
@@ -204,9 +205,9 @@
                         @endcanany
                     @endcanany
                     {{-- End Expense --}}
-                @endif
+                {{-- @endif --}}
 
-                @if (checkSubscriptionFeature('supplier_module'))
+                {{-- @if (checkSubscriptionFeature('supplier_module')) --}}
                     {{-- Supplier --}}
                     @canany(['supplier_listing','supplier_manage', 'supplier_delivery_order_listing','supplier_delivery_order_manage', 'supplier_delivery_order_delete'])
                         <li class="menu-title">Supplier</li>
@@ -240,9 +241,9 @@
                         </li>
                     @endcanany
                     {{-- End Supplier --}}
-                @endif
+                {{-- @endif --}}
 
-                @if (checkSubscriptionFeature('report'))
+                {{-- @if (checkSubscriptionFeature('report')) --}}
                     {{-- Reporting --}}
                     @can('report_listing')
                         @if (auth()->user()->user_type_id == 1)
@@ -444,7 +445,7 @@
                         <li><a href="{{ route('budget_estimate_report_listing_reporting', ['tenant' => tenant('id')]) }}" class="waves-effect"><i class="bx bx-detail"></i><span> Budget Estimate Reporting</span></a></li>
                     @endcan
                     {{-- End Of Reporting --}}
-                @endif
+                {{-- @endif --}}
 
                 {{-- @if (checkSubscriptionFeature('formula_usage_module')) --}}
                     {{-- Budget Estimate --}}
@@ -478,7 +479,7 @@
                     {{-- End Company --}}
                 {{-- @endif --}}
 
-                @if (checkSubscriptionFeature('zone_module') || checkSubscriptionFeature('land_module'))
+                {{-- @if (checkSubscriptionFeature('zone_module') || checkSubscriptionFeature('land_module')) --}}
                 {{-- Tree --}}
                     @can('company_land_tree_listing')
                         <li>
@@ -500,9 +501,9 @@
                             </a>
                         </li>
                     @endcan
-                @endif
+                {{-- @endif --}}
 
-                @if (checkSubscriptionFeature('customer_module'))
+                {{-- @if (checkSubscriptionFeature('customer_module')) --}}
                     {{-- Customer --}}
                     @canany(['customer_listing', 'customer_manage', 'customer_category_listing','customer_category_manage',
                     'customer_term_listing', 'customer_term_manage'])
@@ -561,9 +562,9 @@
                         @endcanany
                     @endcanany
                     {{-- End Customer --}}
-                @endif
+                {{-- @endif --}}
 
-                @if (checkSubscriptionFeature('product_module'))
+                {{-- @if (checkSubscriptionFeature('product_module')) --}}
                     {{-- Product --}}
                     @canany(['product_listing', 'product_manage', 'product_category_listing', 'product_category_manage',
                     'product_tag_listing', 'product_tag_manage', 'product_stock_listing', 'product_stock_manage'])
@@ -618,9 +619,9 @@
                         @endcanany
                     @endcanany
                     {{-- End Product --}}
-                @endif
+                {{-- @endif --}}
 
-                @if (checkSubscriptionFeature('claim_module'))
+                {{-- @if (checkSubscriptionFeature('claim_module')) --}}
                     @canany(['claim_listing', 'claim_manage'])
                         <li class="menu-title">Claim</li>
                         @canany(['claim_listing', 'claim_manage'])
@@ -640,7 +641,7 @@
                         </li>
                         @endcanany
                     @endcanany
-                @endif
+                {{-- @endif --}}
 
                 {{-- @if (checkSubscriptionFeature('claim_module')) --}}
                     @canany(['worker_manage', 'worker_listing'])

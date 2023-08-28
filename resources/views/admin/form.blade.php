@@ -283,7 +283,7 @@
 <div class="modal fade" id="existUserModal" tabindex="-1" aria-labelledby="existUserModalLabel" aria-hidden="true" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
-            <form method="POST" action="{{ route('update_user_to_admin') }}">
+            <form method="POST" action="{{ route('update_user_to_admin', ['tenant' => tenant('id')]) }}">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title">User Exists</h5>

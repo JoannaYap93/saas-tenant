@@ -271,7 +271,7 @@ class CompanyLandTreeController extends Controller
                     }
                 }
                 Session::flash('success_msg', 'Successfully Managed Tree');
-                return redirect()->route('land_tree_listing', ['tenant' => tenant('id'), 'id' => $company_land_zone_id]);
+                return redirect()->route('land_tree_listing', ['tenant' => tenant('id'), 'company_land_zone_id' => $company_land_zone_id]);
             }
             $post = (object) $request->all();
         }
